@@ -1,3 +1,6 @@
+可以，下面這份是已改好的完整 `index.html`。重點已改成：教師後台直接顯示「班級與帳號管理」，可新增班級、學生、老師、管理者；建立教職員時會依選項存成 `teacher` 或 `admin`。
+
+```html
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -8,20 +11,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    html, body, div, span, header, nav, main, section, input, button, textarea, select, h1, h2, h3, p, label { 
-      box-sizing: border-box; margin: 0; padding: 0; 
+    html, body, div, span, header, nav, main, section, input, button, textarea, select, h1, h2, h3, p, label {
+      box-sizing: border-box; margin: 0; padding: 0;
     }
     :root {
-      --gold:       #C9A84C;
+      --gold: #C9A84C;
       --gold-light: #E8C97A;
-      --gold-dim:   #8A6E30;
-      --black:      #0D0D0D;
-      --surface:    #161616;
-      --surface2:   #1F1F1F;
-      --border:     rgba(201,168,76,0.25);
-      --text-main:  #F0EAD6;
+      --gold-dim: #8A6E30;
+      --black: #0D0D0D;
+      --surface: #161616;
+      --surface2: #1F1F1F;
+      --border: rgba(201,168,76,0.25);
+      --text-main: #F0EAD6;
       --text-muted: #9A9180;
-      --radius:     12px;
+      --radius: 12px;
       --font-serif: 'Playfair Display','Noto Serif TC',serif;
     }
     html, body {
@@ -31,7 +34,7 @@
       font-family: -apple-system, 'Noto Sans TC', sans-serif;
       -webkit-font-smoothing: antialiased;
     }
-    
+
     header {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
@@ -80,9 +83,9 @@
     }
     .nav-btn:hover { background: var(--surface2); }
     .nav-btn.active { background: var(--gold); color: var(--black); font-weight: 600; border-color: var(--gold); }
-    
+
     #nav-super-btn {
-      display: none;
+      display: block;
       border: 1px solid rgba(232,201,122,0.4);
       color: var(--gold-light);
     }
@@ -128,7 +131,7 @@
     }
     .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--gold); }
     .form-textarea { resize: vertical; min-height: 100px; }
-    
+
     .btn-submit {
       background: var(--gold); color: var(--black); border: none; border-radius: 8px;
       padding: 12px 24px; font-size: 14px; font-weight: 600; cursor: pointer;
@@ -137,13 +140,20 @@
     .btn-submit:hover { background: var(--gold-light); }
 
     .student-selector { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px dashed var(--border); }
-    
+
     .msg-success {
       display: none; background: rgba(201,168,76,0.1); border: 1px solid var(--gold);
       color: var(--gold-light); padding: 10px 16px; border-radius: 8px; margin-top: 1rem; font-size: 13px;
     }
 
     .small-hint { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+
+    @media (max-width: 760px) {
+      header { padding: 1rem; align-items: flex-start; gap: 12px; }
+      .container { flex-direction: column; padding: 1rem; gap: 1rem; }
+      nav.sidebar { width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      main.content { padding: 1.25rem; }
+    }
   </style>
 </head>
 <body>
@@ -161,11 +171,11 @@
       <button class="nav-btn active" onclick="switchTab('tab-contact', this)">聯絡簿佈達</button>
       <button class="nav-btn" onclick="switchTab('tab-grades', this)">成績與診斷</button>
       <button class="nav-btn" onclick="switchTab('tab-messages', this)">家長私訊管理</button>
-      <button class="nav-btn" id="nav-super-btn" onclick="switchTab('tab-superuser', this)">最高管理面板</button>
+      <button class="nav-btn" id="nav-super-btn" onclick="switchTab('tab-superuser', this)">班級與帳號管理</button>
     </nav>
 
     <main class="content">
-      
+
       <div class="student-selector" id="global-student-wrapper">
         <label class="form-label">當前操作學生 (小班制精準關注)</label>
         <select class="form-select" id="global-student-select">
@@ -241,8 +251,8 @@
       </div>
 
       <div id="tab-superuser" class="tab-content">
-        <div class="section-title">最高管理控制台 (宋維 專屬)</div>
-        
+        <div class="section-title">班級、學生、老師與管理者管理</div>
+
         <div class="sub-panel">
           <div class="sub-panel-title">1. 配置新班級</div>
           <div class="form-group">
@@ -274,12 +284,12 @@
         </div>
 
         <div class="sub-panel">
-          <div class="sub-panel-title">3. 授權教職員帳號</div>
+          <div class="sub-panel-title">3. 授權老師或管理者帳號</div>
           <div class="form-group">
             <label class="form-label">帳號身分</label>
             <select class="form-select" id="super-staff-type">
-              <option value="admin">管理者 (行政與系統營運)</option>
               <option value="teacher">老師 (授課與成績登錄)</option>
+              <option value="admin">管理者 (行政與系統營運)</option>
             </select>
           </div>
           <div class="form-group">
@@ -306,14 +316,24 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { collection, query, where, getDocs, getDoc, doc, addDoc, setDoc, serverTimestamp, Timestamp } from 
-      "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import {
+      collection,
+      query,
+      where,
+      getDocs,
+      getDoc,
+      doc,
+      addDoc,
+      setDoc,
+      serverTimestamp,
+      Timestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
     import { db, auth } from '../js/firebase-config.js';
 
     const adminUid = sessionStorage.getItem('vip_uid');
     const role = sessionStorage.getItem('vip_role');
 
-    if (!adminUid || role !== 'admin') {
+    if (!adminUid || (role !== 'admin' && role !== 'teacher')) {
       window.location.href = '../index.html';
     }
 
@@ -321,12 +341,12 @@
     document.getElementById('grade-date').valueAsDate = new Date();
 
     const firebaseConfig = {
-      apiKey:            "AIzaSyCWcNX_urPo8HOV42pL_ngHs7a9T60tGWY",
-      authDomain:        "liveabc-song.firebaseapp.com",
-      projectId:         "liveabc-song",
-      storageBucket:     "liveabc-song.firebasestorage.app",
+      apiKey: "AIzaSyCWcNX_urPo8HOV42pL_ngHs7a9T60tGWY",
+      authDomain: "liveabc-song.firebaseapp.com",
+      projectId: "liveabc-song",
+      storageBucket: "liveabc-song.firebasestorage.app",
       messagingSenderId: "545222080412",
-      appId:             "1:545222080412:web:1c3a34e4b88053ebb97a59"
+      appId: "1:545222080412:web:1c3a34e4b88053ebb97a59"
     };
 
     window.handleAdminLogout = async function() {
@@ -340,7 +360,7 @@
       document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       btnEl.classList.add('active');
-      
+
       if (tabId === 'tab-superuser') {
         document.getElementById('global-student-wrapper').style.display = 'none';
       } else {
@@ -356,22 +376,7 @@
 
     async function hashPassword(pwd) {
       const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
-      return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-    }
-
-    async function checkSuperAdminPrivilege() {
-      try {
-        const docRef = doc(db, 'users', adminUid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          if (data.isSuperAdmin === true || data.name === '宋維') {
-            document.getElementById('nav-super-btn').style.display = 'block';
-          }
-        }
-      } catch (err) {
-        console.error("權限確認失敗:", err);
-      }
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
     async function loadStudents() {
@@ -380,10 +385,10 @@
         const snap = await getDocs(q);
         const select = document.getElementById('global-student-select');
         select.innerHTML = '<option value="">請選擇學生...</option>';
-        snap.forEach(doc => {
-          const data = doc.data();
+        snap.forEach(docSnap => {
+          const data = docSnap.data();
           const option = document.createElement('option');
-          option.value = doc.id;
+          option.value = docSnap.id;
           option.textContent = data.name + ' (' + (data.className || '未指定班級') + ')';
           select.appendChild(option);
         });
@@ -397,8 +402,8 @@
         const snap = await getDocs(collection(db, 'classes'));
         const superStudentClass = document.getElementById('super-student-class');
         superStudentClass.innerHTML = '<option value="">請選擇班級...</option>';
-        snap.forEach(doc => {
-          const data = doc.data();
+        snap.forEach(docSnap => {
+          const data = docSnap.data();
           const option = document.createElement('option');
           option.value = data.className;
           option.textContent = data.className;
@@ -516,17 +521,17 @@
       if (!email || !name || !pwd) return alert('請填寫完整教職員權限資料');
 
       try {
-        const secondaryApp = initializeApp(firebaseConfig, "SecondaryAuthInstance");
+        const secondaryApp = initializeApp(firebaseConfig, "SecondaryAuthInstance-" + Date.now());
         const secondaryAuth = getAuth(secondaryApp);
-        
+
         const cred = await createUserWithEmailAndPassword(secondaryAuth, email, pwd);
         const newUid = cred.user.uid;
 
         await setDoc(doc(db, 'users', newUid), {
           email: email,
           name: name,
-          role: 'admin',
-          jobTitle: type, 
+          role: type,
+          jobTitle: type === 'admin' ? '管理者' : '老師',
           isSuperAdmin: false,
           createdAt: serverTimestamp()
         });
@@ -543,9 +548,9 @@
       }
     };
 
-    checkSuperAdminPrivilege();
     loadStudents();
     loadClasses();
   </script>
 </body>
 </html>
+```
