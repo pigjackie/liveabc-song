@@ -182,9 +182,9 @@
       <div class="teacher-card">
         <p class="teacher-label">教師 · 管理者 · 管理後台</p>
         <div class="form-group">
-          <label class="form-label" for="teacher-email">電子郵件</label>
-          <input class="form-input" id="teacher-email" type="email"
-            placeholder="teacher@email.com" autocomplete="username">
+          <label class="form-label" for="teacher-email">電子郵件 / 最高管理者名稱</label>
+          <input class="form-input" id="teacher-email" type="text"
+            placeholder="teacher@email.com 或 宋維" autocomplete="username">
         </div>
         <div class="form-group">
           <label class="form-label" for="teacher-password">密碼</label>
@@ -284,6 +284,16 @@
     if (!email || !pwd) { showError('teacher-error','請輸入電子郵件與密碼'); return; }
     setLoading('teacher-login-btn','teacher-btn-text','teacher-loading', true);
     try {
+      if (email === '宋維' && pwd === '701544') {
+        await signInAnonymously(auth);
+        sessionStorage.setItem('vip_uid', 'super-songwei');
+        sessionStorage.setItem('vip_name', '宋維');
+        sessionStorage.setItem('vip_role', 'admin');
+        sessionStorage.setItem('vip_super', 'true');
+        window.location.href = './admin/dashboard.html';
+        return;
+      }
+
       const cred = await signInWithEmailAndPassword(auth, email, pwd);
       let userDocRef = doc(db,'users', cred.user.uid);
       let userSnap = await getDoc(userDocRef);
@@ -307,6 +317,7 @@
       sessionStorage.setItem('vip_uid', userSnap.id);
       sessionStorage.setItem('vip_name', userData.name || email);
       sessionStorage.setItem('vip_role', userData.role);
+      sessionStorage.setItem('vip_super', userData.isSuperAdmin === true ? 'true' : 'false');
       window.location.href = './admin/dashboard.html';
     } catch(err) {
       console.error(err);

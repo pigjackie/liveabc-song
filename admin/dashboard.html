@@ -367,12 +367,13 @@
 
     const adminUid = sessionStorage.getItem('vip_uid');
     const role = sessionStorage.getItem('vip_role');
+    const isSuperAdmin = sessionStorage.getItem('vip_super') === 'true';
 
     if (!adminUid || (role !== 'admin' && role !== 'teacher')) {
       window.location.href = '../index.html';
     }
 
-    document.getElementById('admin-role-label').textContent = role === 'admin' ? '管理者' : '老師';
+    document.getElementById('admin-role-label').textContent = isSuperAdmin ? '最高管理者' : (role === 'admin' ? '管理者' : '老師');
 
     document.getElementById('contact-date').valueAsDate = new Date();
     document.getElementById('grade-date').valueAsDate = new Date();
