@@ -104,4 +104,456 @@
       margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px;
     }
     .section-title::before {
-      content: ''; display: inline-block; width: 4px; height: 18px; background: var(--gold); border-radius:
+      content: ''; display: inline-block; width: 4px; height: 18px; background: var(--gold); border-radius: 2px;
+    }
+
+    .sub-panel {
+      background: var(--surface2);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .sub-panel-title {
+      font-size: 15px; color: var(--gold-light); margin-bottom: 1.2rem;
+      font-weight: 600; display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .form-group { margin-bottom: 1.5rem; }
+    .form-label { display: block; font-size: 13px; color: var(--gold-dim); margin-bottom: 8px; text-transform: uppercase; }
+    .form-input, .form-select, .form-textarea {
+      width: 100%; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px; font-size: 14px; color: var(--text-main);
+      outline: none; transition: 0.2s;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--gold); }
+    .form-textarea { resize: vertical; min-height: 100px; }
+
+    .btn-submit {
+      background: var(--gold); color: var(--black); border: none; border-radius: 8px;
+      padding: 12px 24px; font-size: 14px; font-weight: 600; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-submit:hover { background: var(--gold-light); }
+
+    .student-selector { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px dashed var(--border); }
+
+    .msg-success {
+      display: none; background: rgba(201,168,76,0.1); border: 1px solid var(--gold);
+      color: var(--gold-light); padding: 10px 16px; border-radius: 8px; margin-top: 1rem; font-size: 13px;
+    }
+
+    .small-hint { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+
+    @media (max-width: 760px) {
+      header { padding: 1rem; align-items: flex-start; gap: 12px; }
+      .container { flex-direction: column; padding: 1rem; gap: 1rem; }
+      nav.sidebar { width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      main.content { padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <div class="header-title">教師管理後台</div>
+      <div class="header-sub">互動美語 × 如苑 · 國一先修小班制專屬</div>
+    </div>
+    <button id="btn-logout" class="logout-btn">登出系統</button>
+  </header>
+
+  <div class="container">
+    <nav class="sidebar">
+      <button class="nav-btn active" onclick="switchTab('tab-contact', this)">聯絡簿佈達</button>
+      <button class="nav-btn" onclick="switchTab('tab-grades', this)">成績與診斷</button>
+      <button class="nav-btn" onclick="switchTab('tab-messages', this)">家長私訊管理</button>
+      <button class="nav-btn" id="nav-super-btn" onclick="switchTab('tab-superuser', this)">班級與帳號管理</button>
+    </nav>
+
+    <main class="content">
+
+      <div class="student-selector" id="global-student-wrapper">
+        <label class="form-label">當前操作學生 (小班制精準關注)</label>
+        <select class="form-select" id="global-student-select">
+          <option value="">請選擇學生...</option>
+        </select>
+      </div>
+
+      <div id="tab-contact" class="tab-content active">
+        <div class="section-title">新增數位聯絡簿</div>
+        <div class="form-group">
+          <label class="form-label">日期</label>
+          <input type="date" class="form-input" id="contact-date">
+        </div>
+        <div class="form-group">
+          <label class="form-label">出缺勤</label>
+          <select class="form-select" id="contact-attendance">
+            <option value="準時">準時</option>
+            <option value="遲到">遲到</option>
+            <option value="請假">請假</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">英文進度</label>
+          <input type="text" class="form-input" id="contact-en" placeholder="例如：Unit 1 核心單字總複習">
+        </div>
+        <div class="form-group">
+          <label class="form-label">國文進度</label>
+          <input type="text" class="form-input" id="contact-zh" placeholder="例如：文言文基本句型修辭">
+        </div>
+        <div class="form-group">
+          <label class="form-label">指派作業</label>
+          <textarea class="form-textarea" id="contact-hw" placeholder="請輸入今日作業內容..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">課堂表現標籤 (用半形逗號分隔)</label>
+          <input type="text" class="form-input" id="contact-tags" placeholder="例如：專注度佳,互動良好">
+        </div>
+        <button class="btn-submit" onclick="submitContact()">發布聯絡簿</button>
+        <div id="msg-contact" class="msg-success">聯絡簿已成功發布！</div>
+      </div>
+
+      <div id="tab-grades" class="tab-content">
+        <div class="section-title">登錄成績與個別化診斷</div>
+        <div class="form-group">
+          <label class="form-label">測驗日期</label>
+          <input type="date" class="form-input" id="grade-date">
+        </div>
+        <div class="form-group">
+          <label class="form-label">測驗名稱</label>
+          <input type="text" class="form-input" id="grade-title" placeholder="例如：第一週課堂單字測驗">
+        </div>
+        <div class="form-group">
+          <label class="form-label">測驗分數</label>
+          <input type="number" class="form-input" id="grade-score" min="0" max="100" placeholder="0-100">
+        </div>
+        <div class="form-group">
+          <label class="form-label">全班平均 (用於圖表對比)</label>
+          <input type="number" class="form-input" id="grade-avg" min="0" max="100" placeholder="輸入全班平均">
+        </div>
+        <div class="form-group">
+          <label class="form-label">個別化診斷與精進方針</label>
+          <textarea class="form-textarea" id="grade-diagnosis" placeholder="針對該名學生的弱點給予具體建議..."></textarea>
+        </div>
+        <button class="btn-submit" onclick="submitGrade()">登錄成績</button>
+        <div id="msg-grade" class="msg-success">成績與診斷已成功儲存！</div>
+      </div>
+
+      <div id="tab-messages" class="tab-content">
+        <div class="section-title">家長私訊管理</div>
+        <p style="color:var(--text-muted); font-size:14px; line-height:1.6;">
+          請從上方選擇特定學生，即可啟動與該位家長的一對一專屬對話。
+        </p>
+      </div>
+
+      <div id="tab-superuser" class="tab-content">
+        <div class="section-title">班級、學生、老師與管理者管理</div>
+
+        <div class="sub-panel">
+          <div class="sub-panel-title">1. 配置新班級</div>
+          <div class="form-group">
+            <label class="form-label">班級名稱</label>
+            <input type="text" class="form-input" id="super-class-name" placeholder="例如：國一英語先修A班">
+          </div>
+          <button class="btn-submit" onclick="createClass()">確認新增班級</button>
+          <div id="msg-super-class" class="msg-success">班級配置成功！</div>
+        </div>
+
+        <div class="sub-panel">
+          <div class="sub-panel-title">2. 註冊新學生帳戶 (VIP 家長專屬憑證)</div>
+          <div class="form-group">
+            <label class="form-label">學生姓名</label>
+            <input type="text" class="form-input" id="super-student-name" placeholder="請輸入學生真實姓名">
+          </div>
+          <div class="form-group">
+            <label class="form-label">所屬班級</label>
+            <select class="form-select" id="super-student-class">
+              <option value="">請選擇班級...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">家長專屬登入密碼</label>
+            <input type="text" class="form-input" id="super-student-pwd" placeholder="設定家長登入初始密碼">
+          </div>
+          <button class="btn-submit" onclick="createStudent()">確認建立學生帳戶</button>
+          <div id="msg-super-student" class="msg-success">學生帳戶與家長憑證建立成功！</div>
+        </div>
+
+        <div class="sub-panel">
+          <div class="sub-panel-title">3. 授權老師或管理者帳號</div>
+          <div class="form-group">
+            <label class="form-label">帳號身分</label>
+            <select class="form-select" id="super-staff-type">
+              <option value="teacher">老師 (授課與成績登錄)</option>
+              <option value="admin">管理者 (行政與系統營運)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">電子郵件 (登入帳號)</label>
+            <input type="email" class="form-input" id="super-staff-email" placeholder="staff@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">人員姓名</label>
+            <input type="text" class="form-input" id="super-staff-name" placeholder="請輸入人員姓名或稱呼">
+          </div>
+          <div class="form-group">
+            <label class="form-label">登入密碼</label>
+            <input type="password" class="form-input" id="super-staff-pwd" placeholder="設定教職員登入初始密碼">
+          </div>
+          <button class="btn-submit" onclick="createStaff()">確認授權教職員</button>
+          <div id="msg-super-staff" class="msg-success">教職員帳號建立成功！</div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import {
+      collection,
+      query,
+      where,
+      getDocs,
+      getDoc,
+      doc,
+      addDoc,
+      setDoc,
+      serverTimestamp,
+      Timestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { db, auth } from '../js/firebase-config.js';
+
+    const adminUid = sessionStorage.getItem('vip_uid');
+    const role = sessionStorage.getItem('vip_role');
+
+    if (!adminUid || (role !== 'admin' && role !== 'teacher')) {
+      window.location.replace('../index.html');
+    }
+
+    document.getElementById('contact-date').valueAsDate = new Date();
+    document.getElementById('grade-date').valueAsDate = new Date();
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCWcNX_urPo8HOV42pL_ngHs7a9T60tGWY",
+      authDomain: "liveabc-song.firebaseapp.com",
+      projectId: "liveabc-song",
+      storageBucket: "liveabc-song.firebasestorage.app",
+      messagingSenderId: "545222080412",
+      appId: "1:545222080412:web:1c3a34e4b88053ebb97a59"
+    };
+
+    const logoutBtn = document.getElementById('btn-logout');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', async () => {
+        try {
+          await signOut(auth);
+        } catch (err) {
+          alert('登出時 Firebase 連線異常，將強制登出。錯誤細節：' + err.message);
+        } finally {
+          sessionStorage.clear();
+          window.location.replace('../index.html');
+        }
+      });
+    }
+
+    window.switchTab = function(tabId, btnEl) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btnEl.classList.add('active');
+
+      if (tabId === 'tab-superuser') {
+        document.getElementById('global-student-wrapper').style.display = 'none';
+      } else {
+        document.getElementById('global-student-wrapper').style.display = 'block';
+      }
+    };
+
+    function showSuccessMsg(id) {
+      const el = document.getElementById(id);
+      el.style.display = 'block';
+      setTimeout(() => { el.style.display = 'none'; }, 3000);
+    }
+
+    async function hashPassword(pwd) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function loadStudents() {
+      try {
+        const q = query(collection(db, 'users'), where('role', '==', 'parent'));
+        const snap = await getDocs(q);
+        const select = document.getElementById('global-student-select');
+        select.innerHTML = '<option value="">請選擇學生...</option>';
+        snap.forEach(docSnap => {
+          const data = docSnap.data();
+          const option = document.createElement('option');
+          option.value = docSnap.id;
+          option.textContent = data.name + ' (' + (data.className || '未指定班級') + ')';
+          select.appendChild(option);
+        });
+      } catch (err) {
+        alert("載入學生清單失敗：" + err.message);
+      }
+    }
+
+    async function loadClasses() {
+      try {
+        const snap = await getDocs(collection(db, 'classes'));
+        const superStudentClass = document.getElementById('super-student-class');
+        superStudentClass.innerHTML = '<option value="">請選擇班級...</option>';
+        snap.forEach(docSnap => {
+          const data = docSnap.data();
+          const option = document.createElement('option');
+          option.value = data.className;
+          option.textContent = data.className;
+          superStudentClass.appendChild(option);
+        });
+      } catch (err) {
+        alert("載入班級清單失敗：" + err.message);
+      }
+    }
+
+    window.submitContact = async function() {
+      const studentId = document.getElementById('global-student-select').value;
+      if (!studentId) return alert('請先選擇學生');
+
+      const data = {
+        studentId: studentId,
+        date: document.getElementById('contact-date').value,
+        attendance: document.getElementById('contact-attendance').value,
+        progressEnglish: document.getElementById('contact-en').value.trim(),
+        progressChinese: document.getElementById('contact-zh').value.trim(),
+        homework: document.getElementById('contact-hw').value.trim(),
+        tags: document.getElementById('contact-tags').value.split(',').map(t => t.trim()).filter(t => t),
+        createdAt: serverTimestamp()
+      };
+
+      try {
+        await addDoc(collection(db, 'contact_books'), data);
+        showSuccessMsg('msg-contact');
+        document.getElementById('contact-en').value = '';
+        document.getElementById('contact-zh').value = '';
+        document.getElementById('contact-hw').value = '';
+        document.getElementById('contact-tags').value = '';
+      } catch (err) {
+        alert("聯絡簿發布失敗：" + err.message);
+      }
+    };
+
+    window.submitGrade = async function() {
+      const studentId = document.getElementById('global-student-select').value;
+      if (!studentId) return alert('請先選擇學生');
+
+      const dateStr = document.getElementById('grade-date').value;
+      const data = {
+        studentId: studentId,
+        title: document.getElementById('grade-title').value.trim(),
+        score: Number(document.getElementById('grade-score').value),
+        averageScore: Number(document.getElementById('grade-avg').value),
+        diagnosis: document.getElementById('grade-diagnosis').value.trim(),
+        examDate: Timestamp.fromDate(new Date(dateStr))
+      };
+
+      if (!data.title || isNaN(data.score)) return alert('請填寫完整的測驗名稱與分數');
+
+      try {
+        await addDoc(collection(db, 'grades'), data);
+        showSuccessMsg('msg-grade');
+        document.getElementById('grade-title').value = '';
+        document.getElementById('grade-score').value = '';
+        document.getElementById('grade-avg').value = '';
+        document.getElementById('grade-diagnosis').value = '';
+      } catch (err) {
+        alert("成績登錄失敗：" + err.message);
+      }
+    };
+
+    window.createClass = async function() {
+      const className = document.getElementById('super-class-name').value.trim();
+      if (!className) return alert('請輸入班級名稱');
+
+      try {
+        await addDoc(collection(db, 'classes'), {
+          className: className,
+          createdAt: serverTimestamp()
+        });
+        showSuccessMsg('msg-super-class');
+        document.getElementById('super-class-name').value = '';
+        await loadClasses();
+      } catch (err) {
+        alert("建立班級失敗：" + err.message);
+      }
+    };
+
+    window.createStudent = async function() {
+      const name = document.getElementById('super-student-name').value.trim();
+      const className = document.getElementById('super-student-class').value;
+      const pwd = document.getElementById('super-student-pwd').value;
+
+      if (!name || !className || !pwd) return alert('請填寫完整學生帳戶資料');
+
+      try {
+        const hashed = await hashPassword(pwd);
+        await addDoc(collection(db, 'users'), {
+          name: name,
+          className: className,
+          passwordHash: hashed,
+          role: 'parent',
+          createdAt: serverTimestamp()
+        });
+        showSuccessMsg('msg-super-student');
+        document.getElementById('super-student-name').value = '';
+        document.getElementById('super-student-class').value = '';
+        document.getElementById('super-student-pwd').value = '';
+        await loadStudents();
+      } catch (err) {
+        alert("建立學生失敗：" + err.message);
+      }
+    };
+
+    window.createStaff = async function() {
+      const type = document.getElementById('super-staff-type').value;
+      const email = document.getElementById('super-staff-email').value.trim();
+      const name = document.getElementById('super-staff-name').value.trim();
+      const pwd = document.getElementById('super-staff-pwd').value;
+
+      if (!email || !name || !pwd) return alert('請填寫完整教職員權限資料');
+
+      try {
+        const secondaryApp = initializeApp(firebaseConfig, "SecondaryAuthInstance-" + Date.now());
+        const secondaryAuth = getAuth(secondaryApp);
+
+        const cred = await createUserWithEmailAndPassword(secondaryAuth, email, pwd);
+        const newUid = cred.user.uid;
+
+        await setDoc(doc(db, 'users', newUid), {
+          email: email,
+          name: name,
+          role: type,
+          jobTitle: type === 'admin' ? '管理者' : '老師',
+          isSuperAdmin: false,
+          createdAt: serverTimestamp()
+        });
+
+        await signOut(secondaryAuth);
+
+        showSuccessMsg('msg-super-staff');
+        document.getElementById('super-staff-email').value = '';
+        document.getElementById('super-staff-name').value = '';
+        document.getElementById('super-staff-pwd').value = '';
+      } catch (err) {
+        alert("授權失敗：" + err.message);
+      }
+    };
+
+    loadStudents();
+    loadClasses();
+  </script>
+</body>
+</html>
