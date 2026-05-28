@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>教師管理後台 · 互動美語 X 如苑</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+TC:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ═══════════════════════════════════════════
+       THEME TOKENS — 3 DISTINCT VISUAL SYSTEMS
+    ═══════════════════════════════════════════ */
+
+    /* THEME 1: OBSIDIAN GOLD — Luxury dark, original style, elevated */
+    [data-theme="obsidian"] {
+      --bg:           #0A0A0A;
+      --bg2:          #111111;
+      --surface:      #161616;
+      --surface2:     #1E1E1E;
+      --surface3:     #252525;
+      --border:       rgba(201,168,76,0.2);
+      --border-hover: rgba(201,168,76,0.5);
+      --accent:       #C9A84C;
+      --accent-light: #E8C97A;
+      --accent-dim:   #8A6E30;
+      --accent-glow:  rgba(201,168,76,0.12);
+      --text:         #F0EAD6;
+      --text-sub:     #B8AE9C;
+      --text-muted:   #6E6558;
+      --danger:       #C0392B;
+      --success:      #27AE60;
+      --info:         #2980B9;
+      --radius:       10px;
+      --shadow:       0 4px 24px rgba(0,0,0,0.6);
+      --font-display: 'Playfair Display','Noto Serif TC',serif;
+      --font-body:    'DM Sans','Noto Serif TC',sans-serif;
+      --font-mono:    'IBM Plex Mono', monospace;
+      --nav-w:        220px;
+    }
+
+    /* THEME 2: IVORY MANUSCRIPT — Light cream, editorial, scholarly */
+    [data-theme="ivory"] {
+      --bg:           #F7F3ED;
+      --bg2:          #EDE8E0;
+      --surface:      #FAFAF8;
+      --surface2:     #F0EBE3;
+      --surface3:     #E8E2D8;
+      --border:       rgba(90,70,40,0.15);
+      --border-hover: rgba(90,70,40,0.4);
+      --accent:       #7B5E38;
+      --accent-light: #9E7A4D;
+      --accent-dim:   #B8996A;
+      --accent-glow:  rgba(123,94,56,0.08);
+      --text:         #2A2018;
+      --text-sub:     #5A4A35;
+      --text-muted:   #9A8A75;
+      --danger:       #B94040;
+      --success:      #3A8050;
+      --info:         #3A6098;
+      --radius:       10px;
+      --shadow:       0 4px 24px rgba(60,40,20,0.1);
+      --font-display: 'Cormorant Garamond','Noto Serif TC',serif;
+      --font-body:    'DM Sans','Noto Serif TC',sans-serif;
+      --font-mono:    'IBM Plex Mono', monospace;
+      --nav-w:        220px;
+    }
+
+    /* THEME 3: NEON SLATE — Modern dark, techy, high-contrast cyan */
+    [data-theme="neon"] {
+      --bg:           #0D1117;
+      --bg2:          #161B22;
+      --surface:      #1C2128;
+      --surface2:     #22272E;
+      --surface3:     #2D333B;
+      --border:       rgba(56,189,248,0.18);
+      --border-hover: rgba(56,189,248,0.5);
+      --accent:       #38BDF8;
+      --accent-light: #7DD3FC;
+      --accent-dim:   #0EA5E9;
+      --accent-glow:  rgba(56,189,248,0.1);
+      --text:         #CDD9E5;
+      --text-sub:     #8B949E;
+      --text-muted:   #484F58;
+      --danger:       #F85149;
+      --success:      #3FB950;
+      --info:         #58A6FF;
+      --radius:       8px;
+      --shadow:       0 4px 24px rgba(0,0,0,0.7);
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body:    'Space Grotesk', sans-serif;
+      --font-mono:    'IBM Plex Mono', monospace;
+      --nav-w:        220px;
+    }
+
+    /* ═══════════════════════════════════════════
+       BASE LAYOUT
+    ═══════════════════════════════════════════ */
+    html, body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.35s, color 0.35s;
+    }
+
+    /* ─── HEADER ─── */
+    .top-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .top-bar-left { display: flex; align-items: center; gap: 1rem; }
+
+    .logo-mark {
+      width: 36px; height: 36px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-size: 15px; font-weight: 700;
+      color: var(--bg);
+      flex-shrink: 0;
+    }
+
+    .site-name {
+      font-family: var(--font-display);
+      font-size: 17px;
+      color: var(--accent-light);
+      font-weight: 600;
+      line-height: 1.2;
+    }
+    .site-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; letter-spacing: 0.04em; }
+
+    .top-bar-right { display: flex; align-items: center; gap: 12px; }
+
+    /* Theme switcher */
+    .theme-switcher {
+      display: flex; gap: 6px; align-items: center;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 8px;
+    }
+    .theme-dot {
+      width: 20px; height: 20px; border-radius: 50%;
+      cursor: pointer; border: 2px solid transparent;
+      transition: transform 0.2s, border-color 0.2s;
+      position: relative;
+    }
+    .theme-dot:hover { transform: scale(1.15); }
+    .theme-dot.active { border-color: var(--accent); }
+    .theme-dot[data-t="obsidian"] { background: radial-gradient(circle at 35% 35%, #E8C97A, #6B4E1A); }
+    .theme-dot[data-t="ivory"]    { background: radial-gradient(circle at 35% 35%, #F7F3ED, #7B5E38); }
+    .theme-dot[data-t="neon"]     { background: radial-gradient(circle at 35% 35%, #38BDF8, #0D1117); }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 8px;
+      padding: 7px 16px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ─── APP SHELL ─── */
+    .app-shell {
+      display: flex;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      gap: 1.5rem;
+      min-height: calc(100vh - 64px);
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      width: var(--nav-w);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sidebar-section-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      padding: 14px 12px 6px;
+      font-weight: 500;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 13.5px;
+      color: var(--text-sub);
+      background: transparent;
+      border: 1px solid transparent;
+      text-align: left;
+      width: 100%;
+      font-family: var(--font-body);
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      position: relative;
+    }
+    .nav-item:hover {
+      background: var(--surface2);
+      color: var(--text);
+    }
+    .nav-item.active {
+      background: var(--accent-glow);
+      color: var(--accent-light);
+      border-color: var(--border);
+      font-weight: 600;
+    }
+    .nav-item.active .nav-icon { color: var(--accent); }
+    .nav-item.super {
+      margin-top: 4px;
+      border: 1px solid rgba(201,168,76,0.25);
+      color: var(--accent-light);
+    }
+    [data-theme="neon"] .nav-item.super { border-color: rgba(56,189,248,0.25); }
+
+    .nav-icon { font-size: 15px; flex-shrink: 0; opacity: 0.8; }
+    .nav-badge {
+      margin-left: auto;
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 99px;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    .main-panel {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Student selector bar */
+    .student-bar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .student-bar-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .student-bar select {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    /* Tab panels */
+    .tab-pane { display: none; animation: fadeUp 0.25s ease; }
+    .tab-pane.active { display: block; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── CARD / PANEL ─── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .card:last-child { margin-bottom: 0; }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+    }
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 17px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-title::before {
+      content: '';
+      width: 3px; height: 17px;
+      background: var(--accent);
+      border-radius: 2px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .card-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+    /* ─── FORMS ─── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-group.full { grid-column: 1 / -1; }
+
+    .form-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-dim);
+      font-weight: 500;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-size: 14px;
+      color: var(--text);
+      font-family: var(--font-body);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .form-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+    .form-textarea { min-height: 100px; resize: vertical; line-height: 1.6; }
+    .form-hint { font-size: 11.5px; color: var(--text-muted); margin-top: 3px; }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 22px; border-radius: 8px;
+      font-size: 13.5px; font-weight: 600;
+      cursor: pointer; border: none;
+      font-family: var(--font-body);
+      transition: 0.2s; white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--accent); color: var(--bg);
+    }
+    .btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 4px 12px var(--accent-glow); }
+    .btn-primary:active { transform: none; }
+    .btn-sm { padding: 7px 14px; font-size: 12px; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ─── ALERTS ─── */
+    .alert {
+      display: none;
+      padding: 10px 16px; border-radius: 8px;
+      font-size: 13px; margin-top: 1rem;
+      animation: fadeUp 0.2s ease;
+    }
+    .alert-success {
+      background: rgba(39,174,96,0.1);
+      border: 1px solid rgba(39,174,96,0.4);
+      color: #5DCA8A;
+    }
+    .alert-error {
+      background: rgba(192,57,43,0.1);
+      border: 1px solid rgba(192,57,43,0.4);
+      color: #E07060;
+    }
+
+    /* ═══════════════════════════════════════════
+       SCHEDULE TAB
+    ═══════════════════════════════════════════ */
+    .schedule-toolbar {
+      display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap;
+    }
+    .week-nav {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 6px 12px;
+      font-size: 13px; color: var(--text-sub);
+    }
+    .week-nav button {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-muted); font-size: 18px; padding: 2px 4px;
+      border-radius: 4px; line-height: 1;
+      transition: color 0.15s;
+    }
+    .week-nav button:hover { color: var(--accent); }
+    .week-label { font-weight: 500; color: var(--text); min-width: 140px; text-align: center; }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: 70px repeat(6, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .schedule-cell {
+      background: var(--surface);
+      padding: 8px 10px;
+      font-size: 12.5px;
+      min-height: 52px;
+      display: flex; flex-direction: column; gap: 3px;
+    }
+    .schedule-cell.head {
+      background: var(--surface2);
+      font-weight: 600; font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      align-items: center; justify-content: center;
+      min-height: 40px; text-align: center;
+    }
+    .schedule-cell.time-col {
+      background: var(--surface2);
+      align-items: center; justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 11px; color: var(--text-muted);
+      min-height: 70px;
+    }
+    .schedule-cell.slot {
+      min-height: 70px;
+      cursor: pointer;
+      transition: background 0.15s;
+      position: relative;
+    }
+    .schedule-cell.slot:hover { background: var(--surface2); }
+    .schedule-cell.slot.today-col { background: var(--accent-glow); }
+    .schedule-event {
+      background: var(--accent-glow);
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 11.5px;
+      color: var(--accent-light);
+      cursor: pointer;
+      transition: opacity 0.15s;
+      position: relative;
+    }
+    .schedule-event:hover { opacity: 0.85; }
+    .schedule-event .ev-class { font-weight: 600; }
+    .schedule-event .ev-room { color: var(--text-muted); font-size: 10.5px; }
+    [data-theme="neon"] .schedule-event { border-color: var(--accent); }
+
+    /* Add-event modal */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.65); z-index: 500;
+      align-items: center; justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+      width: min(500px, 95vw);
+      box-shadow: var(--shadow);
+      animation: fadeUp 0.2s ease;
+    }
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 17px; color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-muted); font-size: 20px;
+      transition: color 0.15s; line-height: 1;
+    }
+    .modal-close:hover { color: var(--text); }
+    .modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 1.5rem; }
+
+    /* ═══════════════════════════════════════════
+       NEWS TAB
+    ═══════════════════════════════════════════ */
+    .news-list { display: flex; flex-direction: column; gap: 12px; }
+    .news-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+      transition: border-color 0.2s;
+      cursor: pointer;
+    }
+    .news-card:hover { border-color: var(--border-hover); }
+    .news-badge {
+      flex-shrink: 0;
+      padding: 3px 10px; border-radius: 99px;
+      font-size: 11px; font-weight: 600;
+      background: var(--accent-glow);
+      color: var(--accent);
+      border: 1px solid var(--border);
+      margin-top: 2px;
+      white-space: nowrap;
+    }
+    .news-badge.urgent {
+      background: rgba(192,57,43,0.12);
+      color: #E07060;
+      border-color: rgba(192,57,43,0.3);
+    }
+    .news-badge.event {
+      background: rgba(41,128,185,0.12);
+      color: #6AADDB;
+      border-color: rgba(41,128,185,0.3);
+    }
+    .news-content { flex: 1; }
+    .news-title { font-size: 14.5px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+    .news-body { font-size: 13px; color: var(--text-sub); line-height: 1.6; }
+    .news-meta { font-size: 11.5px; color: var(--text-muted); margin-top: 8px; }
+    .news-actions { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--text-muted);
+    }
+    .empty-state .icon { font-size: 40px; margin-bottom: 0.75rem; opacity: 0.5; }
+    .empty-state p { font-size: 14px; }
+
+    /* ─── MESSAGES TAB ─── */
+    .msg-thread {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .msg-thread:last-child { border-bottom: none; }
+    .msg-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--accent-glow);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 15px; color: var(--accent);
+      flex-shrink: 0;
+    }
+    .msg-meta-name { font-size: 14px; font-weight: 600; color: var(--text); }
+    .msg-meta-time { font-size: 11.5px; color: var(--text-muted); margin-left: 8px; }
+    .msg-preview { font-size: 13px; color: var(--text-sub); margin-top: 4px; line-height: 1.5; }
+    .msg-unread { color: var(--accent-light); font-weight: 600; }
+
+    /* ─── REPLY BOX ─── */
+    .reply-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-top: 1rem;
+    }
+    .reply-box textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 14px;
+      resize: none;
+      min-height: 90px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .reply-box textarea:focus { border-color: var(--accent); }
+    .reply-footer { display: flex; justify-content: flex-end; margin-top: 10px; }
+
+    /* ─── SUPER-USER PANELS ─── */
+    .panel-step {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 1.25rem;
+    }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--accent); color: var(--bg);
+      font-size: 13px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-title { font-size: 14px; font-weight: 600; color: var(--accent-light); }
+
+    /* ─── STATS OVERVIEW ─── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+    .stat-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+    .stat-val {
+      font-family: var(--font-display);
+      font-size: 32px; font-weight: 700;
+      color: var(--accent-light);
+      line-height: 1;
+    }
+    .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 99px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+    /* ─── TAGS ─── */
+    .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .tag {
+      padding: 3px 12px; border-radius: 99px;
+      font-size: 12px; font-weight: 500;
+      background: var(--surface3);
+      color: var(--text-sub);
+      border: 1px solid var(--border);
+    }
+    .tag.good { background: rgba(39,174,96,0.1); color: #5DCA8A; border-color: rgba(39,174,96,0.3); }
+    .tag.warn { background: rgba(230,126,34,0.1); color: #E8A266; border-color: rgba(230,126,34,0.3); }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 768px) {
+      .top-bar { padding: 0 1rem; }
+      .site-name { font-size: 15px; }
+      .site-sub { display: none; }
+      .app-shell { flex-direction: column; padding: 1rem; }
+      .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; gap: 6px; }
+      .sidebar-section-label { display: none; }
+      .nav-item { flex: 1 0 auto; min-width: 120px; font-size: 12px; padding: 8px 10px; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .form-grid { grid-template-columns: 1fr; }
+      .schedule-grid { grid-template-columns: 55px repeat(6, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .nav-item { min-width: calc(50% - 3px); }
+      .theme-switcher .theme-dot { width: 17px; height: 17px; }
+    }
+
+  </style>
+</head>
+<body data-theme="obsidian">
+
+  <!-- ══════════ TOP BAR ══════════ -->
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <div class="logo-mark">如</div>
+      <div>
+        <div class="site-name">教師管理後台</div>
+        <div class="site-sub">互動美語 × 如苑 · 國一先修小班制</div>
+      </div>
+    </div>
+    <div class="top-bar-right">
+      <div class="theme-switcher" title="切換介面風格">
+        <div class="theme-dot active" data-t="obsidian" title="暗金奢華" onclick="setTheme('obsidian',this)"></div>
+        <div class="theme-dot" data-t="ivory" title="象牙手稿" onclick="setTheme('ivory',this)"></div>
+        <div class="theme-dot" data-t="neon" title="霓虹科技" onclick="setTheme('neon',this)"></div>
+      </div>
+      <button class="btn-ghost" onclick="handleAdminLogout()">⏻ 登出系統</button>
+    </div>
+  </header>
+
+  <!-- ══════════ APP SHELL ══════════ -->
+  <div class="app-shell">
+
+    <!-- ─ SIDEBAR ─ -->
+    <nav class="sidebar">
+      <div class="sidebar-section-label">主要功能</div>
+      <button class="nav-item active" onclick="switchTab('tab-contact',this)">
+        <span class="nav-icon">📋</span> 聯絡簿佈達
+      </button>
+      <button class="nav-item" onclick="switchTab('tab-grades',this)">
+        <span class="nav-icon">📊</span> 成績與診斷
+      </button>
+      <button class="nav-item" onclick="switchTab('tab-messages',this)">
+        <span class="nav-icon">💬</span> 家長私訊
+        <span class="nav-badge" id="badge-msg" style="display:none">0</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('tab-schedule',this)">
+        <span class="nav-icon">🗓</span> 課表管理
+      </button>
+      <button class="nav-item" onclick="switchTab('tab-news',this)">
+        <span class="nav-icon">📣</span> 最新消息
+      </button>
+      <div class="sidebar-section-label">系統管理</div>
+      <button class="nav-item super" onclick="switchTab('tab-superuser',this)">
+        <span class="nav-icon">⚙️</span> 班級與帳號
+      </button>
+    </nav>
+
+    <!-- ─ MAIN CONTENT ─ -->
+    <main class="main-panel">
+
+      <!-- Student selector (global, hidden for super/schedule/news) -->
+      <div class="student-bar" id="student-bar">
+        <span class="student-bar-label">操作學生</span>
+        <select class="form-select" id="global-student-select" style="flex:1; max-width:320px;">
+          <option value="">請選擇學生...</option>
+        </select>
+        <span id="student-class-badge" style="font-size:12px; color:var(--text-muted); white-space:nowrap;"></span>
+      </div>
+
+      <!-- ══ TAB: 聯絡簿 ══ -->
+      <div id="tab-contact" class="tab-pane active">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">新增數位聯絡簿</div>
+              <div class="card-subtitle">每次記錄均即時同步至家長 App</div>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">課程日期</label>
+              <input type="date" class="form-input" id="contact-date">
+            </div>
+            <div class="form-group">
+              <label class="form-label">出缺勤狀態</label>
+              <select class="form-select" id="contact-attendance">
+                <option value="準時出席">✅ 準時出席</option>
+                <option value="遲到">⏱ 遲到</option>
+                <option value="請假">📋 請假</option>
+                <option value="曠課">❌ 曠課</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">英文進度</label>
+              <input type="text" class="form-input" id="contact-en" placeholder="例如：Unit 3 核心單字精讀">
+            </div>
+            <div class="form-group">
+              <label class="form-label">國文進度</label>
+              <input type="text" class="form-input" id="contact-zh" placeholder="例如：文言文句型修辭應用">
+            </div>
+            <div class="form-group full">
+              <label class="form-label">指派作業</label>
+              <textarea class="form-textarea" id="contact-hw" placeholder="請詳細填寫今日指定作業內容，包含頁數與截止時間..."></textarea>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">課堂表現標籤 <span style="color:var(--text-muted); font-size:10px; font-weight:400; text-transform:none; letter-spacing:0;">(以半形逗號分隔)</span></label>
+              <input type="text" class="form-input" id="contact-tags" placeholder="例如：專注度佳, 互動踴躍, 作業完成率高">
+              <div class="form-hint">常用標籤：專注, 表現優異, 需加強聆聽, 積極發言, 需關注情緒</div>
+            </div>
+          </div>
+          <div style="margin-top:1.5rem; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="submitContact()">📤 發布聯絡簿</button>
+            <button class="btn btn-outline btn-sm" onclick="clearContactForm()">清空欄位</button>
+          </div>
+          <div id="msg-contact" class="alert alert-success">✔ 聯絡簿已成功發布並通知家長！</div>
+          <div id="err-contact" class="alert alert-error"></div>
+        </div>
+      </div>
+
+      <!-- ══ TAB: 成績診斷 ══ -->
+      <div id="tab-grades" class="tab-pane">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">登錄成績與個別化診斷</div>
+              <div class="card-subtitle">輸入成績後系統自動生成學習趨勢圖</div>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">測驗日期</label>
+              <input type="date" class="form-input" id="grade-date">
+            </div>
+            <div class="form-group">
+              <label class="form-label">測驗類型</label>
+              <select class="form-select" id="grade-type">
+                <option value="單字測驗">單字測驗</option>
+                <option value="閱讀理解">閱讀理解</option>
+                <option value="聽力測驗">聽力測驗</option>
+                <option value="模擬月考">模擬月考</option>
+                <option value="小考">小考</option>
+                <option value="作業評分">作業評分</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">測驗名稱</label>
+              <input type="text" class="form-input" id="grade-title" placeholder="例如：第三週課堂單字精測 (Unit 3-4)">
+            </div>
+            <div class="form-group">
+              <label class="form-label">學生分數 <span style="color:var(--text-muted); font-size:10px; font-weight:400;">(0–100)</span></label>
+              <input type="number" class="form-input" id="grade-score" min="0" max="100" placeholder="0–100">
+            </div>
+            <div class="form-group">
+              <label class="form-label">全班平均分 <span style="color:var(--text-muted); font-size:10px; font-weight:400;">(用於圖表對比)</span></label>
+              <input type="number" class="form-input" id="grade-avg" min="0" max="100" placeholder="0–100">
+            </div>
+            <div class="form-group full">
+              <label class="form-label">個別化診斷與精進方針</label>
+              <textarea class="form-textarea" id="grade-diagnosis" style="min-height:120px;" placeholder="請針對本次測驗分析學生弱點，並給予具體、可執行的補強建議..."></textarea>
+            </div>
+          </div>
+          <div style="margin-top:1.5rem; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="submitGrade()">📊 登錄成績</button>
+            <button class="btn btn-outline btn-sm" onclick="clearGradeForm()">清空欄位</button>
+          </div>
+          <div id="msg-grade" class="alert alert-success">✔ 成績與診斷已成功儲存！</div>
+          <div id="err-grade" class="alert alert-error"></div>
+        </div>
+      </div>
+
+      <!-- ══ TAB: 家長私訊 ══ -->
+      <div id="tab-messages" class="tab-pane">
+        <div class="card">
+          <div class="card-title" style="margin-bottom:1.5rem;">家長私訊管理</div>
+          <p style="font-size:13.5px; color:var(--text-sub); line-height:1.7; margin-bottom:1.5rem;">
+            從上方選擇特定學生，即可開啟與該位家長的一對一專屬對話通道。未讀訊息將以黃色標示。
+          </p>
+          <!-- Demo threads -->
+          <div id="msg-thread-list">
+            <div class="msg-thread">
+              <div class="msg-avatar">王</div>
+              <div style="flex:1">
+                <div><span class="msg-meta-name msg-unread">王小明 家長</span><span class="msg-meta-time">10分鐘前</span></div>
+                <div class="msg-preview msg-unread">老師您好，請問這周的英文作業有截止時間嗎？謝謝...</div>
+              </div>
+              <button class="btn btn-sm btn-primary" onclick="openReply('王小明')">回覆</button>
+            </div>
+            <div class="msg-thread">
+              <div class="msg-avatar">陳</div>
+              <div style="flex:1">
+                <div><span class="msg-meta-name">陳美玲 家長</span><span class="msg-meta-time">昨天</span></div>
+                <div class="msg-preview">謝謝老師上次的聯絡簿回饋，孩子最近進步很多！</div>
+              </div>
+              <button class="btn btn-sm btn-outline" onclick="openReply('陳美玲')">回覆</button>
+            </div>
+            <div class="msg-thread">
+              <div class="msg-avatar">林</div>
+              <div style="flex:1">
+                <div><span class="msg-meta-name">林子豪 家長</span><span class="msg-meta-time">2天前</span></div>
+                <div class="msg-preview">請問下週是否有模擬考？需要準備什麼複習材料？</div>
+              </div>
+              <button class="btn btn-sm btn-outline" onclick="openReply('林子豪')">回覆</button>
+            </div>
+          </div>
+
+          <div class="reply-box" id="reply-box" style="display:none;">
+            <div style="font-size:12px; color:var(--accent); margin-bottom:10px;" id="reply-to-label">回覆給：</div>
+            <textarea id="reply-text" placeholder="輸入回覆內容..."></textarea>
+            <div class="reply-footer">
+              <button class="btn btn-outline btn-sm" onclick="closeReply()">取消</button>
+              <button class="btn btn-primary btn-sm" onclick="sendReply()" style="margin-left:8px;">傳送 ✉</button>
+            </div>
+          </div>
+
+          <div id="msg-reply" class="alert alert-success">✔ 訊息已傳送！</div>
+        </div>
+      </div>
+
+      <!-- ══ TAB: 課表管理 ══ -->
+      <div id="tab-schedule" class="tab-pane">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">週課表管理</div>
+            <button class="btn btn-primary btn-sm" onclick="openAddEventModal()">＋ 新增課程</button>
+          </div>
+
+          <div class="schedule-toolbar">
+            <div class="week-nav">
+              <button onclick="changeWeek(-1)">‹</button>
+              <span class="week-label" id="week-label">載入中...</span>
+              <button onclick="changeWeek(1)">›</button>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="goToToday()">今天</button>
+          </div>
+
+          <!-- Schedule grid -->
+          <div style="overflow-x:auto;">
+            <div class="schedule-grid" id="schedule-grid">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Upcoming list -->
+        <div class="card">
+          <div class="card-title" style="margin-bottom:1.25rem;">本週課程一覽</div>
+          <div id="schedule-upcoming-list">
+            <div class="empty-state"><div class="icon">📅</div><p>暫無本週課程資料</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB: 最新消息 ══ -->
+      <div id="tab-news" class="tab-pane">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">發布最新消息</div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">消息類型</label>
+              <select class="form-select" id="news-type">
+                <option value="公告">📢 一般公告</option>
+                <option value="緊急">🔴 緊急通知</option>
+                <option value="活動">🎉 活動資訊</option>
+                <option value="考試">📝 考試資訊</option>
+                <option value="課程">📚 課程更新</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">目標對象</label>
+              <select class="form-select" id="news-target">
+                <option value="全體">全體家長與學生</option>
+                <option value="國一A班">國一英語先修 A 班</option>
+                <option value="國一B班">國一英語先修 B 班</option>
+                <option value="師資">教師團隊</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">消息標題</label>
+              <input type="text" class="form-input" id="news-title" placeholder="請輸入公告標題（建議30字以內）">
+            </div>
+            <div class="form-group full">
+              <label class="form-label">消息內容</label>
+              <textarea class="form-textarea" id="news-body" style="min-height:130px;" placeholder="請詳細填寫公告內容，包含時間、地點、注意事項等..."></textarea>
+            </div>
+          </div>
+          <div style="margin-top:1.5rem; display:flex; gap:10px;">
+            <button class="btn btn-primary" onclick="submitNews()">📣 發布消息</button>
+            <button class="btn btn-outline btn-sm" onclick="clearNewsForm()">清空</button>
+          </div>
+          <div id="msg-news" class="alert alert-success">✔ 最新消息已成功發布！</div>
+          <div id="err-news" class="alert alert-error"></div>
+        </div>
+
+        <!-- Published news list -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">已發布消息</div>
+            <button class="btn btn-outline btn-sm" onclick="loadNews()">🔄 重新整理</button>
+          </div>
+          <div class="news-list" id="news-list">
+            <!-- Demo entries pre-loaded -->
+            <div class="news-card">
+              <span class="news-badge urgent">緊急</span>
+              <div class="news-content">
+                <div class="news-title">下週一英文段考提醒</div>
+                <div class="news-body">請提醒各位同學複習 Unit 1–4 核心單字、句型及聽力練習，考試範圍詳見附件講義。</div>
+                <div class="news-meta">對象：全體 · 發布時間：2025/01/14 10:30 · 已讀 12 人</div>
+              </div>
+              <div class="news-actions">
+                <button class="btn btn-outline btn-sm" onclick="deleteNews(this)">刪除</button>
+              </div>
+            </div>
+            <div class="news-card">
+              <span class="news-badge event">活動</span>
+              <div class="news-content">
+                <div class="news-title">寒假英語口語實戰營（2/3–2/7）</div>
+                <div class="news-body">如苑寒假口語課程正式開放報名，每天2小時沉浸式會話訓練，名額僅限8人，先報先得！</div>
+                <div class="news-meta">對象：全體 · 發布時間：2025/01/12 14:15 · 已讀 18 人</div>
+              </div>
+              <div class="news-actions">
+                <button class="btn btn-outline btn-sm" onclick="deleteNews(this)">刪除</button>
+              </div>
+            </div>
+            <div class="news-card">
+              <span class="news-badge">公告</span>
+              <div class="news-content">
+                <div class="news-title">1月份課程微調通知</div>
+                <div class="news-body">1/28（除夕前一天）停課一次，補課時間為 2/10（週一），時段不變，請家長知悉。</div>
+                <div class="news-meta">對象：全體 · 發布時間：2025/01/10 09:00 · 已讀 21 人</div>
+              </div>
+              <div class="news-actions">
+                <button class="btn btn-outline btn-sm" onclick="deleteNews(this)">刪除</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB: 班級帳號管理 ══ -->
+      <div id="tab-superuser" class="tab-pane">
+        <!-- Stats row -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-val" id="stat-students">—</div>
+            <div class="stat-label">在籍學生</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val" id="stat-classes">—</div>
+            <div class="stat-label">班級數量</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val" id="stat-teachers">—</div>
+            <div class="stat-label">教職人員</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val">🟢</div>
+            <div class="stat-label">系統狀態正常</div>
+          </div>
+        </div>
+
+        <!-- 1. Create class -->
+        <div class="card">
+          <div class="panel-step">
+            <div class="step-num">1</div>
+            <div class="step-title">建立新班級</div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">班級名稱</label>
+              <input type="text" class="form-input" id="super-class-name" placeholder="例如：國一英語先修 A 班">
+            </div>
+            <div class="form-group" style="align-self:flex-end;">
+              <button class="btn btn-primary" onclick="createClass()">確認新增班級</button>
+            </div>
+          </div>
+          <div id="msg-super-class" class="alert alert-success">✔ 班級建立成功！</div>
+        </div>
+
+        <!-- 2. Create student -->
+        <div class="card">
+          <div class="panel-step">
+            <div class="step-num">2</div>
+            <div class="step-title">註冊新學生帳戶（家長專屬憑證）</div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">學生姓名</label>
+              <input type="text" class="form-input" id="super-student-name" placeholder="請輸入學生真實姓名">
+            </div>
+            <div class="form-group">
+              <label class="form-label">所屬班級</label>
+              <select class="form-select" id="super-student-class">
+                <option value="">請先建立班級...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">家長登入密碼</label>
+              <input type="text" class="form-input" id="super-student-pwd" placeholder="設定初始登入密碼">
+              <div class="form-hint">⚠ 請告知家長首次登入後立即修改密碼</div>
+            </div>
+          </div>
+          <button class="btn btn-primary" style="margin-top:1rem;" onclick="createStudent()">建立學生帳戶</button>
+          <div id="msg-super-student" class="alert alert-success">✔ 學生帳戶建立成功！</div>
+        </div>
+
+        <!-- 3. Create staff -->
+        <div class="card">
+          <div class="panel-step">
+            <div class="step-num">3</div>
+            <div class="step-title">授權教職員帳號（Firebase Auth）</div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">帳號身分</label>
+              <select class="form-select" id="super-staff-type">
+                <option value="teacher">老師（授課 / 成績登錄）</option>
+                <option value="admin">管理者（行政 / 系統營運）</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">電子郵件（登入帳號）</label>
+              <input type="email" class="form-input" id="super-staff-email" placeholder="staff@email.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label">人員姓名</label>
+              <input type="text" class="form-input" id="super-staff-name" placeholder="真實姓名或稱呼">
+            </div>
+            <div class="form-group">
+              <label class="form-label">登入密碼</label>
+              <input type="password" class="form-input" id="super-staff-pwd" placeholder="設定初始密碼">
+            </div>
+          </div>
+          <button class="btn btn-primary" style="margin-top:1rem;" onclick="createStaff()">授權教職員帳號</button>
+          <div id="msg-super-staff" class="alert alert-success">✔ 教職員帳號授權成功！</div>
+          <div id="err-super-staff" class="alert alert-error"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ══════════ ADD-EVENT MODAL ══════════ -->
+  <div class="modal-overlay" id="modal-event">
+    <div class="modal">
+      <div class="modal-title">
+        新增課程
+        <button class="modal-close" onclick="closeAddEventModal()">✕</button>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">星期</label>
+          <select class="form-select" id="ev-day">
+            <option value="1">週一</option>
+            <option value="2">週二</option>
+            <option value="3">週三</option>
+            <option value="4">週四</option>
+            <option value="5">週五</option>
+            <option value="6">週六</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">時段</label>
+          <select class="form-select" id="ev-slot">
+            <option value="0">09:00–10:30</option>
+            <option value="1">10:40–12:10</option>
+            <option value="2">13:00–14:30</option>
+            <option value="3">14:40–16:10</option>
+            <option value="4">16:20–17:50</option>
+            <option value="5">18:00–19:30</option>
+            <option value="6">19:40–21:10</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">班級名稱</label>
+          <input type="text" class="form-input" id="ev-class" placeholder="例如：國一英語先修 A 班">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">教室 / 地點</label>
+          <input type="text" class="form-input" id="ev-room" placeholder="例如：204 教室">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">備註（選填）</label>
+          <input type="text" class="form-input" id="ev-note" placeholder="例如：本週主題：閱讀策略">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeAddEventModal()">取消</button>
+        <button class="btn btn-primary" onclick="saveEvent()">儲存課程</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ FIREBASE + APP SCRIPT ══════════ -->
+  <script type="module">
+    import { initializeApp, getApps }
+      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import {
+      getFirestore,
+      collection, query, where,
+      getDocs, getDoc, addDoc, setDoc, deleteDoc, doc,
+      serverTimestamp, Timestamp, orderBy, limit
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    /* ─── Firebase init ─── */
+    const firebaseConfig = {
+      apiKey:            "AIzaSyCWcNX_urPo8HOV42pL_ngHs7a9T60tGWY",
+      authDomain:        "liveabc-song.firebaseapp.com",
+      projectId:         "liveabc-song",
+      storageBucket:     "liveabc-song.firebasestorage.app",
+      messagingSenderId: "545222080412",
+      appId:             "1:545222080412:web:1c3a34e4b88053ebb97a59"
+    };
+
+    /* Avoid duplicate app init (important for re-loads) */
+    const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
+    /* ─── Auth guard ─── */
+    const adminUid = sessionStorage.getItem('vip_uid');
+    const role     = sessionStorage.getItem('vip_role');
+    if (!adminUid || (role !== 'admin' && role !== 'teacher')) {
+      window.location.href = '../index.html';
+    }
+
+    /* ─── Set today dates ─── */
+    const todayStr = new Date().toISOString().slice(0,10);
+    document.getElementById('contact-date').value = todayStr;
+    document.getElementById('grade-date').value   = todayStr;
+
+    /* ─── Helpers ─── */
+    function showAlert(id, duration = 3500) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.style.display = 'block';
+      setTimeout(() => { el.style.display = 'none'; }, duration);
+    }
+    function showError(id, msg) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = '⚠ ' + msg;
+      el.style.display = 'block';
+      setTimeout(() => { el.style.display = 'none'; }, 4000);
+    }
+
+    async function hashPassword(pwd) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    }
+
+    /* ─── Load students ─── */
+    async function loadStudents() {
+      try {
+        const q    = query(collection(db,'users'), where('role','==','parent'));
+        const snap = await getDocs(q);
+        const sel  = document.getElementById('global-student-select');
+        sel.innerHTML = '<option value="">請選擇學生...</option>';
+        let count = 0;
+        snap.forEach(s => {
+          const d  = s.data();
+          const op = document.createElement('option');
+          op.value       = s.id;
+          op.textContent = d.name + ' (' + (d.className || '未指定班級') + ')';
+          sel.appendChild(op);
+          count++;
+        });
+        document.getElementById('stat-students').textContent = count;
+      } catch (e) { console.error('載入學生清單失敗:', e); }
+    }
+
+    /* ─── Load classes ─── */
+    async function loadClasses() {
+      try {
+        const snap = await getDocs(collection(db,'classes'));
+        const sel  = document.getElementById('super-student-class');
+        sel.innerHTML = '<option value="">請選擇班級...</option>';
+        let count = 0;
+        snap.forEach(s => {
+          const op = document.createElement('option');
+          op.value = op.textContent = s.data().className;
+          sel.appendChild(op);
+          count++;
+        });
+        document.getElementById('stat-classes').textContent = count;
+      } catch (e) { console.error('載入班級清單失敗:', e); }
+    }
+
+    /* ─── Submit contact book ─── */
+    window.submitContact = async function() {
+      const sid = document.getElementById('global-student-select').value;
+      if (!sid) return showError('err-contact','請先選擇操作學生');
+
+      const data = {
+        studentId:       sid,
+        date:            document.getElementById('contact-date').value,
+        attendance:      document.getElementById('contact-attendance').value,
+        progressEnglish: document.getElementById('contact-en').value.trim(),
+        progressChinese: document.getElementById('contact-zh').value.trim(),
+        homework:        document.getElementById('contact-hw').value.trim(),
+        tags:            document.getElementById('contact-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+        createdAt:       serverTimestamp()
+      };
+
+      if (!data.date)            return showError('err-contact','請填寫課程日期');
+      if (!data.progressEnglish) return showError('err-contact','請填寫英文進度');
+
+      try {
+        await addDoc(collection(db,'contact_books'), data);
+        showAlert('msg-contact');
+        clearContactForm();
+      } catch (e) {
+        console.error('聯絡簿發布失敗:', e);
+        showError('err-contact', e.message);
+      }
+    };
+
+    window.clearContactForm = function() {
+      ['contact-en','contact-zh','contact-hw','contact-tags'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('contact-date').value = todayStr;
+    };
+
+    /* ─── Submit grade ─── */
+    window.submitGrade = async function() {
+      const sid = document.getElementById('global-student-select').value;
+      if (!sid) return showError('err-grade','請先選擇操作學生');
+
+      const title = document.getElementById('grade-title').value.trim();
+      const score = Number(document.getElementById('grade-score').value);
+      const avg   = Number(document.getElementById('grade-avg').value);
+      const diag  = document.getElementById('grade-diagnosis').value.trim();
+      const dateV = document.getElementById('grade-date').value;
+
+      if (!title)        return showError('err-grade','請填寫測驗名稱');
+      if (isNaN(score))  return showError('err-grade','請填寫有效分數');
+
+      try {
+        await addDoc(collection(db,'grades'), {
+          studentId:    sid,
+          title,
+          examType:     document.getElementById('grade-type').value,
+          score,
+          averageScore: avg || null,
+          diagnosis:    diag,
+          examDate:     Timestamp.fromDate(new Date(dateV)),
+          createdAt:    serverTimestamp()
+        });
+        showAlert('msg-grade');
+        clearGradeForm();
+      } catch (e) {
+        console.error('成績登錄失敗:', e);
+        showError('err-grade', e.message);
+      }
+    };
+
+    window.clearGradeForm = function() {
+      ['grade-title','grade-score','grade-avg','grade-diagnosis'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('grade-date').value = todayStr;
+    };
+
+    /* ─── Create class ─── */
+    window.createClass = async function() {
+      const name = document.getElementById('super-class-name').value.trim();
+      if (!name) return alert('請輸入班級名稱');
+      try {
+        await addDoc(collection(db,'classes'), { className: name, createdAt: serverTimestamp() });
+        showAlert('msg-super-class');
+        document.getElementById('super-class-name').value = '';
+        await loadClasses();
+      } catch (e) { console.error('建立班級失敗:', e); alert(e.message); }
+    };
+
+    /* ─── Create student ─── */
+    window.createStudent = async function() {
+      const name  = document.getElementById('super-student-name').value.trim();
+      const cls   = document.getElementById('super-student-class').value;
+      const pwd   = document.getElementById('super-student-pwd').value;
+      if (!name||!cls||!pwd) return alert('請填寫完整學生帳戶資料');
+      try {
+        const hashed = await hashPassword(pwd);
+        await addDoc(collection(db,'users'), {
+          name, className: cls, passwordHash: hashed,
+          role: 'parent', createdAt: serverTimestamp()
+        });
+        showAlert('msg-super-student');
+        ['super-student-name','super-student-pwd'].forEach(id => { document.getElementById(id).value=''; });
+        document.getElementById('super-student-class').value='';
+        await loadStudents();
+      } catch (e) { console.error('建立學生失敗:', e); alert(e.message); }
+    };
+
+    /* ─── Create staff ─── */
+    window.createStaff = async function() {
+      const type  = document.getElementById('super-staff-type').value;
+      const email = document.getElementById('super-staff-email').value.trim();
+      const name  = document.getElementById('super-staff-name').value.trim();
+      const pwd   = document.getElementById('super-staff-pwd').value;
+      if (!email||!name||!pwd) return showError('err-super-staff','請填寫完整教職員資料');
+
+      try {
+        /* Use a named secondary app to avoid displacing primary auth session */
+        const secName = 'SecondaryAuth-' + Date.now();
+        const secApp  = initializeApp(firebaseConfig, secName);
+        const secAuth = getAuth(secApp);
+        const cred    = await createUserWithEmailAndPassword(secAuth, email, pwd);
+        const uid     = cred.user.uid;
+
+        await setDoc(doc(db,'users',uid), {
+          email, name,
+          role:        type,
+          jobTitle:    type==='admin' ? '管理者' : '老師',
+          isSuperAdmin: false,
+          createdAt:   serverTimestamp()
+        });
+
+        await signOut(secAuth);
+        /* clean up secondary app */
+        await secApp.delete?.();
+
+        showAlert('msg-super-staff');
+        ['super-staff-email','super-staff-name','super-staff-pwd'].forEach(id => { document.getElementById(id).value=''; });
+        document.getElementById('stat-teachers').textContent =
+          (parseInt(document.getElementById('stat-teachers').textContent)||0) + 1;
+      } catch (e) {
+        console.error('建立教職員失敗:', e);
+        showError('err-super-staff', e.message);
+      }
+    };
+
+    /* ─── Submit news ─── */
+    window.submitNews = async function() {
+      const title = document.getElementById('news-title').value.trim();
+      const body  = document.getElementById('news-body').value.trim();
+      const type  = document.getElementById('news-type').value;
+      const tgt   = document.getElementById('news-target').value;
+      if (!title) return showError('err-news','請填寫消息標題');
+      if (!body)  return showError('err-news','請填寫消息內容');
+      try {
+        const ref = await addDoc(collection(db,'news'), {
+          title, body, type, target: tgt,
+          createdAt: serverTimestamp(), readCount: 0
+        });
+        showAlert('msg-news');
+        clearNewsForm();
+        /* prepend to UI list */
+        prependNewsCard({ id: ref.id, title, body, type, target: tgt });
+      } catch (e) {
+        console.error('發布消息失敗:', e);
+        showError('err-news', e.message);
+      }
+    };
+
+    window.clearNewsForm = function() {
+      ['news-title','news-body'].forEach(id => { document.getElementById(id).value=''; });
+    };
+
+    window.loadNews = async function() {
+      try {
+        const snap = await getDocs(
+          query(collection(db,'news'), orderBy('createdAt','desc'), limit(20))
+        );
+        const list = document.getElementById('news-list');
+        list.innerHTML = '';
+        if (snap.empty) {
+          list.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>尚無已發布消息</p></div>';
+          return;
+        }
+        snap.forEach(s => {
+          const d = s.data();
+          prependNewsCard({ id: s.id, ...d });
+        });
+      } catch (e) { console.error('載入消息失敗:', e); }
+    };
+
+    function prependNewsCard({ id, title, body, type, target, createdAt }) {
+      const list  = document.getElementById('news-list');
+      const badge = type === '緊急' ? 'urgent' : type === '活動' ? 'event' : '';
+      const div   = document.createElement('div');
+      div.className = 'news-card';
+      div.dataset.docid = id;
+      div.innerHTML = `
+        <span class="news-badge ${badge}">${type||'公告'}</span>
+        <div class="news-content">
+          <div class="news-title">${escHtml(title)}</div>
+          <div class="news-body">${escHtml(body)}</div>
+          <div class="news-meta">對象：${escHtml(target||'全體')} · 剛剛發布</div>
+        </div>
+        <div class="news-actions">
+          <button class="btn btn-outline btn-sm" onclick="deleteNews(this)">刪除</button>
+        </div>`;
+      list.prepend(div);
+    }
+
+    window.deleteNews = async function(btn) {
+      const card  = btn.closest('.news-card');
+      const docId = card?.dataset?.docid;
+      if (!confirm('確定刪除這則消息？')) return;
+      if (docId) {
+        try { await deleteDoc(doc(db,'news',docId)); } catch(e) { console.warn(e); }
+      }
+      card?.remove();
+    };
+
+    function escHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    /* ─── Messages ─── */
+    window.openReply = function(name) {
+      document.getElementById('reply-to-label').textContent = '回覆給：' + name + ' 家長';
+      document.getElementById('reply-text').value = '';
+      document.getElementById('reply-box').style.display = 'block';
+      document.getElementById('reply-text').focus();
+    };
+    window.closeReply = function() {
+      document.getElementById('reply-box').style.display = 'none';
+    };
+    window.sendReply = async function() {
+      const text = document.getElementById('reply-text').value.trim();
+      if (!text) return;
+      /* In a full implementation this writes to Firestore messages collection */
+      showAlert('msg-reply');
+      closeReply();
+    };
+
+    /* ─── Logout ─── */
+    window.handleAdminLogout = async function() {
+      await signOut(auth);
+      sessionStorage.clear();
+      window.location.href = '../index.html';
+    };
+
+    /* ─── Init ─── */
+    loadStudents();
+    loadClasses();
+
+  </script>
+
+  <!-- ══════════ NON-MODULE UI SCRIPT ══════════ -->
+  <script>
+    /* ─── Theme switcher ─── */
+    function setTheme(name, dotEl) {
+      document.body.dataset.theme = name;
+      document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active'));
+      dotEl.classList.add('active');
+      localStorage.setItem('vip_theme', name);
+    }
+    (function() {
+      const saved = localStorage.getItem('vip_theme');
+      if (saved) {
+        document.body.dataset.theme = saved;
+        const dot = document.querySelector(`.theme-dot[data-t="${saved}"]`);
+        if (dot) {
+          document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active'));
+          dot.classList.add('active');
+        }
+      }
+    })();
+
+    /* ─── Tab switching ─── */
+    const HIDE_STUDENT_BAR = ['tab-superuser','tab-schedule','tab-news'];
+
+    window.switchTab = function(tabId, btn) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId)?.classList.add('active');
+      btn?.classList.add('active');
+
+      const bar = document.getElementById('student-bar');
+      bar.style.display = HIDE_STUDENT_BAR.includes(tabId) ? 'none' : 'flex';
+    };
+
+    /* ─── Schedule ─── */
+    const TIME_SLOTS = [
+      '09:00–10:30','10:40–12:10','13:00–14:30',
+      '14:40–16:10','16:20–17:50','18:00–19:30','19:40–21:10'
+    ];
+    const DAYS = ['週一','週二','週三','週四','週五','週六'];
+
+    /* LocalStorage-backed events */
+    let scheduleEvents = JSON.parse(localStorage.getItem('vip_schedule') || '[]');
+
+    /* Seed demo if empty */
+    if (scheduleEvents.length === 0) {
+      scheduleEvents = [
+        { id:1, day:1, slot:0, className:'國一英語先修 A 班', room:'204 教室', note:'Unit 3 核心單字' },
+        { id:2, day:3, slot:2, className:'國一英語先修 B 班', room:'205 教室', note:'閱讀理解策略' },
+        { id:4, day:2, slot:4, className:'國文小班先修',       room:'208 教室', note:'文言文句型' },
+        { id:5, day:5, slot:1, className:'國一英語先修 A 班', room:'204 教室', note:'聽力訓練' },
+      ];
+      localStorage.setItem('vip_schedule', JSON.stringify(scheduleEvents));
+    }
+
+    let currentWeekOffset = 0;
+
+    function getWeekDates(offset) {
+      const now = new Date();
+      const dayOfWeek = now.getDay() === 0 ? 7 : now.getDay();
+      const monday = new Date(now);
+      monday.setDate(now.getDate() - dayOfWeek + 1 + offset * 7);
+      const dates = [];
+      for (let i = 0; i < 6; i++) {
+        const d = new Date(monday);
+        d.setDate(monday.getDate() + i);
+        dates.push(d);
+      }
+      return dates;
+    }
+
+    function renderSchedule() {
+      const dates   = getWeekDates(currentWeekOffset);
+      const todayD  = new Date().toDateString();
+      const grid    = document.getElementById('schedule-grid');
+      const wlabel  = document.getElementById('week-label');
+      const fmt     = d => `${d.getMonth()+1}/${d.getDate()}`;
+
+      wlabel.textContent = `${fmt(dates[0])} — ${fmt(dates[5])}`;
+
+      const today = new Date().getDay();
+      // day index: Mon=1..Sat=6
+
+      let html = '<div class="schedule-cell head"></div>';
+      dates.forEach((d, i) => {
+        const isToday = d.toDateString() === todayD;
+        html += `<div class="schedule-cell head${isToday ? '" style="color:var(--accent)' : ''}">${DAYS[i]}<br><span style="font-size:10px; font-weight:400;">${fmt(d)}</span></div>`;
+      });
+
+      TIME_SLOTS.forEach((slot, si) => {
+        html += `<div class="schedule-cell time-col">${slot}</div>`;
+        for (let di = 1; di <= 6; di++) {
+          const evs = scheduleEvents.filter(e => e.day === di && e.slot === si);
+          const isToday = dates[di-1].toDateString() === todayD;
+          html += `<div class="schedule-cell slot${isToday ? ' today-col' : ''}" data-day="${di}" data-slot="${si}" onclick="cellClick(${di},${si})">`;
+          evs.forEach(ev => {
+            html += `<div class="schedule-event" onclick="event.stopPropagation(); removeEvent(${ev.id});" title="點擊刪除">
+              <div class="ev-class">${ev.className}</div>
+              <div class="ev-room">${ev.room}${ev.note ? ' · ' + ev.note : ''}</div>
+            </div>`;
+          });
+          html += '</div>';
+        }
+      });
+
+      grid.innerHTML = html;
+      renderUpcoming();
+    }
+
+    function renderUpcoming() {
+      const list = document.getElementById('schedule-upcoming-list');
+      if (scheduleEvents.length === 0) {
+        list.innerHTML = '<div class="empty-state"><div class="icon">📅</div><p>尚無課程資料，請點擊「新增課程」開始建立</p></div>';
+        return;
+      }
+      list.innerHTML = scheduleEvents.map(ev =>
+        `<div style="display:flex; align-items:center; gap:14px; padding:10px 0; border-bottom:1px solid var(--border);">
+          <span style="font-family:var(--font-mono); font-size:12px; color:var(--accent); min-width:30px;">${DAYS[ev.day-1]}</span>
+          <span style="font-size:12px; color:var(--text-muted); min-width:110px;">${TIME_SLOTS[ev.slot]}</span>
+          <span style="font-size:13.5px; font-weight:600; color:var(--text); flex:1;">${ev.className}</span>
+          <span style="font-size:12px; color:var(--text-muted);">${ev.room}</span>
+          <button class="btn btn-outline btn-sm" style="flex-shrink:0;" onclick="removeEvent(${ev.id})">移除</button>
+        </div>`
+      ).join('');
+    }
+
+    window.changeWeek = function(dir) {
+      currentWeekOffset += dir;
+      renderSchedule();
+    };
+    window.goToToday = function() {
+      currentWeekOffset = 0;
+      renderSchedule();
+    };
+    window.cellClick = function(day, slot) {
+      document.getElementById('ev-day').value  = day;
+      document.getElementById('ev-slot').value = slot;
+      document.getElementById('modal-event').classList.add('open');
+    };
+    window.openAddEventModal = function() {
+      document.getElementById('modal-event').classList.add('open');
+    };
+    window.closeAddEventModal = function() {
+      document.getElementById('modal-event').classList.remove('open');
+    };
+    window.saveEvent = function() {
+      const cls  = document.getElementById('ev-class').value.trim();
+      const room = document.getElementById('ev-room').value.trim();
+      const note = document.getElementById('ev-note').value.trim();
+      const day  = parseInt(document.getElementById('ev-day').value);
+      const slot = parseInt(document.getElementById('ev-slot').value);
+      if (!cls) return alert('請填寫班級名稱');
+      const id = Date.now();
+      scheduleEvents.push({ id, day, slot, className: cls, room: room||'—', note });
+      localStorage.setItem('vip_schedule', JSON.stringify(scheduleEvents));
+      closeAddEventModal();
+      document.getElementById('ev-class').value = '';
+      document.getElementById('ev-room').value  = '';
+      document.getElementById('ev-note').value  = '';
+      renderSchedule();
+    };
+    window.removeEvent = function(id) {
+      scheduleEvents = scheduleEvents.filter(e => e.id !== id);
+      localStorage.setItem('vip_schedule', JSON.stringify(scheduleEvents));
+      renderSchedule();
+    };
+
+    /* Click outside modal to close */
+    document.getElementById('modal-event').addEventListener('click', function(e) {
+      if (e.target === this) closeAddEventModal();
+    });
+
+    /* Init schedule on load */
+    renderSchedule();
+
+  </script>
+</body>
+</html>
