@@ -22,6 +22,14 @@
       --radius:     12px;
       --font-serif: 'Playfair Display','Noto Serif TC',serif;
     }
+    [data-theme="ivory"] {
+      --black:#F6F0E4; --surface:#FFFDF8; --surface2:#F1E6D2; --border:rgba(138,110,48,.28);
+      --text-main:#241D14; --text-muted:#756A5A; --gold:#9C7A24; --gold-light:#B99335; --gold-dim:#7B642A;
+    }
+    [data-theme="studio"] {
+      --black:#07121C; --surface:#102033; --surface2:#162B42; --border:rgba(103,177,255,.26);
+      --text-main:#EAF4FF; --text-muted:#91A7BD; --gold:#67B1FF; --gold-light:#A6D4FF; --gold-dim:#6D91B6;
+    }
     html,body {
       min-height:100%;
       background:var(--black);
@@ -138,6 +146,14 @@
       text-align:center;margin-top:1.5rem;font-size:12px;
       color:var(--text-muted);line-height:1.7;
     }
+    .theme-picker {
+      display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:1rem;
+    }
+    .theme-picker button {
+      background:transparent;border:1px solid var(--border);border-radius:999px;
+      color:var(--text-muted);padding:6px 10px;font-size:12px;cursor:pointer;
+    }
+    .theme-picker button.active { color:var(--black);background:var(--gold);border-color:var(--gold); }
   </style>
 </head>
 <body>
@@ -203,6 +219,11 @@
     帳號由老師統一建立管理<br>
     如需協助請聯繫班級老師
   </p>
+  <div class="theme-picker" aria-label="介面風格">
+    <button type="button" data-theme-btn="obsidian" onclick="setTheme('obsidian')">曜石金</button>
+    <button type="button" data-theme-btn="ivory" onclick="setTheme('ivory')">白瓷紙</button>
+    <button type="button" data-theme-btn="studio" onclick="setTheme('studio')">藍調學院</button>
+  </div>
 
 </div>
 
@@ -230,6 +251,15 @@
   function clearError(id) {
     document.getElementById(id).classList.remove('show');
   }
+
+  window.setTheme = function(theme) {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('vip_theme', theme);
+    document.querySelectorAll('[data-theme-btn]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.themeBtn === theme);
+    });
+  };
+  setTheme(localStorage.getItem('vip_theme') || 'obsidian');
 
   window.switchLoginMode = function(mode) {
     const isStaff = mode === 'staff';
@@ -266,6 +296,7 @@
       await updateDoc(doc(db,'users', userDoc.id), { lastLogin: serverTimestamp() });
       sessionStorage.setItem('vip_uid', userDoc.id);
       sessionStorage.setItem('vip_name', userDoc.data().name);
+      sessionStorage.setItem('vip_class', userDoc.data().className || '');
       sessionStorage.setItem('vip_role', 'parent');
       window.location.href = './parent/dashboard.html';
     } catch(err) {

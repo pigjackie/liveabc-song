@@ -24,6 +24,14 @@
       --radius: 12px;
       --font-serif: 'Playfair Display','Noto Serif TC',serif;
     }
+    [data-theme="ivory"] {
+      --black:#F6F0E4; --surface:#FFFDF8; --surface2:#F1E6D2; --border:rgba(138,110,48,.28);
+      --text-main:#241D14; --text-muted:#756A5A; --gold:#9C7A24; --gold-light:#B99335; --gold-dim:#7B642A;
+    }
+    [data-theme="studio"] {
+      --black:#07121C; --surface:#102033; --surface2:#162B42; --border:rgba(103,177,255,.26);
+      --text-main:#EAF4FF; --text-muted:#91A7BD; --gold:#67B1FF; --gold-light:#A6D4FF; --gold-dim:#6D91B6;
+    }
     html, body {
       min-height: 100%;
       background: var(--black);
@@ -165,6 +173,12 @@
       background:rgba(13,13,13,.28);padding:10px 12px;font-size:13px;
     }
     .mini-meta { color:var(--text-muted);font-size:12px; }
+    .theme-picker {display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .theme-picker button {
+      background:transparent;border:1px solid var(--border);border-radius:999px;
+      color:var(--text-muted);padding:6px 10px;font-size:12px;cursor:pointer;
+    }
+    .theme-picker button.active {background:var(--gold);color:var(--black);border-color:var(--gold)}
 
     @media (max-width: 760px) {
       header { padding: 1rem; align-items: flex-start; gap: 12px; }
@@ -181,14 +195,21 @@
       <div class="header-title">教師管理後台</div>
       <div class="header-sub">互動美語 × 如苑 · 國一先修小班制專屬</div>
     </div>
-    <button class="logout-btn" onclick="handleAdminLogout()">登出系統</button>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+      <div class="theme-picker" aria-label="介面風格">
+        <button type="button" data-theme-btn="obsidian" onclick="setTheme('obsidian')">曜石金</button>
+        <button type="button" data-theme-btn="ivory" onclick="setTheme('ivory')">白瓷紙</button>
+        <button type="button" data-theme-btn="studio" onclick="setTheme('studio')">藍調學院</button>
+      </div>
+      <button class="logout-btn" onclick="handleAdminLogout()">登出系統</button>
+    </div>
   </header>
 
   <div class="container">
     <nav class="sidebar">
       <button class="nav-btn active" onclick="switchTab('tab-contact', this)">聯絡簿佈達</button>
       <button class="nav-btn" onclick="switchTab('tab-grades', this)">成績與診斷</button>
-      <button class="nav-btn" onclick="switchTab('tab-messages', this)">家長私訊管理</button>
+      <button class="nav-btn" onclick="switchTab('tab-messages', this)">發布訊息與課表</button>
       <button class="nav-btn" id="nav-super-btn" onclick="switchTab('tab-superuser', this)">班級與帳號管理</button>
     </nav>
 
@@ -200,9 +221,13 @@
       </div>
 
       <div class="student-selector" id="global-student-wrapper">
+        <label class="form-label">班級</label>
+        <select class="form-select" id="global-class-select" onchange="filterStudentsByClass()">
+          <option value="">請先選擇班級...</option>
+        </select>
         <label class="form-label">當前操作學生 (小班制精準關注)</label>
         <select class="form-select" id="global-student-select">
-          <option value="">請選擇學生...</option>
+          <option value="">可選擇單一學生，或留空發布給全班</option>
         </select>
       </div>
 
@@ -267,10 +292,45 @@
       </div>
 
       <div id="tab-messages" class="tab-content">
-        <div class="section-title">家長私訊管理</div>
-        <p style="color:var(--text-muted); font-size:14px; line-height:1.6;">
-          請從上方選擇特定學生，即可啟動與該位家長的一對一專屬對話。
-        </p>
+        <div class="section-title">發布新訊息與班級課表</div>
+        <div class="sub-panel">
+          <div class="sub-panel-title">發布班級新訊息</div>
+          <div class="form-group">
+            <label class="form-label">訊息班級</label>
+            <select class="form-select" id="message-class-select">
+              <option value="">請選擇班級...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">訊息標題</label>
+            <input type="text" class="form-input" id="message-title" placeholder="例如：本週課前提醒">
+          </div>
+          <div class="form-group">
+            <label class="form-label">訊息內容</label>
+            <textarea class="form-textarea" id="message-body" placeholder="輸入要發布給該班家長的訊息..."></textarea>
+          </div>
+          <button class="btn-submit" onclick="publishMessage()">發布新訊息</button>
+          <div id="msg-message" class="msg-success">新訊息已發布！</div>
+        </div>
+        <div class="sub-panel">
+          <div class="sub-panel-title">貼上 / 更新班級課表</div>
+          <div class="form-group">
+            <label class="form-label">課表班級</label>
+            <select class="form-select" id="schedule-class-select">
+              <option value="">請選擇班級...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">課表圖片網址（可選）</label>
+            <input type="url" class="form-input" id="schedule-image" placeholder="https://.../schedule.jpg">
+          </div>
+          <div class="form-group">
+            <label class="form-label">課表文字</label>
+            <textarea class="form-textarea" id="schedule-text" placeholder="也可以直接貼上文字課表，例如：週一 19:00 英文閱讀..."></textarea>
+          </div>
+          <button class="btn-submit" onclick="saveSchedule()">儲存班級課表</button>
+          <div id="msg-schedule" class="msg-success">課表已更新！</div>
+        </div>
       </div>
 
       <div id="tab-superuser" class="tab-content">
@@ -365,6 +425,8 @@
     } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
     import { db, auth } from '../js/firebase-config.js';
 
+    let allStudents = [];
+
     const adminUid = sessionStorage.getItem('vip_uid');
     const role = sessionStorage.getItem('vip_role');
     const isSuperAdmin = sessionStorage.getItem('vip_super') === 'true';
@@ -423,6 +485,29 @@
       }[ch]));
     }
 
+    window.setTheme = function(theme) {
+      document.documentElement.dataset.theme = theme;
+      localStorage.setItem('vip_theme', theme);
+      document.querySelectorAll('[data-theme-btn]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.themeBtn === theme);
+      });
+    };
+    setTheme(localStorage.getItem('vip_theme') || 'obsidian');
+
+    window.filterStudentsByClass = function() {
+      const className = document.getElementById('global-class-select').value;
+      const select = document.getElementById('global-student-select');
+      select.innerHTML = '<option value="">全班發布 / 不指定單一學生</option>';
+      allStudents
+        .filter(stu => !className || stu.className === className)
+        .forEach(stu => {
+          const option = document.createElement('option');
+          option.value = stu.id;
+          option.textContent = stu.name + ' (' + (stu.className || '未指定班級') + ')';
+          select.appendChild(option);
+        });
+    };
+
     async function hashPassword(pwd) {
       const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
       return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
@@ -434,16 +519,19 @@
         const snap = await getDocs(q);
         const select = document.getElementById('global-student-select');
         const list = document.getElementById('student-list');
-        select.innerHTML = '<option value="">請選擇學生...</option>';
+        select.innerHTML = '<option value="">全班發布 / 不指定單一學生</option>';
+        allStudents = [];
         const rows = [];
         snap.forEach(docSnap => {
           const data = docSnap.data();
+          allStudents.push({ id: docSnap.id, name: data.name || '', className: data.className || '' });
           const option = document.createElement('option');
           option.value = docSnap.id;
           option.textContent = data.name + ' (' + (data.className || '未指定班級') + ')';
           select.appendChild(option);
           rows.push(`<div class="mini-item"><span>${escapeHtml(data.name)}</span><span class="mini-meta">${escapeHtml(data.className || '未指定班級')}</span></div>`);
         });
+        filterStudentsByClass();
         if (list) list.innerHTML = rows.length ? rows.join('') : '<div class="mini-item"><span class="mini-meta">目前尚未建立學生</span></div>';
         setDebug(`已載入 ${snap.size} 位學生`);
       } catch (err) {
@@ -456,15 +544,23 @@
       try {
         const snap = await getDocs(collection(db, 'classes'));
         const superStudentClass = document.getElementById('super-student-class');
+        const globalClass = document.getElementById('global-class-select');
+        const messageClass = document.getElementById('message-class-select');
+        const scheduleClass = document.getElementById('schedule-class-select');
         const list = document.getElementById('class-list');
         superStudentClass.innerHTML = '<option value="">請選擇班級...</option>';
+        globalClass.innerHTML = '<option value="">請選擇班級...</option>';
+        messageClass.innerHTML = '<option value="">請選擇班級...</option>';
+        scheduleClass.innerHTML = '<option value="">請選擇班級...</option>';
         const rows = [];
         snap.forEach(docSnap => {
           const data = docSnap.data();
-          const option = document.createElement('option');
-          option.value = data.className;
-          option.textContent = data.className;
-          superStudentClass.appendChild(option);
+          [superStudentClass, globalClass, messageClass, scheduleClass].forEach(sel => {
+            const option = document.createElement('option');
+            option.value = data.className;
+            option.textContent = data.className;
+            sel.appendChild(option);
+          });
           rows.push(`<div class="mini-item"><span>${escapeHtml(data.className)}</span><span class="mini-meta">班級</span></div>`);
         });
         if (list) list.innerHTML = rows.length ? rows.join('') : '<div class="mini-item"><span class="mini-meta">目前尚未建立班級</span></div>';
@@ -495,11 +591,13 @@
     };
 
     window.submitContact = async function() {
+      const className = document.getElementById('global-class-select').value;
       const studentId = document.getElementById('global-student-select').value;
-      if (!studentId) return alert('請先選擇學生');
+      if (!className) return alert('請先選擇班級');
 
       const data = {
         studentId: studentId,
+        className: className,
         date: document.getElementById('contact-date').value,
         attendance: document.getElementById('contact-attendance').value,
         progressEnglish: document.getElementById('contact-en').value.trim(),
@@ -518,6 +616,47 @@
         document.getElementById('contact-tags').value = '';
       } catch (err) {
         console.error("聯絡簿發布失敗:", err);
+      }
+    };
+
+    window.publishMessage = async function() {
+      const className = document.getElementById('message-class-select').value;
+      const title = document.getElementById('message-title').value.trim();
+      const body = document.getElementById('message-body').value.trim();
+      if (!className || !title || !body) return alert('請選擇班級並填寫標題與內容');
+      try {
+        await addDoc(collection(db, 'class_messages'), {
+          className, title, body,
+          createdBy: sessionStorage.getItem('vip_name') || '',
+          createdAt: serverTimestamp()
+        });
+        showSuccessMsg('msg-message');
+        document.getElementById('message-title').value = '';
+        document.getElementById('message-body').value = '';
+        setDebug(`已發布 ${className} 新訊息`);
+      } catch (err) {
+        console.error('發布訊息失敗:', err);
+        alert('發布訊息失敗，請檢查 Firebase 權限或網路連線');
+      }
+    };
+
+    window.saveSchedule = async function() {
+      const className = document.getElementById('schedule-class-select').value;
+      const imageUrl = document.getElementById('schedule-image').value.trim();
+      const scheduleText = document.getElementById('schedule-text').value.trim();
+      if (!className) return alert('請先選擇班級');
+      if (!imageUrl && !scheduleText) return alert('請貼上課表文字或圖片網址');
+      try {
+        await setDoc(doc(db, 'class_schedules', className), {
+          className, imageUrl, scheduleText,
+          updatedBy: sessionStorage.getItem('vip_name') || '',
+          updatedAt: serverTimestamp()
+        });
+        showSuccessMsg('msg-schedule');
+        setDebug(`已更新 ${className} 課表`);
+      } catch (err) {
+        console.error('儲存課表失敗:', err);
+        alert('儲存課表失敗，請檢查 Firebase 權限或網路連線');
       }
     };
 
