@@ -9,208 +9,142 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --gold:        #C9A84C;
-      --gold-light:  #E8C97A;
-      --gold-dim:    #8A6E30;
-      --black:       #0D0D0D;
-      --surface:     #161616;
-      --surface2:    #1F1F1F;
-      --border:      rgba(201,168,76,0.25);
-      --border-hover:rgba(201,168,76,0.6);
-      --text-main:   #F0EAD6;
-      --text-muted:  #9A9180;
-      --radius:      12px;
-      --font-serif:  'Playfair Display', 'Noto Serif TC', serif;
+      --gold:       #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-dim:   #8A6E30;
+      --black:      #0D0D0D;
+      --surface:    #161616;
+      --surface2:   #1F1F1F;
+      --border:     rgba(201,168,76,0.25);
+      --text-main:  #F0EAD6;
+      --text-muted: #9A9180;
+      --radius:     12px;
+      --font-serif: 'Playfair Display','Noto Serif TC',serif;
     }
-
-    html, body {
-      min-height: 100%;
-      background: var(--black);
-      color: var(--text-main);
-      font-family: -apple-system, 'Noto Sans TC', sans-serif;
-      -webkit-font-smoothing: antialiased;
+    html,body {
+      min-height:100%;
+      background:var(--black);
+      color:var(--text-main);
+      font-family:-apple-system,'Noto Sans TC',sans-serif;
+      -webkit-font-smoothing:antialiased;
     }
-
     body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100svh;
-      padding: 2rem 1.25rem;
-      background-image:
-        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 70%);
+      display:flex;flex-direction:column;align-items:center;
+      justify-content:center;min-height:100svh;padding:2rem 1.25rem;
+      background-image:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(201,168,76,0.07) 0%,transparent 70%);
     }
+    .wrap { width:100%;max-width:420px; }
 
-    .login-wrap {
-      width: 100%;
-      max-width: 400px;
-    }
-
-    .brand {
-      text-align: center;
-      margin-bottom: 2.5rem;
-    }
-
+    /* brand */
+    .brand { text-align:center;margin-bottom:2.2rem; }
     .brand-badge {
-      display: inline-block;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 4px 16px;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 1rem;
+      display:inline-block;border:1px solid var(--border);border-radius:999px;
+      padding:4px 16px;font-size:11px;letter-spacing:.12em;color:var(--gold);
+      text-transform:uppercase;margin-bottom:.9rem;
     }
-
     .brand-title {
-      font-family: var(--font-serif);
-      font-size: clamp(1.5rem, 5vw, 2rem);
-      font-weight: 600;
-      color: var(--gold-light);
-      line-height: 1.3;
-      margin-bottom: 0.4rem;
+      font-family:var(--font-serif);font-size:clamp(1.5rem,5vw,2rem);
+      font-weight:600;color:var(--gold-light);line-height:1.3;margin-bottom:.4rem;
     }
-
-    .brand-sub {
-      font-size: 13px;
-      color: var(--text-muted);
-      letter-spacing: 0.05em;
-    }
-
+    .brand-sub { font-size:13px;color:var(--text-muted);letter-spacing:.05em; }
+    .gold-line { width:40px;height:2px;background:var(--gold);margin:0 auto 1.5rem;border-radius:2px;opacity:.5; }
     .divider {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 2rem;
+      display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;
     }
-    .divider::before, .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-    .divider span {
-      font-size: 11px;
-      color: var(--gold-dim);
-      letter-spacing: 0.1em;
-      white-space: nowrap;
-    }
+    .divider::before,.divider::after { content:'';flex:1;height:1px;background:var(--border); }
+    .divider span { font-size:11px;color:var(--gold-dim);letter-spacing:.1em;white-space:nowrap; }
 
+    /* card */
     .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem 1.75rem;
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius);padding:2rem 1.75rem;margin-bottom:1rem;
     }
-
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
-
+    .form-group { margin-bottom:1.2rem; }
     .form-label {
-      display: block;
-      font-size: 12px;
-      color: var(--gold-dim);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
+      display:block;font-size:12px;color:var(--gold-dim);
+      letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;
     }
-
     .form-input {
-      width: 100%;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 13px 16px;
-      font-size: 15px;
-      color: var(--text-main);
-      outline: none;
-      transition: border-color 0.2s;
-      -webkit-appearance: none;
+      width:100%;background:var(--surface2);border:1px solid var(--border);
+      border-radius:8px;padding:13px 16px;font-size:15px;color:var(--text-main);
+      outline:none;transition:border-color .2s;-webkit-appearance:none;
     }
-    .form-input::placeholder { color: var(--text-muted); }
-    .form-input:focus { border-color: var(--gold); }
+    .form-input::placeholder { color:var(--text-muted); }
+    .form-input:focus { border-color:var(--gold); }
+    .input-hint { font-size:11px;color:var(--text-muted);margin-top:5px; }
 
-    .input-hint {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 5px;
+    .btn {
+      width:100%;border:none;border-radius:8px;padding:14px;
+      font-size:15px;font-weight:600;letter-spacing:.05em;cursor:pointer;
+      margin-top:.25rem;transition:background .2s,transform .1s;
+      -webkit-tap-highlight-color:transparent;
+      display:flex;align-items:center;justify-content:center;gap:8px;
     }
-
-    .btn-login {
-      width: 100%;
-      background: var(--gold);
-      color: var(--black);
-      border: none;
-      border-radius: 8px;
-      padding: 14px;
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      cursor: pointer;
-      margin-top: 0.5rem;
-      transition: background 0.2s, transform 0.1s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .btn-login:hover  { background: var(--gold-light); }
-    .btn-login:active { transform: scale(0.98); }
-    .btn-login:disabled {
-      background: var(--gold-dim);
-      cursor: not-allowed;
-      transform: none;
-    }
+    .btn-gold { background:var(--gold);color:var(--black); }
+    .btn-gold:hover { background:var(--gold-light); }
+    .btn-gold:active { transform:scale(.98); }
+    .btn-gold:disabled { background:var(--gold-dim);cursor:not-allowed;transform:none; }
 
     .error-msg {
-      display: none;
-      background: rgba(220,50,50,0.12);
-      border: 1px solid rgba(220,50,50,0.3);
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-size: 13px;
-      color: #f87171;
-      margin-top: 1rem;
-      text-align: center;
+      display:none;background:rgba(220,50,50,.12);border:1px solid rgba(220,50,50,.3);
+      border-radius:8px;padding:10px 14px;font-size:13px;color:#f87171;
+      margin-top:1rem;text-align:center;
     }
-    .error-msg.show { display: block; }
+    .error-msg.show { display:block; }
 
     .loading-ring {
-      display: none;
-      width: 18px;
-      height: 18px;
-      border: 2px solid rgba(0,0,0,0.3);
-      border-top-color: var(--black);
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      margin: 0 auto;
+      display:none;width:18px;height:18px;border:2px solid rgba(0,0,0,.3);
+      border-top-color:var(--black);border-radius:50%;
+      animation:spin .7s linear infinite;
     }
-    .loading-ring.show { display: block; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-ring.show { display:block; }
+    @keyframes spin { to{transform:rotate(360deg)} }
+
+    /* 教師登入區塊 */
+    .teacher-section { margin-top:.5rem; }
+    .teacher-toggle {
+      width:100%;background:transparent;border:1px solid rgba(201,168,76,.15);
+      border-radius:8px;padding:12px 16px;color:var(--text-muted);
+      font-size:13px;cursor:pointer;display:flex;align-items:center;
+      justify-content:center;gap:8px;transition:border-color .2s,color .2s;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .teacher-toggle:hover { border-color:var(--border);color:var(--gold-dim); }
+    .teacher-toggle .arrow {
+      display:inline-block;transition:transform .3s;font-size:10px;
+    }
+    .teacher-toggle.open .arrow { transform:rotate(180deg); }
+
+    .teacher-panel {
+      max-height:0;overflow:hidden;transition:max-height .4s ease;
+    }
+    .teacher-panel.open { max-height:400px; }
+    .teacher-card {
+      background:var(--surface);border:1px solid rgba(201,168,76,.15);
+      border-top:none;border-radius:0 0 var(--radius) var(--radius);
+      padding:1.5rem 1.75rem 1.75rem;
+    }
+    .teacher-label {
+      font-size:11px;color:var(--gold-dim);letter-spacing:.1em;
+      text-align:center;margin-bottom:1.2rem;text-transform:uppercase;
+    }
+    .btn-teacher {
+      background:transparent;color:var(--gold-dim);
+      border:1px solid rgba(201,168,76,.3);
+    }
+    .btn-teacher:hover { background:rgba(201,168,76,.08);color:var(--gold); }
+    .btn-teacher:active { transform:scale(.98); }
+    .btn-teacher:disabled { opacity:.5;cursor:not-allowed; }
 
     .footer-note {
-      text-align: center;
-      margin-top: 2rem;
-      font-size: 12px;
-      color: var(--text-muted);
-      line-height: 1.7;
-    }
-
-    .gold-line {
-      width: 40px;
-      height: 2px;
-      background: var(--gold);
-      margin: 0 auto 1.5rem;
-      border-radius: 2px;
-      opacity: 0.5;
+      text-align:center;margin-top:1.5rem;font-size:12px;
+      color:var(--text-muted);line-height:1.7;
     }
   </style>
 </head>
 <body>
-
-<div class="login-wrap">
+<div class="wrap">
 
   <div class="brand">
     <div class="brand-badge">VIP Members Only</div>
@@ -219,43 +153,53 @@
   </div>
 
   <div class="gold-line"></div>
-
-  <div class="divider">
-    <span>專屬登入</span>
-  </div>
+  <div class="divider"><span>家長專屬登入</span></div>
 
   <div class="card">
     <div class="form-group">
-      <label class="form-label" for="alias-input">帳號代碼</label>
-      <input
-        class="form-input"
-        id="alias-input"
-        type="text"
-        placeholder="請輸入您的專屬帳號"
-        autocomplete="username"
-        autocapitalize="none"
-        spellcheck="false"
-      >
-      <p class="input-hint">由老師提供的專屬代碼，如 A01、admin</p>
+      <label class="form-label" for="student-name">學生姓名</label>
+      <input class="form-input" id="student-name" type="text"
+        placeholder="請輸入孩子的姓名" autocomplete="off" spellcheck="false">
     </div>
-
     <div class="form-group">
-      <label class="form-label" for="password-input">密碼</label>
-      <input
-        class="form-input"
-        id="password-input"
-        type="password"
-        placeholder="請輸入密碼"
-        autocomplete="current-password"
-      >
+      <label class="form-label" for="parent-password">密碼</label>
+      <input class="form-input" id="parent-password" type="password"
+        placeholder="請輸入密碼" autocomplete="current-password">
+      <p class="input-hint">密碼由老師提供，建議登入後自行更改</p>
     </div>
-
-    <button class="btn-login" id="login-btn" onclick="handleLogin()">
-      <span id="btn-text">登入</span>
-      <div class="loading-ring" id="loading-ring"></div>
+    <button class="btn btn-gold" id="parent-login-btn" onclick="handleParentLogin()">
+      <span id="parent-btn-text">登入</span>
+      <div class="loading-ring" id="parent-loading"></div>
     </button>
+    <div class="error-msg" id="parent-error"></div>
+  </div>
 
-    <div class="error-msg" id="error-msg"></div>
+  <!-- 教師登入 -->
+  <div class="teacher-section">
+    <button class="teacher-toggle" id="teacher-toggle-btn" onclick="toggleTeacher()">
+      <span>教師登入</span>
+      <span class="arrow">▼</span>
+    </button>
+    <div class="teacher-panel" id="teacher-panel">
+      <div class="teacher-card">
+        <p class="teacher-label">教師 · 管理後台</p>
+        <div class="form-group">
+          <label class="form-label" for="teacher-email">電子郵件</label>
+          <input class="form-input" id="teacher-email" type="email"
+            placeholder="teacher@email.com" autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="teacher-password">密碼</label>
+          <input class="form-input" id="teacher-password" type="password"
+            placeholder="請輸入密碼" autocomplete="current-password">
+        </div>
+        <button class="btn btn-teacher" id="teacher-login-btn" onclick="handleTeacherLogin()">
+          <span id="teacher-btn-text">教師登入</span>
+          <div class="loading-ring" id="teacher-loading"></div>
+        </button>
+        <div class="error-msg" id="teacher-error"></div>
+      </div>
+    </div>
   </div>
 
   <p class="footer-note">
@@ -267,82 +211,111 @@
 
 <script type="module">
   import { auth, db } from './js/firebase-config.js';
-  import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-  import { collection, query, where, getDocs, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { signInWithEmailAndPassword, signInAnonymously } from
+    "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { collection, query, where, getDocs, doc, updateDoc, serverTimestamp } from
+    "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-  window.handleLogin = async function() {
-    const alias    = document.getElementById('alias-input').value.trim();
-    const password = document.getElementById('password-input').value;
-    const btn      = document.getElementById('login-btn');
-    const btnText  = document.getElementById('btn-text');
-    const ring     = document.getElementById('loading-ring');
-    const errMsg   = document.getElementById('error-msg');
+  /* ── 工具 ── */
+  async function hashPassword(pwd) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  function setLoading(btnId, textId, ringId, on) {
+    document.getElementById(btnId).disabled = on;
+    document.getElementById(textId).style.display = on ? 'none' : 'inline';
+    document.getElementById(ringId).classList.toggle('show', on);
+  }
+  function showError(id, msg) {
+    const el = document.getElementById(id);
+    el.textContent = msg; el.classList.add('show');
+  }
+  function clearError(id) {
+    document.getElementById(id).classList.remove('show');
+  }
 
-    errMsg.classList.remove('show');
-
-    if (!alias || !password) {
-      showError('請輸入帳號代碼與密碼');
-      return;
-    }
-
-    btn.disabled = true;
-    btnText.style.display = 'none';
-    ring.classList.add('show');
-
+  /* ── 家長登入 ── */
+  window.handleParentLogin = async function() {
+    const name = document.getElementById('student-name').value.trim();
+    const pwd  = document.getElementById('parent-password').value;
+    clearError('parent-error');
+    if (!name || !pwd) { showError('parent-error','請輸入學生姓名與密碼'); return; }
+    setLoading('parent-login-btn','parent-btn-text','parent-loading', true);
     try {
-      const q    = query(collection(db, 'users'), where('alias', '==', alias));
+      const hashed = await hashPassword(pwd);
+      const q = query(collection(db,'users'),
+        where('name','==', name),
+        where('role','==','parent'),
+        where('passwordHash','==', hashed)
+      );
       const snap = await getDocs(q);
-
-      if (snap.empty) {
-        showError('找不到此帳號，請確認代碼是否正確');
-        return;
-      }
-
-      const userDoc  = snap.docs[0];
-      const userData = userDoc.data();
-      const email    = userData.email || alias + '@liveabc-song.vip';
-
-      await signInWithEmailAndPassword(auth, email, password);
-
-      await updateDoc(doc(db, 'users', userDoc.id), {
-        lastLogin: serverTimestamp()
-      });
-
-      if (userData.role === 'admin') {
-        window.location.href = './admin/dashboard.html';
-      } else {
-        window.location.href = './parent/dashboard.html';
-      }
-
-    } catch (err) {
+      if (snap.empty) { showError('parent-error','姓名或密碼錯誤，請重新確認'); return; }
+      const userDoc = snap.docs[0];
+      await signInAnonymously(auth);
+      await updateDoc(doc(db,'users', userDoc.id), { lastLogin: serverTimestamp() });
+      sessionStorage.setItem('vip_uid', userDoc.id);
+      sessionStorage.setItem('vip_name', userDoc.data().name);
+      sessionStorage.setItem('vip_role', 'parent');
+      window.location.href = './parent/dashboard.html';
+    } catch(err) {
       console.error(err);
-      if (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
-        showError('密碼錯誤，請重新輸入');
-      } else if (err.code === 'auth/too-many-requests') {
-        showError('嘗試次數過多，請稍後再試');
-      } else {
-        showError('登入失敗，請稍後再試');
-      }
+      showError('parent-error','登入失敗，請稍後再試');
     } finally {
-      btn.disabled = false;
-      btnText.style.display = 'block';
-      ring.classList.remove('show');
+      setLoading('parent-login-btn','parent-btn-text','parent-loading', false);
     }
   };
 
-  function showError(msg) {
-    const el = document.getElementById('error-msg');
-    el.textContent = msg;
-    el.classList.add('show');
-  }
+  /* ── 教師登入 ── */
+  window.handleTeacherLogin = async function() {
+    const email = document.getElementById('teacher-email').value.trim();
+    const pwd   = document.getElementById('teacher-password').value;
+    clearError('teacher-error');
+    if (!email || !pwd) { showError('teacher-error','請輸入電子郵件與密碼'); return; }
+    setLoading('teacher-login-btn','teacher-btn-text','teacher-loading', true);
+    try {
+      const cred = await signInWithEmailAndPassword(auth, email, pwd);
+      const q = query(collection(db,'users'), where('email','==', email), where('role','==','admin'));
+      const snap = await getDocs(q);
+      if (snap.empty) { showError('teacher-error','此帳號無管理權限'); await auth.signOut(); return; }
+      await updateDoc(doc(db,'users', snap.docs[0].id), { lastLogin: serverTimestamp() });
+      sessionStorage.setItem('vip_uid', snap.docs[0].id);
+      sessionStorage.setItem('vip_role','admin');
+      window.location.href = './admin/dashboard.html';
+    } catch(err) {
+      console.error(err);
+      if (err.code==='auth/wrong-password'||err.code==='auth/invalid-credential')
+        showError('teacher-error','密碼錯誤');
+      else if (err.code==='auth/user-not-found')
+        showError('teacher-error','找不到此帳號');
+      else if (err.code==='auth/too-many-requests')
+        showError('teacher-error','嘗試次數過多，請稍後再試');
+      else showError('teacher-error','登入失敗，請稍後再試');
+    } finally {
+      setLoading('teacher-login-btn','teacher-btn-text','teacher-loading', false);
+    }
+  };
 
-  document.getElementById('password-input').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') window.handleLogin();
+  /* ── 教師區塊展開 ── */
+  window.toggleTeacher = function() {
+    const btn   = document.getElementById('teacher-toggle-btn');
+    const panel = document.getElementById('teacher-panel');
+    btn.classList.toggle('open');
+    panel.classList.toggle('open');
+  };
+
+  /* ── Enter 鍵 ── */
+  document.getElementById('student-name').addEventListener('keydown', e => {
+    if (e.key==='Enter') document.getElementById('parent-password').focus();
   });
-  document.getElementById('alias-input').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') document.getElementById('password-input').focus();
+  document.getElementById('parent-password').addEventListener('keydown', e => {
+    if (e.key==='Enter') window.handleParentLogin();
+  });
+  document.getElementById('teacher-email').addEventListener('keydown', e => {
+    if (e.key==='Enter') document.getElementById('teacher-password').focus();
+  });
+  document.getElementById('teacher-password').addEventListener('keydown', e => {
+    if (e.key==='Enter') window.handleTeacherLogin();
   });
 </script>
-
 </body>
 </html>
