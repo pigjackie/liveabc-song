@@ -8,20 +8,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    html, body, div, span, header, nav, main, section, input, button, textarea, select, h1, h2, h3, p, label { 
-      box-sizing: border-box; margin: 0; padding: 0; 
+    html, body, div, span, header, nav, main, section, input, button, textarea, select, h1, h2, h3, p, label {
+      box-sizing: border-box; margin: 0; padding: 0;
     }
     :root {
-      --gold:       #C9A84C;
+      --gold: #C9A84C;
       --gold-light: #E8C97A;
-      --gold-dim:   #8A6E30;
-      --black:      #0D0D0D;
-      --surface:    #161616;
-      --surface2:   #1F1F1F;
-      --border:     rgba(201,168,76,0.25);
-      --text-main:  #F0EAD6;
+      --gold-dim: #8A6E30;
+      --black: #0D0D0D;
+      --surface: #161616;
+      --surface2: #1F1F1F;
+      --border: rgba(201,168,76,0.25);
+      --text-main: #F0EAD6;
       --text-muted: #9A9180;
-      --radius:     12px;
+      --radius: 12px;
       --font-serif: 'Playfair Display','Noto Serif TC',serif;
     }
     html, body {
@@ -31,7 +31,7 @@
       font-family: -apple-system, 'Noto Sans TC', sans-serif;
       -webkit-font-smoothing: antialiased;
     }
-    
+
     header {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
@@ -81,6 +81,12 @@
     .nav-btn:hover { background: var(--surface2); }
     .nav-btn.active { background: var(--gold); color: var(--black); font-weight: 600; border-color: var(--gold); }
 
+    #nav-super-btn {
+      display: block;
+      border: 1px solid rgba(232,201,122,0.4);
+      color: var(--gold-light);
+    }
+
     main.content {
       flex: 1;
       background: var(--surface);
@@ -98,238 +104,4 @@
       margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px;
     }
     .section-title::before {
-      content: ''; display: inline-block; width: 4px; height: 18px; background: var(--gold); border-radius: 2px;
-    }
-
-    .form-group { margin-bottom: 1.5rem; }
-    .form-label { display: block; font-size: 13px; color: var(--gold-dim); margin-bottom: 8px; text-transform: uppercase; }
-    .form-input, .form-select, .form-textarea {
-      width: 100%; background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 12px 16px; font-size: 14px; color: var(--text-main);
-      outline: none; transition: 0.2s;
-    }
-    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--gold); }
-    .form-textarea { resize: vertical; min-height: 100px; }
-    
-    .btn-submit {
-      background: var(--gold); color: var(--black); border: none; border-radius: 8px;
-      padding: 12px 24px; font-size: 14px; font-weight: 600; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 8px;
-    }
-    .btn-submit:hover { background: var(--gold-light); }
-
-    .student-selector { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px dashed var(--border); }
-    
-    .msg-success {
-      display: none; background: rgba(201,168,76,0.1); border: 1px solid var(--gold);
-      color: var(--gold-light); padding: 10px 16px; border-radius: 8px; margin-top: 1rem; font-size: 13px;
-    }
-
-    .small-hint { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
-  </style>
-</head>
-<body>
-
-  <header>
-    <div>
-      <div class="header-title">教師管理後台</div>
-      <div class="header-sub">互動美語 × 如苑 · 國一先修小班制專屬</div>
-    </div>
-    <button class="logout-btn" onclick="handleAdminLogout()">登出系統</button>
-  </header>
-
-  <div class="container">
-    <nav class="sidebar">
-      <button class="nav-btn active" onclick="switchTab('tab-contact', this)">聯絡簿佈達</button>
-      <button class="nav-btn" onclick="switchTab('tab-grades', this)">成績與診斷</button>
-      <button class="nav-btn" onclick="switchTab('tab-messages', this)">家長私訊管理</button>
-    </nav>
-
-    <main class="content">
-      
-      <div class="student-selector">
-        <label class="form-label">當前操作學生 (小班制精準關注)</label>
-        <select class="form-select" id="global-student-select">
-          <option value="">請選擇學生...</option>
-        </select>
-      </div>
-
-      <div id="tab-contact" class="tab-content active">
-        <div class="section-title">新增數位聯絡簿</div>
-        <div class="form-group">
-          <label class="form-label">日期</label>
-          <input type="date" class="form-input" id="contact-date">
-        </div>
-        <div class="form-group">
-          <label class="form-label">出缺勤</label>
-          <select class="form-select" id="contact-attendance">
-            <option value="準時">準時</option>
-            <option value="遲到">遲到</option>
-            <option value="請假">請假</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">英文進度</label>
-          <input type="text" class="form-input" id="contact-en" placeholder="例如：Unit 1 核心單字">
-        </div>
-        <div class="form-group">
-          <label class="form-label">國文進度</label>
-          <input type="text" class="form-input" id="contact-zh" placeholder="例如：文言文修辭">
-        </div>
-        <div class="form-group">
-          <label class="form-label">指派作業</label>
-          <textarea class="form-textarea" id="contact-hw" placeholder="請輸入今日作業內容..."></textarea>
-        </div>
-        <div class="form-group">
-          <label class="form-label">課堂表現標籤 (用半形逗號分隔)</label>
-          <input type="text" class="form-input" id="contact-tags" placeholder="例如：專注度佳,互動良好">
-        </div>
-        <button class="btn-submit" onclick="submitContact()">發布聯絡簿</button>
-        <div id="msg-contact" class="msg-success">聯絡簿已成功發布！</div>
-      </div>
-
-      <div id="tab-grades" class="tab-content">
-        <div class="section-title">登錄成績與個別化診斷</div>
-        <div class="form-group">
-          <label class="form-label">測驗日期</label>
-          <input type="date" class="form-input" id="grade-date">
-        </div>
-        <div class="form-group">
-          <label class="form-label">測驗名稱</label>
-          <input type="text" class="form-input" id="grade-title" placeholder="例如：第一週單字小考">
-        </div>
-        <div class="form-group">
-          <label class="form-label">測驗分數</label>
-          <input type="number" class="form-input" id="grade-score" min="0" max="100" placeholder="0-100">
-        </div>
-        <div class="form-group">
-          <label class="form-label">全班平均 (用於圖表對比)</label>
-          <input type="number" class="form-input" id="grade-avg" min="0" max="100" placeholder="輸入全班平均">
-        </div>
-        <div class="form-group">
-          <label class="form-label">個別化診斷與精進方針</label>
-          <textarea class="form-textarea" id="grade-diagnosis" placeholder="針對該名學生的弱點給予具體建議..."></textarea>
-          <p class="small-hint">此段文字將直接顯示於家長端的專屬儀表板中。</p>
-        </div>
-        <button class="btn-submit" onclick="submitGrade()">登錄成績</button>
-        <div id="msg-grade" class="msg-success">成績與診斷已成功儲存！</div>
-      </div>
-
-      <div id="tab-messages" class="tab-content">
-        <div class="section-title">家長私訊管理</div>
-        <p style="color:var(--text-muted); font-size:14px; line-height:1.6;">
-          目前尚未實作即時對話介面。後續將整合 Firebase onSnapshot 呈現雙向聊天室。
-        </p>
-      </div>
-
-    </main>
-  </div>
-
-  <script type="module">
-    import { auth, db } from '../js/firebase-config.js';
-    import { collection, query, where, getDocs, addDoc, serverTimestamp, Timestamp } from 
-      "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-    const adminUid = sessionStorage.getItem('vip_uid');
-    const role = sessionStorage.getItem('vip_role');
-
-    if (!adminUid || role !== 'admin') {
-      window.location.href = '../index.html';
-    }
-
-    document.getElementById('contact-date').valueAsDate = new Date();
-    document.getElementById('grade-date').valueAsDate = new Date();
-
-    window.handleAdminLogout = async function() {
-      await auth.signOut();
-      sessionStorage.clear();
-      window.location.href = '../index.html';
-    };
-
-    window.switchTab = function(tabId, btnEl) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-      btnEl.classList.add('active');
-    };
-
-    function showSuccessMsg(id) {
-      const el = document.getElementById(id);
-      el.style.display = 'block';
-      setTimeout(() => { el.style.display = 'none'; }, 3000);
-    }
-
-    async function loadStudents() {
-      try {
-        const q = query(collection(db, 'users'), where('role', '==', 'parent'));
-        const snap = await getDocs(q);
-        const select = document.getElementById('global-student-select');
-        snap.forEach(doc => {
-          const data = doc.data();
-          const option = document.createElement('option');
-          option.value = doc.id;
-          option.textContent = data.name;
-          select.appendChild(option);
-        });
-      } catch (err) {
-        console.error("載入學生清單失敗:", err);
-      }
-    }
-
-    window.submitContact = async function() {
-      const studentId = document.getElementById('global-student-select').value;
-      if (!studentId) return alert('請先選擇學生');
-
-      const data = {
-        studentId: studentId,
-        date: document.getElementById('contact-date').value,
-        attendance: document.getElementById('contact-attendance').value,
-        progressEnglish: document.getElementById('contact-en').value.trim(),
-        progressChinese: document.getElementById('contact-zh').value.trim(),
-        homework: document.getElementById('contact-hw').value.trim(),
-        tags: document.getElementById('contact-tags').value.split(',').map(t => t.trim()).filter(t => t),
-        createdAt: serverTimestamp()
-      };
-
-      try {
-        await addDoc(collection(db, 'contact_books'), data);
-        showSuccessMsg('msg-contact');
-        document.getElementById('contact-en').value = '';
-        document.getElementById('contact-zh').value = '';
-        document.getElementById('contact-hw').value = '';
-      } catch (err) {
-        console.error("發布失敗:", err);
-      }
-    };
-
-    window.submitGrade = async function() {
-      const studentId = document.getElementById('global-student-select').value;
-      if (!studentId) return alert('請先選擇學生');
-
-      const dateStr = document.getElementById('grade-date').value;
-      const data = {
-        studentId: studentId,
-        title: document.getElementById('grade-title').value.trim(),
-        score: Number(document.getElementById('grade-score').value),
-        averageScore: Number(document.getElementById('grade-avg').value),
-        diagnosis: document.getElementById('grade-diagnosis').value.trim(),
-        examDate: Timestamp.fromDate(new Date(dateStr))
-      };
-
-      if (!data.title || isNaN(data.score)) return alert('請填寫完整的測驗名稱與分數');
-
-      try {
-        await addDoc(collection(db, 'grades'), data);
-        showSuccessMsg('msg-grade');
-        document.getElementById('grade-title').value = '';
-        document.getElementById('grade-score').value = '';
-        document.getElementById('grade-diagnosis').value = '';
-      } catch (err) {
-        console.error("成績登錄失敗:", err);
-      }
-    };
-
-    loadStudents();
-  </script>
-</body>
-</html>
+      content: ''; display: inline-block; width: 4px; height: 18px; background: var(--gold); border-radius:
