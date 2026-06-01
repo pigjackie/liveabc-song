@@ -232,7 +232,7 @@
           sessionStorage.setItem('vip_name','宋維');
           sessionStorage.setItem('vip_role','admin');
           sessionStorage.setItem('vip_super','true');
-          window.location.href = './admin/dashboard.html'; return;
+          window.location.href = './admin_dashboard.html'; return;
         }
 
         const cred = await signInWithEmailAndPassword(auth, email, pwd);
@@ -246,7 +246,7 @@
         sessionStorage.setItem('vip_name', data.name || email);
         sessionStorage.setItem('vip_role', data.role);
         sessionStorage.setItem('vip_super', data.isSuperAdmin ? 'true' : 'false');
-        window.location.href = './admin/dashboard.html';
+        window.location.href = './admin_dashboard.html';
 
       } else {
         const name = document.getElementById('inp-name').value.trim();
@@ -266,7 +266,7 @@
         sessionStorage.setItem('vip_name',  d.data().name);
         sessionStorage.setItem('vip_class', d.data().className || '');
         sessionStorage.setItem('vip_role',  'parent');
-        window.location.href = './parent/dashboard.html';
+        window.location.href = './parent_dashboard.html';
       }
     } catch(e) {
       console.error(e);
