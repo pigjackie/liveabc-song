@@ -143,8 +143,8 @@
       <input class="fi" id="inp-name" type="text" placeholder="請輸入孩子的姓名" autocomplete="off">
     </div>
     <div class="fg" id="f-email">
-      <label class="fl" id="lbl-email">電子郵件</label>
-      <input class="fi" id="inp-email" type="email" placeholder="teacher@email.com" autocomplete="username">
+      <label class="fl" id="lbl-email">電子郵件 / 管理者名稱</label>
+      <input class="fi" id="inp-email" type="text" placeholder="teacher@email.com 或 宋維" autocomplete="username">
     </div>
     <div class="fg">
       <label class="fl">密碼</label>
@@ -291,8 +291,8 @@
     if (t) { document.body.dataset.theme=t; document.querySelectorAll('.td').forEach(d=>d.classList.toggle('active',d.dataset.t===t)); }
   })();
 
-  /* Init: show name field for parent */
-  switchRole('parent');
+  /* Init: default to staff tab so 宋維 can log in directly */
+  switchRole('staff');
 </script>
 
 <script>
