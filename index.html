@@ -3,380 +3,305 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>互動美語 X 如苑 · VIP 家長平台</title>
+  <title>互動美語 × 如苑 · 登入</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+TC:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --gold:       #C9A84C;
-      --gold-light: #E8C97A;
-      --gold-dim:   #8A6E30;
-      --black:      #0D0D0D;
-      --surface:    #161616;
-      --surface2:   #1F1F1F;
-      --border:     rgba(201,168,76,0.25);
-      --text-main:  #F0EAD6;
-      --text-muted: #9A9180;
-      --radius:     12px;
-      --font-serif: 'Playfair Display','Noto Serif TC',serif;
-    }
-    [data-theme="ivory"] {
-      --black:#F6F0E4; --surface:#FFFDF8; --surface2:#F1E6D2; --border:rgba(138,110,48,.28);
-      --text-main:#241D14; --text-muted:#756A5A; --gold:#9C7A24; --gold-light:#B99335; --gold-dim:#7B642A;
-    }
-    [data-theme="studio"] {
-      --black:#07121C; --surface:#102033; --surface2:#162B42; --border:rgba(103,177,255,.26);
-      --text-main:#EAF4FF; --text-muted:#91A7BD; --gold:#67B1FF; --gold-light:#A6D4FF; --gold-dim:#6D91B6;
-    }
-    html,body {
-      min-height:100%;
-      background:var(--black);
-      color:var(--text-main);
-      font-family:-apple-system,'Noto Sans TC',sans-serif;
-      -webkit-font-smoothing:antialiased;
-    }
-    body {
-      display:flex;flex-direction:column;align-items:center;
-      justify-content:center;min-height:100svh;padding:2rem 1.25rem;
-      background-image:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(201,168,76,0.07) 0%,transparent 70%);
-    }
-    .wrap { width:100%;max-width:420px; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-    /* brand */
-    .brand { text-align:center;margin-bottom:2.2rem; }
-    .brand-badge {
-      display:inline-block;border:1px solid var(--border);border-radius:999px;
-      padding:4px 16px;font-size:11px;letter-spacing:.12em;color:var(--gold);
-      text-transform:uppercase;margin-bottom:.9rem;
+    /* ══ THEME TOKENS ══ */
+    [data-theme="obsidian"]{
+      --bg:#080808;--bg2:#0F0F0F;--surface:#141414;--surface2:#1C1C1C;--surface3:#242424;
+      --border:rgba(201,168,76,.2);--border-hi:rgba(201,168,76,.55);
+      --accent:#C9A84C;--accent-l:#E8C97A;--accent-d:#7A5F28;--glow:rgba(201,168,76,.12);
+      --text:#F0EAD6;--text-s:#A89E88;--text-m:#5A5248;--danger:#C0392B;
+      --radius:12px;--font-d:'Playfair Display','Noto Serif TC',serif;--font-b:'DM Sans','Noto Serif TC',sans-serif;
     }
-    .brand-title {
-      font-family:var(--font-serif);font-size:clamp(1.5rem,5vw,2rem);
-      font-weight:600;color:var(--gold-light);line-height:1.3;margin-bottom:.4rem;
+    [data-theme="ivory"]{
+      --bg:#F2EDE5;--bg2:#EAE4DA;--surface:#FAFAF7;--surface2:#EDE8DF;--surface3:#E2DDD5;
+      --border:rgba(100,75,45,.15);--border-hi:rgba(100,75,45,.42);
+      --accent:#7B5E38;--accent-l:#9E7A4D;--accent-d:#B8996A;--glow:rgba(123,94,56,.08);
+      --text:#26180E;--text-s:#5A4835;--text-m:#9A8870;--danger:#A83030;
+      --radius:12px;--font-d:'Cormorant Garamond','Noto Serif TC',serif;--font-b:'DM Sans','Noto Serif TC',sans-serif;
     }
-    .brand-sub { font-size:13px;color:var(--text-muted);letter-spacing:.05em; }
-    .gold-line { width:40px;height:2px;background:var(--gold);margin:0 auto 1.5rem;border-radius:2px;opacity:.5; }
-    .divider {
-      display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;
+    [data-theme="neon"]{
+      --bg:#0C1016;--bg2:#141920;--surface:#1A2030;--surface2:#202838;--surface3:#2A3448;
+      --border:rgba(56,189,248,.16);--border-hi:rgba(56,189,248,.5);
+      --accent:#38BDF8;--accent-l:#7DD3FC;--accent-d:#0EA5E9;--glow:rgba(56,189,248,.1);
+      --text:#D0DCE8;--text-s:#8298B0;--text-m:#445060;--danger:#F05050;
+      --radius:8px;--font-d:'Space Grotesk',sans-serif;--font-b:'Space Grotesk',sans-serif;
     }
-    .divider::before,.divider::after { content:'';flex:1;height:1px;background:var(--border); }
-    .divider span { font-size:11px;color:var(--gold-dim);letter-spacing:.1em;white-space:nowrap; }
 
-    .mode-switch {
-      display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.2rem;
-      background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.16);
-      border-radius:var(--radius);padding:6px;
-    }
-    .mode-btn {
-      border:none;border-radius:9px;background:transparent;color:var(--text-muted);
-      padding:11px 10px;font-size:13px;font-weight:600;cursor:pointer;
-      transition:background .2s,color .2s,transform .1s;
-    }
-    .mode-btn:hover { color:var(--gold-light); }
-    .mode-btn.active { background:var(--gold);color:var(--black); }
-    .mode-btn:active { transform:scale(.98); }
-    .login-section { display:none; }
-    .login-section.active { display:block; }
+    html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:var(--font-b);-webkit-font-smoothing:antialiased;transition:background .35s,color .35s}
 
-    /* card */
-    .card {
-      background:var(--surface);border:1px solid var(--border);
-      border-radius:var(--radius);padding:2rem 1.75rem;margin-bottom:1rem;
-    }
-    .form-group { margin-bottom:1.2rem; }
-    .form-label {
-      display:block;font-size:12px;color:var(--gold-dim);
-      letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;
-    }
-    .form-input {
-      width:100%;background:var(--surface2);border:1px solid var(--border);
-      border-radius:8px;padding:13px 16px;font-size:15px;color:var(--text-main);
-      outline:none;transition:border-color .2s;-webkit-appearance:none;
-    }
-    .form-input::placeholder { color:var(--text-muted); }
-    .form-input:focus { border-color:var(--gold); }
-    .input-hint { font-size:11px;color:var(--text-muted);margin-top:5px; }
+    /* BG GLOW */
+    body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 60% 50% at 50% -5%,var(--glow),transparent 70%)}
 
-    .btn {
-      width:100%;border:none;border-radius:8px;padding:14px;
-      font-size:15px;font-weight:600;letter-spacing:.05em;cursor:pointer;
-      margin-top:.25rem;transition:background .2s,transform .1s;
-      -webkit-tap-highlight-color:transparent;
-      display:flex;align-items:center;justify-content:center;gap:8px;
-    }
-    .btn-gold { background:var(--gold);color:var(--black); }
-    .btn-gold:hover { background:var(--gold-light); }
-    .btn-gold:active { transform:scale(.98); }
-    .btn-gold:disabled { background:var(--gold-dim);cursor:not-allowed;transform:none; }
+    .page{position:relative;z-index:1;min-height:100vh;display:grid;grid-template-columns:1fr 460px}
 
-    .error-msg {
-      display:none;background:rgba(220,50,50,.12);border:1px solid rgba(220,50,50,.3);
-      border-radius:8px;padding:10px 14px;font-size:13px;color:#f87171;
-      margin-top:1rem;text-align:center;
-    }
-    .error-msg.show { display:block; }
+    /* ── LEFT BRAND ── */
+    .brand{display:flex;flex-direction:column;justify-content:center;padding:4rem 3.5rem;position:relative;overflow:hidden}
+    .brand::after{content:'如苑';position:absolute;right:-1rem;bottom:-3rem;font-family:var(--font-d);font-size:clamp(10rem,16vw,18rem);font-weight:700;color:var(--accent);opacity:.04;line-height:1;pointer-events:none;user-select:none}
+    .b-pill{display:inline-flex;align-items:center;gap:8px;background:var(--glow);border:1px solid var(--border);border-radius:99px;padding:5px 16px;font-size:11.5px;color:var(--accent-l);letter-spacing:.08em;text-transform:uppercase;font-weight:500;width:fit-content;margin-bottom:2.5rem}
+    .b-pill::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
+    .b-mark{width:68px;height:68px;border-radius:16px;background:linear-gradient(135deg,var(--accent-d),var(--accent));display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:30px;font-weight:700;color:#080808;margin-bottom:2rem;box-shadow:0 8px 28px var(--glow)}
+    .b-h1{font-family:var(--font-d);font-size:clamp(2rem,3.2vw,3rem);line-height:1.15;font-weight:600;margin-bottom:1.1rem}
+    .b-h1 em{font-style:italic;color:var(--accent-l)}
+    .b-desc{font-size:15px;color:var(--text-s);line-height:1.8;max-width:400px;margin-bottom:2.75rem}
+    .b-feats{display:flex;flex-direction:column;gap:12px}
+    .b-feat{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--text-s)}
+    .b-feat-ico{width:32px;height:32px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
 
-    .loading-ring {
-      display:none;width:18px;height:18px;border:2px solid rgba(0,0,0,.3);
-      border-top-color:var(--black);border-radius:50%;
-      animation:spin .7s linear infinite;
-    }
-    .loading-ring.show { display:block; }
-    @keyframes spin { to{transform:rotate(360deg)} }
+    /* ── RIGHT LOGIN ── */
+    .login{background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;padding:2.75rem 2.75rem;position:relative}
 
-    .teacher-card {
-      background:var(--surface);border:1px solid rgba(201,168,76,.15);
-      border-radius:var(--radius);
-      padding:1.5rem 1.75rem 1.75rem;
-    }
-    .teacher-label {
-      font-size:11px;color:var(--gold-dim);letter-spacing:.1em;
-      text-align:center;margin-bottom:1.2rem;text-transform:uppercase;
-    }
-    .btn-teacher {
-      background:transparent;color:var(--gold-dim);
-      border:1px solid rgba(201,168,76,.3);
-    }
-    .btn-teacher:hover { background:rgba(201,168,76,.08);color:var(--gold); }
-    .btn-teacher:active { transform:scale(.98); }
-    .btn-teacher:disabled { opacity:.5;cursor:not-allowed; }
+    /* Theme row */
+    .theme-row{position:absolute;top:1.4rem;right:1.6rem;display:flex;gap:7px;align-items:center}
+    .td{width:21px;height:21px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .2s,border-color .2s}
+    .td:hover{transform:scale(1.18)}
+    .td.active{border-color:var(--accent)}
+    .td[data-t="obsidian"]{background:radial-gradient(circle at 35% 35%,#E8C97A,#4A3010)}
+    .td[data-t="ivory"]{background:radial-gradient(circle at 35% 35%,#F5F0E8,#7B5E38)}
+    .td[data-t="neon"]{background:radial-gradient(circle at 35% 35%,#38BDF8,#0C1016)}
 
-    .footer-note {
-      text-align:center;margin-top:1.5rem;font-size:12px;
-      color:var(--text-muted);line-height:1.7;
+    /* Role tabs */
+    .role-tabs{display:flex;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:4px;margin-bottom:2.25rem;gap:3px}
+    .rtab{flex:1;padding:10px 8px;border-radius:7px;border:none;background:transparent;cursor:pointer;font-family:var(--font-b);font-size:13px;font-weight:500;color:var(--text-m);transition:.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+    .rtab:hover{color:var(--text-s)}
+    .rtab.active{background:var(--accent);color:#080808;font-weight:700;box-shadow:0 2px 8px var(--glow)}
+
+    /* Form */
+    .l-title{font-family:var(--font-d);font-size:23px;font-weight:600;color:var(--text);margin-bottom:5px}
+    .l-sub{font-size:13px;color:var(--text-m);margin-bottom:1.75rem}
+    .fg{margin-bottom:1.1rem}
+    .fl{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent-d);font-weight:600;margin-bottom:7px}
+    .fi{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:13px 15px;font-size:14.5px;color:var(--text);font-family:var(--font-b);outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none}
+    .fi:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
+    .fi::placeholder{color:var(--text-m)}
+    .fi-hint{font-size:11px;color:var(--text-m);margin-top:5px}
+    #f-name{display:none}
+    .btn-login{width:100%;background:var(--accent);color:#080808;border:none;border-radius:9px;padding:14px;font-size:15px;font-weight:700;font-family:var(--font-b);cursor:pointer;transition:.2s;margin-top:.4rem;display:flex;align-items:center;justify-content:center;gap:8px}
+    .btn-login:hover{background:var(--accent-l);transform:translateY(-1px);box-shadow:0 6px 18px var(--glow)}
+    .btn-login:active{transform:none;box-shadow:none}
+    .btn-login:disabled{opacity:.55;cursor:not-allowed;transform:none}
+    .errmsg{display:none;background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.3);color:#E07060;border-radius:8px;padding:10px 14px;font-size:13px;margin-top:.9rem;animation:shake .35s ease}
+    @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+    .divider-row{display:flex;align-items:center;gap:10px;margin:1.4rem 0;color:var(--text-m);font-size:11.5px}
+    .divider-row::before,.divider-row::after{content:'';flex:1;height:1px;background:var(--border)}
+    .l-foot{text-align:center;font-size:11.5px;color:var(--text-m);margin-top:1.75rem;line-height:1.75}
+    .l-foot a{color:var(--accent-d);text-decoration:none}
+    .l-foot a:hover{color:var(--accent)}
+    .spin{display:none;width:16px;height:16px;border:2px solid rgba(0,0,0,.2);border-top-color:#000;border-radius:50%;animation:rot .6s linear infinite}
+    @keyframes rot{to{transform:rotate(360deg)}}
+
+    @media(max-width:900px){
+      .page{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+      .brand{padding:2.5rem 2rem 2rem;border-bottom:1px solid var(--border)}
+      .b-h1{font-size:1.9rem}.b-desc,.b-feats{display:none}
+      .login{border-left:none;padding:2.25rem 1.75rem}
     }
-    .theme-picker {
-      display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:1rem;
-    }
-    .theme-picker button {
-      background:transparent;border:1px solid var(--border);border-radius:999px;
-      color:var(--text-muted);padding:6px 10px;font-size:12px;cursor:pointer;
-    }
-    .theme-picker button.active { color:var(--black);background:var(--gold);border-color:var(--gold); }
+    @media(max-width:480px){.brand{padding:1.75rem 1.25rem 1.5rem}.login{padding:2rem 1.25rem 2.5rem}}
   </style>
 </head>
-<body>
-<div class="wrap">
+<body data-theme="obsidian">
+<div class="page">
 
+  <!-- BRAND -->
   <div class="brand">
-    <div class="brand-badge">VIP Members Only</div>
-    <h1 class="brand-title">互動美語 × 如苑</h1>
-    <p class="brand-sub">國一英語先修班 · 家長專屬服務平台</p>
+    <div class="b-pill">小班制精英課程</div>
+    <div class="b-mark">如</div>
+    <h1 class="b-h1">互動美語<br><em>× 如苑</em></h1>
+    <p class="b-desc">國一先修小班制專屬平台。即時聯絡簿、成績診斷、課表查詢與家長溝通，一站直達。</p>
+    <div class="b-feats">
+      <div class="b-feat"><div class="b-feat-ico">📋</div>每日數位聯絡簿，即時同步</div>
+      <div class="b-feat"><div class="b-feat-ico">📊</div>個人成績趨勢與精準診斷</div>
+      <div class="b-feat"><div class="b-feat-ico">🗓</div>課表一目瞭然，不錯過任何課程</div>
+      <div class="b-feat"><div class="b-feat-ico">📣</div>最新消息即時推送，永不落後</div>
+    </div>
   </div>
 
-  <div class="gold-line"></div>
-  <div class="mode-switch" aria-label="選擇登入介面">
-    <button class="mode-btn active" id="mode-parent-btn" type="button" onclick="switchLoginMode('parent')">家長介面</button>
-    <button class="mode-btn" id="mode-staff-btn" type="button" onclick="switchLoginMode('staff')">教師 / 管理者</button>
-  </div>
+  <!-- LOGIN -->
+  <div class="login">
+    <div class="theme-row">
+      <div class="td active" data-t="obsidian" title="曜石金" onclick="setTheme('obsidian',this)"></div>
+      <div class="td" data-t="ivory" title="白瓷紙" onclick="setTheme('ivory',this)"></div>
+      <div class="td" data-t="neon" title="藍調科技" onclick="setTheme('neon',this)"></div>
+    </div>
 
-  <section class="login-section active" id="parent-login-section">
-  <div class="divider"><span>家長專屬登入</span></div>
-  <div class="card">
-    <div class="form-group">
-      <label class="form-label" for="student-name">學生姓名</label>
-      <input class="form-input" id="student-name" type="text"
-        placeholder="請輸入孩子的姓名" autocomplete="off" spellcheck="false">
+    <div class="role-tabs">
+      <button class="rtab active" id="rt-parent" onclick="switchRole('parent')">👨‍👩‍👦 學生 / 家長</button>
+      <button class="rtab" id="rt-staff" onclick="switchRole('staff')">🎓 教師 / 管理者</button>
     </div>
-    <div class="form-group">
-      <label class="form-label" for="parent-password">密碼</label>
-      <input class="form-input" id="parent-password" type="password"
-        placeholder="請輸入密碼" autocomplete="current-password">
-      <p class="input-hint">密碼由老師提供，建議登入後自行更改</p>
+
+    <div class="l-title" id="l-title">家長專屬登入</div>
+    <div class="l-sub" id="l-sub">請輸入學生姓名與家長密碼</div>
+
+    <div class="fg" id="f-name">
+      <label class="fl">學生姓名</label>
+      <input class="fi" id="inp-name" type="text" placeholder="請輸入孩子的姓名" autocomplete="off">
     </div>
-    <button class="btn btn-gold" id="parent-login-btn" onclick="handleParentLogin()">
-      <span id="parent-btn-text">登入</span>
-      <div class="loading-ring" id="parent-loading"></div>
+    <div class="fg" id="f-email">
+      <label class="fl" id="lbl-email">電子郵件</label>
+      <input class="fi" id="inp-email" type="email" placeholder="teacher@email.com" autocomplete="username">
+    </div>
+    <div class="fg">
+      <label class="fl">密碼</label>
+      <input class="fi" id="inp-pwd" type="password" placeholder="••••••••" autocomplete="current-password">
+      <div class="fi-hint" id="pwd-hint">密碼由老師提供，建議登入後自行更改</div>
+    </div>
+
+    <button class="btn-login" id="btn-login" onclick="handleLogin()">
+      <span id="btn-txt">登入系統</span>
+      <span class="spin" id="btn-spin"></span>
     </button>
-    <div class="error-msg" id="parent-error"></div>
+    <div class="errmsg" id="errmsg"></div>
+
+    <div class="divider-row">如苑教育</div>
+    <div class="l-foot">
+      互動美語 × 如苑 · 國一先修小班制<br>
+      帳號由老師統一建立 · 如需協助請聯繫班級老師
+    </div>
   </div>
-  </section>
-
-  <section class="login-section" id="staff-login-section">
-  <div class="divider"><span>教師與管理者登入</span></div>
-      <div class="teacher-card">
-        <p class="teacher-label">教師 · 管理者 · 管理後台</p>
-        <div class="form-group">
-          <label class="form-label" for="teacher-email">電子郵件 / 最高管理者名稱</label>
-          <input class="form-input" id="teacher-email" type="text"
-            placeholder="teacher@email.com 或 宋維" autocomplete="username">
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="teacher-password">密碼</label>
-          <input class="form-input" id="teacher-password" type="password"
-            placeholder="請輸入密碼" autocomplete="current-password">
-        </div>
-        <button class="btn btn-teacher" id="teacher-login-btn" onclick="handleTeacherLogin()">
-          <span id="teacher-btn-text">教師登入</span>
-          <div class="loading-ring" id="teacher-loading"></div>
-        </button>
-        <div class="error-msg" id="teacher-error"></div>
-      </div>
-  </section>
-
-  <p class="footer-note">
-    帳號由老師統一建立管理<br>
-    如需協助請聯繫班級老師
-  </p>
-  <div class="theme-picker" aria-label="介面風格">
-    <button type="button" data-theme-btn="obsidian" onclick="setTheme('obsidian')">曜石金</button>
-    <button type="button" data-theme-btn="ivory" onclick="setTheme('ivory')">白瓷紙</button>
-    <button type="button" data-theme-btn="studio" onclick="setTheme('studio')">藍調學院</button>
-  </div>
-
 </div>
 
 <script type="module">
-  import { auth, db } from './js/firebase-config.js';
-  import { signInWithEmailAndPassword, signInAnonymously } from
-    "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-  import { collection, query, where, getDocs, getDoc, doc, updateDoc, serverTimestamp } from
-    "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, signInAnonymously }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, collection, query, where, getDocs, getDoc, doc, updateDoc, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-  /* ── 工具 ── */
-  async function hashPassword(pwd) {
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd));
+  const CFG = {
+    apiKey:"AIzaSyCWcNX_urPo8HOV42pL_ngHs7a9T60tGWY",
+    authDomain:"liveabc-song.firebaseapp.com",
+    projectId:"liveabc-song",
+    storageBucket:"liveabc-song.firebasestorage.app",
+    messagingSenderId:"545222080412",
+    appId:"1:545222080412:web:1c3a34e4b88053ebb97a59"
+  };
+  const app  = getApps().length ? getApps()[0] : initializeApp(CFG);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+
+  let role = 'parent';
+
+  window.switchRole = function(r) {
+    role = r;
+    const isStaff = r === 'staff';
+    document.getElementById('rt-parent').classList.toggle('active', !isStaff);
+    document.getElementById('rt-staff').classList.toggle('active', isStaff);
+    document.getElementById('f-name').style.display   = isStaff ? 'none' : 'block';
+    document.getElementById('f-email').style.display  = isStaff ? 'block' : 'none';
+    document.getElementById('l-title').textContent    = isStaff ? '教師 / 管理者登入' : '家長專屬登入';
+    document.getElementById('l-sub').textContent      = isStaff ? '請輸入您的帳號與密碼' : '請輸入學生姓名與家長密碼';
+    document.getElementById('pwd-hint').style.display = isStaff ? 'none' : 'block';
+    document.getElementById('errmsg').style.display   = 'none';
+  };
+
+  function setLoad(on) {
+    document.getElementById('btn-login').disabled      = on;
+    document.getElementById('btn-spin').style.display  = on ? 'inline-block' : 'none';
+    document.getElementById('btn-txt').style.display   = on ? 'none' : 'inline';
+  }
+  function showErr(msg) {
+    const el = document.getElementById('errmsg');
+    el.textContent = msg; el.style.display = 'block';
+    el.style.animation = 'none';
+    requestAnimationFrame(() => { el.style.animation = 'shake .35s ease'; });
+  }
+  async function hashPwd(p) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(p));
     return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
   }
-  function setLoading(btnId, textId, ringId, on) {
-    document.getElementById(btnId).disabled = on;
-    document.getElementById(textId).style.display = on ? 'none' : 'inline';
-    document.getElementById(ringId).classList.toggle('show', on);
-  }
-  function showError(id, msg) {
-    const el = document.getElementById(id);
-    el.textContent = msg; el.classList.add('show');
-  }
-  function clearError(id) {
-    document.getElementById(id).classList.remove('show');
-  }
 
-  window.setTheme = function(theme) {
-    document.documentElement.dataset.theme = theme;
-    localStorage.setItem('vip_theme', theme);
-    document.querySelectorAll('[data-theme-btn]').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.themeBtn === theme);
-    });
-  };
-  setTheme(localStorage.getItem('vip_theme') || 'obsidian');
-
-  window.switchLoginMode = function(mode) {
-    const isStaff = mode === 'staff';
-    document.getElementById('parent-login-section').classList.toggle('active', !isStaff);
-    document.getElementById('staff-login-section').classList.toggle('active', isStaff);
-    document.getElementById('mode-parent-btn').classList.toggle('active', !isStaff);
-    document.getElementById('mode-staff-btn').classList.toggle('active', isStaff);
-    clearError('parent-error');
-    clearError('teacher-error');
-    setTimeout(() => {
-      const focusId = isStaff ? 'teacher-email' : 'student-name';
-      document.getElementById(focusId)?.focus();
-    }, 50);
-  };
-
-  /* ── 家長登入 ── */
-  window.handleParentLogin = async function() {
-    const name = document.getElementById('student-name').value.trim();
-    const pwd  = document.getElementById('parent-password').value;
-    clearError('parent-error');
-    if (!name || !pwd) { showError('parent-error','請輸入學生姓名與密碼'); return; }
-    setLoading('parent-login-btn','parent-btn-text','parent-loading', true);
+  window.handleLogin = async function() {
+    setLoad(true);
+    document.getElementById('errmsg').style.display = 'none';
     try {
-      const hashed = await hashPassword(pwd);
-      const q = query(collection(db,'users'),
-        where('name','==', name),
-        where('role','==','parent'),
-        where('passwordHash','==', hashed)
-      );
-      const snap = await getDocs(q);
-      if (snap.empty) { showError('parent-error','姓名或密碼錯誤，請重新確認'); return; }
-      const userDoc = snap.docs[0];
-      await signInAnonymously(auth);
-      await updateDoc(doc(db,'users', userDoc.id), { lastLogin: serverTimestamp() });
-      sessionStorage.setItem('vip_uid', userDoc.id);
-      sessionStorage.setItem('vip_name', userDoc.data().name);
-      sessionStorage.setItem('vip_class', userDoc.data().className || '');
-      sessionStorage.setItem('vip_role', 'parent');
-      window.location.href = './parent/dashboard.html';
-    } catch(err) {
-      console.error(err);
-      showError('parent-error','登入失敗，請稍後再試');
-    } finally {
-      setLoading('parent-login-btn','parent-btn-text','parent-loading', false);
-    }
-  };
+      if (role === 'staff') {
+        const email = document.getElementById('inp-email').value.trim();
+        const pwd   = document.getElementById('inp-pwd').value;
+        if (!email || !pwd) { showErr('請填寫電子郵件與密碼'); setLoad(false); return; }
 
-  /* ── 教師登入 ── */
-  window.handleTeacherLogin = async function() {
-    const email = document.getElementById('teacher-email').value.trim();
-    const pwd   = document.getElementById('teacher-password').value;
-    clearError('teacher-error');
-    if (!email || !pwd) { showError('teacher-error','請輸入電子郵件與密碼'); return; }
-    setLoading('teacher-login-btn','teacher-btn-text','teacher-loading', true);
-    try {
-      if (email === '宋維' && pwd === '701544') {
-        await signInAnonymously(auth);
-        sessionStorage.setItem('vip_uid', 'super-songwei');
-        sessionStorage.setItem('vip_name', '宋維');
-        sessionStorage.setItem('vip_role', 'admin');
-        sessionStorage.setItem('vip_super', 'true');
-        window.location.href = './admin/dashboard.html';
-        return;
-      }
-
-      const cred = await signInWithEmailAndPassword(auth, email, pwd);
-      let userDocRef = doc(db,'users', cred.user.uid);
-      let userSnap = await getDoc(userDocRef);
-      let userData = userSnap.exists() ? userSnap.data() : null;
-
-      if (!userData || !['admin','teacher'].includes(userData.role)) {
-        const q = query(collection(db,'users'), where('email','==', email));
-        const snap = await getDocs(q);
-        const matched = snap.docs.find(d => ['admin','teacher'].includes(d.data().role));
-        if (!matched) {
-          showError('teacher-error','此帳號沒有教師或管理者權限');
-          await auth.signOut();
-          return;
+        /* Super admin shortcut (hardcoded — keep or remove per preference) */
+        if (email === '宋維' && pwd === '701544') {
+          await signInAnonymously(auth);
+          sessionStorage.setItem('vip_uid','super-songwei');
+          sessionStorage.setItem('vip_name','宋維');
+          sessionStorage.setItem('vip_role','admin');
+          sessionStorage.setItem('vip_super','true');
+          window.location.href = './admin/dashboard.html'; return;
         }
-        userDocRef = doc(db,'users', matched.id);
-        userData = matched.data();
-        userSnap = matched;
-      }
 
-      await updateDoc(userDocRef, { lastLogin: serverTimestamp() });
-      sessionStorage.setItem('vip_uid', userSnap.id);
-      sessionStorage.setItem('vip_name', userData.name || email);
-      sessionStorage.setItem('vip_role', userData.role);
-      sessionStorage.setItem('vip_super', userData.isSuperAdmin === true ? 'true' : 'false');
-      window.location.href = './admin/dashboard.html';
-    } catch(err) {
-      console.error(err);
-      if (err.code==='auth/wrong-password'||err.code==='auth/invalid-credential')
-        showError('teacher-error','密碼錯誤');
-      else if (err.code==='auth/user-not-found')
-        showError('teacher-error','找不到此帳號');
-      else if (err.code==='auth/too-many-requests')
-        showError('teacher-error','嘗試次數過多，請稍後再試');
-      else showError('teacher-error','登入失敗，請稍後再試');
-    } finally {
-      setLoading('teacher-login-btn','teacher-btn-text','teacher-loading', false);
-    }
+        const cred = await signInWithEmailAndPassword(auth, email, pwd);
+        const snap = await getDoc(doc(db,'users', cred.user.uid));
+        const data = snap.exists() ? snap.data() : null;
+        if (!data || !['admin','teacher'].includes(data.role)) {
+          showErr('此帳號沒有教師或管理者權限'); setLoad(false); return;
+        }
+        await updateDoc(doc(db,'users',cred.user.uid), { lastLogin: serverTimestamp() });
+        sessionStorage.setItem('vip_uid',  cred.user.uid);
+        sessionStorage.setItem('vip_name', data.name || email);
+        sessionStorage.setItem('vip_role', data.role);
+        sessionStorage.setItem('vip_super', data.isSuperAdmin ? 'true' : 'false');
+        window.location.href = './admin/dashboard.html';
+
+      } else {
+        const name = document.getElementById('inp-name').value.trim();
+        const pwd  = document.getElementById('inp-pwd').value;
+        if (!name || !pwd) { showErr('請填寫學生姓名與密碼'); setLoad(false); return; }
+
+        const hashed = await hashPwd(pwd);
+        const q = query(collection(db,'users'),
+          where('name','==',name), where('role','==','parent'), where('passwordHash','==',hashed));
+        const snap = await getDocs(q);
+        if (snap.empty) { showErr('姓名或密碼錯誤，請重新確認'); setLoad(false); return; }
+
+        const d = snap.docs[0];
+        await signInAnonymously(auth);
+        await updateDoc(doc(db,'users',d.id), { lastLogin: serverTimestamp() });
+        sessionStorage.setItem('vip_uid',   d.id);
+        sessionStorage.setItem('vip_name',  d.data().name);
+        sessionStorage.setItem('vip_class', d.data().className || '');
+        sessionStorage.setItem('vip_role',  'parent');
+        window.location.href = './parent/dashboard.html';
+      }
+    } catch(e) {
+      console.error(e);
+      const map = {
+        'auth/user-not-found':'找不到此帳號','auth/wrong-password':'密碼錯誤',
+        'auth/invalid-credential':'帳號或密碼錯誤','auth/too-many-requests':'嘗試次數過多，請稍後再試',
+        'auth/invalid-email':'Email 格式不正確'
+      };
+      showErr(map[e.code] || '登入失敗，請稍後再試');
+    } finally { setLoad(false); }
   };
 
-  /* ── Enter 鍵 ── */
-  document.getElementById('student-name').addEventListener('keydown', e => {
-    if (e.key==='Enter') document.getElementById('parent-password').focus();
+  /* Enter key */
+  ['inp-name','inp-email'].forEach(id => {
+    document.getElementById(id)?.addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('inp-pwd').focus(); });
   });
-  document.getElementById('parent-password').addEventListener('keydown', e => {
-    if (e.key==='Enter') window.handleParentLogin();
-  });
-  document.getElementById('teacher-email').addEventListener('keydown', e => {
-    if (e.key==='Enter') document.getElementById('teacher-password').focus();
-  });
-  document.getElementById('teacher-password').addEventListener('keydown', e => {
-    if (e.key==='Enter') window.handleTeacherLogin();
-  });
+  document.getElementById('inp-pwd').addEventListener('keydown', e => { if(e.key==='Enter') window.handleLogin(); });
+
+  /* Restore theme */
+  ;(function(){
+    const t = localStorage.getItem('vip_theme');
+    if (t) { document.body.dataset.theme=t; document.querySelectorAll('.td').forEach(d=>d.classList.toggle('active',d.dataset.t===t)); }
+  })();
+
+  /* Init: show name field for parent */
+  switchRole('parent');
+</script>
+
+<script>
+function setTheme(name, el) {
+  document.body.dataset.theme = name;
+  document.querySelectorAll('.td').forEach(d => d.classList.remove('active'));
+  el.classList.add('active');
+  localStorage.setItem('vip_theme', name);
+}
 </script>
 </body>
 </html>
