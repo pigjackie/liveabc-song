@@ -7,12 +7,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+TC:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    [data-theme="obsidian"]{--bg:#080808;--surface:#141414;--s2:#1C1C1C;--s3:#242424;--br:rgba(201,168,76,.2);--ac:#C9A84C;--acl:#E8C97A;--acd:#7A5F28;--glow:rgba(201,168,76,.12);--tx:#F0EAD6;--txs:#A89E88;--txm:#5A5248;--r:12px;--fd:'Playfair Display','Noto Serif TC',serif;--fb:'DM Sans','Noto Serif TC',sans-serif;--fm:'IBM Plex Mono',monospace}
-    [data-theme="ivory"]{--bg:#F2EDE5;--surface:#FAFAF7;--s2:#EDE8DF;--s3:#E2DDD5;--br:rgba(100,75,45,.15);--ac:#7B5E38;--acl:#9E7A4D;--acd:#B8996A;--glow:rgba(123,94,56,.08);--tx:#26180E;--txs:#5A4835;--txm:#9A8870;--r:12px;--fd:'Cormorant Garamond','Noto Serif TC',serif;--fb:'DM Sans','Noto Serif TC',sans-serif;--fm:'IBM Plex Mono',monospace}
-    [data-theme="neon"]{--bg:#0C1016;--surface:#1A2030;--s2:#202838;--s3:#2A3448;--br:rgba(56,189,248,.16);--ac:#38BDF8;--acl:#7DD3FC;--acd:#0EA5E9;--glow:rgba(56,189,248,.1);--tx:#D0DCE8;--txs:#8298B0;--txm:#445060;--r:8px;--fd:'Space Grotesk',sans-serif;--fb:'Space Grotesk',sans-serif;--fm:'IBM Plex Mono',monospace}
-
+    [data-theme="obsidian"]{--bg:#080808;--sf:#141414;--s2:#1C1C1C;--s3:#242424;--br:rgba(201,168,76,.2);--ac:#C9A84C;--acl:#E8C97A;--acd:#7A5F28;--glow:rgba(201,168,76,.12);--tx:#F0EAD6;--txs:#A89E88;--txm:#5A5248;--r:12px;--fd:'Playfair Display','Noto Serif TC',serif;--fb:'DM Sans','Noto Serif TC',sans-serif;--fm:'IBM Plex Mono',monospace}
+    [data-theme="ivory"]{--bg:#F2EDE5;--sf:#FAFAF7;--s2:#EDE8DF;--s3:#E2DDD5;--br:rgba(100,75,45,.15);--ac:#7B5E38;--acl:#9E7A4D;--acd:#B8996A;--glow:rgba(123,94,56,.08);--tx:#26180E;--txs:#5A4835;--txm:#9A8870;--r:12px;--fd:'Cormorant Garamond','Noto Serif TC',serif;--fb:'DM Sans','Noto Serif TC',sans-serif;--fm:'IBM Plex Mono',monospace}
+    [data-theme="neon"]{--bg:#0C1016;--sf:#1A2030;--s2:#202838;--s3:#2A3448;--br:rgba(56,189,248,.16);--ac:#38BDF8;--acl:#7DD3FC;--acd:#0EA5E9;--glow:rgba(56,189,248,.1);--tx:#D0DCE8;--txs:#8298B0;--txm:#445060;--r:8px;--fd:'Space Grotesk',sans-serif;--fb:'Space Grotesk',sans-serif;--fm:'IBM Plex Mono',monospace}
     html,body{min-height:100vh;background:var(--bg);color:var(--tx);font-family:var(--fb);-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
-    .topbar{background:var(--surface);border-bottom:1px solid var(--br);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+    .topbar{background:var(--sf);border-bottom:1px solid var(--br);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;position:sticky;top:0;z-index:100}
     .tl{display:flex;align-items:center;gap:10px}
     .logo{width:32px;height:32px;border-radius:7px;background:var(--ac);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:13px;font-weight:700;color:#080808;flex-shrink:0}
     .sname{font-family:var(--fd);font-size:15px;color:var(--acl);font-weight:600}
@@ -24,97 +23,110 @@
     .td[data-t="obsidian"]{background:radial-gradient(circle at 35% 35%,#E8C97A,#4A3010)}
     .td[data-t="ivory"]{background:radial-gradient(circle at 35% 35%,#F5F0E8,#7B5E38)}
     .td[data-t="neon"]{background:radial-gradient(circle at 35% 35%,#38BDF8,#0C1016)}
-    .btn-out{background:transparent;border:1px solid var(--br);border-radius:8px;padding:6px 13px;font-size:12px;color:var(--txm);cursor:pointer;font-family:var(--fb);transition:.2s;white-space:nowrap}
-    .btn-out:hover{border-color:var(--ac);color:var(--ac)}
+    .btn-sm-out{background:transparent;border:1px solid var(--br);border-radius:8px;padding:6px 13px;font-size:12px;color:var(--txm);cursor:pointer;font-family:var(--fb);transition:.2s;white-space:nowrap}
+    .btn-sm-out:hover{border-color:var(--ac);color:var(--ac)}
     .shell{display:flex;max-width:1320px;margin:0 auto;padding:1.4rem 1.75rem;gap:1.4rem;min-height:calc(100vh - 60px)}
+    /* SIDEBAR */
     .sidebar{width:200px;flex-shrink:0;display:flex;flex-direction:column;gap:3px}
     .ns{font-size:9.5px;text-transform:uppercase;letter-spacing:.12em;color:var(--txm);padding:12px 10px 5px;font-weight:600}
-    .ni{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:var(--r);cursor:pointer;font-size:13px;color:var(--txs);background:transparent;border:1px solid transparent;text-align:left;width:100%;font-family:var(--fb);transition:.15s}
+    .ni{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:var(--r);cursor:pointer;font-size:13px;color:var(--txs);background:transparent;border:1px solid transparent;text-align:left;width:100%;font-family:var(--fb);transition:.15s}
     .ni:hover{background:var(--s2);color:var(--tx)}
     .ni.active{background:var(--glow);color:var(--acl);border-color:var(--br);font-weight:600}
-    .ni.super{border:1px solid rgba(201,168,76,.25);color:var(--acl)}
-    [data-theme="neon"] .ni.super{border-color:rgba(56,189,248,.25)}
-    .nio{font-size:14px;flex-shrink:0}
-    .sbar{background:var(--surface);border:1px solid var(--br);border-radius:var(--r);padding:.9rem 1.4rem;margin-bottom:1.1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+    .ni.super{border-color:rgba(201,168,76,.25);color:var(--acl)}
+    .nio{font-size:15px;flex-shrink:0}
+    /* STUDENT BAR */
+    .sbar{background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:.9rem 1.4rem;margin-bottom:1.1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
     .sbarlbl{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--txm);white-space:nowrap;font-weight:600}
+    /* MAIN */
     .main{flex:1;min-width:0}
-    .tp{display:none;animation:fu .22s ease}
+    .tp{display:none;animation:fu .2s ease}
     .tp.active{display:block}
-    @keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-    .card{background:var(--surface);border:1px solid var(--br);border-radius:var(--r);padding:1.6rem;margin-bottom:1.1rem}
+    @keyframes fu{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+    /* CARD */
+    .card{background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:1.6rem;margin-bottom:1.1rem}
     .card:last-child{margin-bottom:0}
     .ch{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.4rem;gap:10px}
-    .ct{font-family:var(--fd);font-size:16.5px;color:var(--ac);display:flex;align-items:center;gap:8px}
+    .ct{font-family:var(--fd);font-size:16px;color:var(--ac);display:flex;align-items:center;gap:8px}
     .ct::before{content:'';width:3px;height:16px;background:var(--ac);border-radius:2px;display:inline-block;flex-shrink:0}
-    .csub{font-size:11.5px;color:var(--txm);margin-top:4px}
-    .fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.1rem}
+    .csub{font-size:11px;color:var(--txm);margin-top:3px}
+    /* FORM */
+    .fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
     .fg{display:flex;flex-direction:column;gap:6px}
     .fg.full{grid-column:1/-1}
-    .fl{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--acd);font-weight:600}
+    .fl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--acd);font-weight:600}
     .fi,.fsel,.fta{background:var(--s2);border:1px solid var(--br);border-radius:8px;padding:10px 13px;font-size:14px;color:var(--tx);font-family:var(--fb);outline:none;transition:border-color .2s,box-shadow .2s;width:100%}
     .fi:focus,.fsel:focus,.fta:focus{border-color:var(--ac);box-shadow:0 0 0 3px var(--glow)}
-    .fsel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px}
-    .fta{min-height:96px;resize:vertical;line-height:1.6}
+    .fsel{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+    .fta{min-height:90px;resize:vertical;line-height:1.6}
     .fhint{font-size:11px;color:var(--txm);margin-top:2px}
+    /* BUTTONS */
     .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:var(--fb);transition:.2s;white-space:nowrap}
     .btnP{background:var(--ac);color:#080808}
     .btnP:hover{background:var(--acl);transform:translateY(-1px);box-shadow:0 4px 12px var(--glow)}
     .btnO{background:transparent;border:1px solid var(--br);color:var(--txs)}
     .btnO:hover{border-color:var(--ac);color:var(--ac)}
-    .btn-sm{padding:6px 13px;font-size:12px}
-    .al{display:none;padding:9px 14px;border-radius:8px;font-size:13px;margin-top:.9rem;animation:fu .2s ease}
+    .btn-xs{padding:6px 12px;font-size:12px}
+    /* ALERT */
+    .al{display:none;padding:9px 14px;border-radius:8px;font-size:13px;margin-top:.9rem}
     .al-ok{background:rgba(39,174,96,.1);border:1px solid rgba(39,174,96,.35);color:#5DCA8A}
     .al-err{background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.35);color:#E07060}
-    .sr{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:1.1rem}
-    .sc{background:var(--surface);border:1px solid var(--br);border-radius:var(--r);padding:1rem 1.2rem}
+    /* STATS */
+    .sr{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-bottom:1.1rem}
+    .sc{background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:1rem 1.2rem}
     .sv{font-family:var(--fd);font-size:28px;font-weight:700;color:var(--acl);line-height:1}
     .sl{font-size:11px;color:var(--txm);margin-top:5px}
-    .step{display:flex;align-items:center;gap:9px;margin-bottom:1.1rem}
+    /* STEP */
+    .step{display:flex;align-items:center;gap:9px;margin-bottom:1rem}
     .stepn{width:26px;height:26px;border-radius:50%;background:var(--ac);color:#080808;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
     .stept{font-size:13.5px;font-weight:600;color:var(--acl)}
-    .sgrid{display:grid;grid-template-columns:62px repeat(6,1fr);gap:1px;background:var(--br);border:1px solid var(--br);border-radius:var(--r);overflow:hidden}
-    .scell{background:var(--surface);padding:7px 8px;min-height:44px;display:flex;flex-direction:column;gap:3px;font-size:11.5px}
-    .scell.head{background:var(--s2);font-weight:600;font-size:11px;color:var(--txm);text-transform:uppercase;letter-spacing:.05em;align-items:center;justify-content:center;min-height:36px;text-align:center}
-    .scell.tcol{background:var(--s2);align-items:center;justify-content:center;font-family:var(--fm);font-size:9.5px;color:var(--txm);min-height:60px;text-align:center;line-height:1.4}
-    .scell.slot{min-height:60px;cursor:pointer;transition:background .15s}
+    /* SCHEDULE GRID */
+    .sgrid{display:grid;grid-template-columns:60px repeat(6,1fr);gap:1px;background:var(--br);border:1px solid var(--br);border-radius:var(--r);overflow:hidden}
+    .scell{background:var(--sf);padding:6px 7px;min-height:42px;display:flex;flex-direction:column;gap:2px;font-size:11px}
+    .scell.head{background:var(--s2);font-weight:600;font-size:10.5px;color:var(--txm);text-transform:uppercase;letter-spacing:.04em;align-items:center;justify-content:center;min-height:34px;text-align:center}
+    .scell.tcol{background:var(--s2);align-items:center;justify-content:center;font-family:var(--fm);font-size:9px;color:var(--txm);min-height:58px;text-align:center;line-height:1.4}
+    .scell.slot{min-height:58px;cursor:pointer;transition:background .15s}
     .scell.slot:hover{background:var(--s2)}
-    .scell.today{background:var(--glow) !important}
-    .sev{background:var(--glow);border-left:3px solid var(--ac);border-radius:4px;padding:3px 6px;font-size:10.5px;color:var(--acl);cursor:pointer}
-    .sev:hover{opacity:.8}
-    .sev .ec{font-weight:600}.sev .er{color:var(--txm);font-size:9.5px}
-    .wnav{display:flex;align-items:center;gap:9px;margin-bottom:1rem}
-    .wnb{background:var(--s2);border:1px solid var(--br);color:var(--txm);border-radius:8px;padding:5px 12px;cursor:pointer;font-size:16px;line-height:1;transition:.15s;font-family:var(--fb)}
+    .scell.today{background:var(--glow)!important}
+    .sev{background:var(--glow);border-left:3px solid var(--ac);border-radius:3px;padding:3px 6px;font-size:10px;color:var(--acl);cursor:pointer}
+    .sev:hover{opacity:.75}
+    .sev .ec{font-weight:700}.sev .er{color:var(--txm);font-size:9px}
+    .wnav{display:flex;align-items:center;gap:8px;margin-bottom:.9rem}
+    .wnb{background:var(--s2);border:1px solid var(--br);color:var(--txm);border-radius:7px;padding:4px 11px;cursor:pointer;font-size:16px;line-height:1;transition:.15s;font-family:var(--fb)}
     .wnb:hover{color:var(--ac);border-color:var(--ac)}
-    .wlbl{font-size:13px;color:var(--tx);font-weight:500;min-width:126px;text-align:center}
-    .ni-card{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);padding:1rem 1.3rem;margin-bottom:9px;display:flex;gap:10px;align-items:flex-start}
-    .nbg{flex-shrink:0;padding:2px 9px;border-radius:99px;font-size:10.5px;font-weight:700;border:1px solid var(--br);margin-top:2px;white-space:nowrap;background:var(--glow);color:var(--ac)}
+    .wlbl{font-size:13px;color:var(--tx);font-weight:500;min-width:120px;text-align:center}
+    /* NEWS */
+    .nc{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start}
+    .nbg{flex-shrink:0;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700;border:1px solid var(--br);margin-top:2px;white-space:nowrap;background:var(--glow);color:var(--ac)}
     .nbg.urgent{background:rgba(192,57,43,.12);color:#E07060;border-color:rgba(192,57,43,.3)}
     .nbg.event{background:rgba(41,128,185,.12);color:#6AADDB;border-color:rgba(41,128,185,.3)}
-    .ntitle{font-size:13.5px;font-weight:600;color:var(--tx);margin-bottom:4px}
-    .nbody{font-size:13px;color:var(--txs);line-height:1.65}
-    .nmeta{font-size:11px;color:var(--txm);margin-top:6px}
-    .mth{border-bottom:1px solid var(--br);padding:.9rem 0;display:flex;gap:.9rem;align-items:flex-start}
+    .ntit{font-size:13.5px;font-weight:600;color:var(--tx);margin-bottom:3px}
+    .nbod{font-size:12.5px;color:var(--txs);line-height:1.6}
+    .nmet{font-size:10.5px;color:var(--txm);margin-top:5px}
+    /* MSG */
+    .mth{border-bottom:1px solid var(--br);padding:.85rem 0;display:flex;gap:.85rem;align-items:flex-start}
     .mth:last-child{border-bottom:none}
-    .mav{width:36px;height:36px;border-radius:50%;background:var(--glow);border:1px solid var(--br);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:14px;color:var(--ac);flex-shrink:0}
-    .mname{font-size:13.5px;font-weight:600;color:var(--tx)}
-    .mt{font-size:11px;color:var(--txm);margin-left:7px}
-    .mprev{font-size:12.5px;color:var(--txs);margin-top:3px}
+    .mav{width:34px;height:34px;border-radius:50%;background:var(--glow);border:1px solid var(--br);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:13px;color:var(--ac);flex-shrink:0}
+    .mname{font-size:13px;font-weight:600;color:var(--tx)}
+    .mt2{font-size:10.5px;color:var(--txm);margin-left:6px}
+    .mprev{font-size:12px;color:var(--txs);margin-top:3px}
     .unread{color:var(--acl);font-weight:700}
-    .rbox{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);padding:1.1rem;margin-top:.9rem;display:none}
-    .rbox textarea{width:100%;background:var(--surface);border:1px solid var(--br);border-radius:8px;padding:11px;color:var(--tx);font-family:var(--fb);font-size:14px;resize:none;min-height:80px;outline:none;transition:border-color .2s}
+    .rbox{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);padding:1rem;margin-top:.85rem;display:none}
+    .rbox textarea{width:100%;background:var(--sf);border:1px solid var(--br);border-radius:7px;padding:10px;color:var(--tx);font-family:var(--fb);font-size:13.5px;resize:none;min-height:80px;outline:none;transition:border-color .2s}
     .rbox textarea:focus{border-color:var(--ac)}
-    .rfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:9px}
-    .upload-zone{border:2px dashed var(--br);border-radius:var(--r);padding:1.75rem;text-align:center;cursor:pointer;transition:border-color .2s;margin-top:.9rem}
-    .upload-zone:hover{border-color:var(--ac)}
-    .upload-zone input[type="file"]{display:none}
-    .preview-img{max-width:100%;border-radius:8px;margin-top:.9rem;border:1px solid var(--br);display:none}
-    .mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+    .rfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
+    /* UPLOAD */
+    .uzbox{border:2px dashed var(--br);border-radius:var(--r);padding:1.5rem;text-align:center;cursor:pointer;transition:border-color .2s;margin-top:.8rem}
+    .uzbox:hover{border-color:var(--ac)}
+    .uzbox input{display:none}
+    .prev-img{max-width:100%;border-radius:8px;margin-top:.8rem;border:1px solid var(--br);display:none}
+    /* MODAL */
+    .mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:500;align-items:center;justify-content:center}
     .mo.open{display:flex}
-    .mbox{background:var(--surface);border:1px solid var(--br);border-radius:14px;padding:2rem;width:min(480px,95vw);animation:fu .2s ease}
-    .mbox-title{font-family:var(--fd);font-size:16.5px;color:var(--ac);margin-bottom:1.4rem;display:flex;justify-content:space-between;align-items:center}
-    .mc{background:none;border:none;cursor:pointer;color:var(--txm);font-size:20px;line-height:1;transition:.15s}
-    .mc:hover{color:var(--tx)}
-    .mfoot{display:flex;justify-content:flex-end;gap:9px;margin-top:1.4rem}
+    .mbox{background:var(--sf);border:1px solid var(--br);border-radius:14px;padding:1.75rem;width:min(460px,94vw);animation:fu .2s ease}
+    .mtit{font-family:var(--fd);font-size:16px;color:var(--ac);margin-bottom:1.3rem;display:flex;justify-content:space-between;align-items:center}
+    .mcls{background:none;border:none;cursor:pointer;color:var(--txm);font-size:20px;line-height:1;transition:.15s}
+    .mcls:hover{color:var(--tx)}
+    .mfoo{display:flex;justify-content:flex-end;gap:8px;margin-top:1.3rem}
     ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--s3);border-radius:99px}
     @media(max-width:820px){
       .topbar{padding:0 1rem}.ssub{display:none}
@@ -134,24 +146,24 @@
   </div>
   <div class="tr">
     <div class="tswitch">
-      <div class="td active" data-t="obsidian" onclick="setTheme('obsidian',this)"></div>
-      <div class="td" data-t="ivory" onclick="setTheme('ivory',this)"></div>
-      <div class="td" data-t="neon" onclick="setTheme('neon',this)"></div>
+      <div class="td active" data-t="obsidian"></div>
+      <div class="td" data-t="ivory"></div>
+      <div class="td" data-t="neon"></div>
     </div>
-    <button class="btn-out" onclick="doLogout()">⏻ 登出</button>
+    <button class="btn-sm-out" id="btn-logout">⏻ 登出</button>
   </div>
 </header>
 
 <div class="shell">
   <nav class="sidebar">
     <div class="ns">教學功能</div>
-    <button class="ni active" onclick="sw('t-cb',this)"><span class="nio">📋</span>聯絡簿佈達</button>
-    <button class="ni" onclick="sw('t-gr',this)"><span class="nio">📊</span>成績與診斷</button>
-    <button class="ni" onclick="sw('t-mg',this)"><span class="nio">💬</span>家長私訊</button>
-    <button class="ni" onclick="sw('t-sc',this)"><span class="nio">🗓</span>課表管理</button>
-    <button class="ni" onclick="sw('t-nw',this)"><span class="nio">📣</span>最新消息</button>
+    <button class="ni active" data-tab="t-cb"><span class="nio">📋</span>聯絡簿佈達</button>
+    <button class="ni" data-tab="t-gr"><span class="nio">📊</span>成績與診斷</button>
+    <button class="ni" data-tab="t-mg"><span class="nio">💬</span>家長私訊</button>
+    <button class="ni" data-tab="t-sc"><span class="nio">🗓</span>課表管理</button>
+    <button class="ni" data-tab="t-nw"><span class="nio">📣</span>最新消息</button>
     <div class="ns">系統管理</div>
-    <button class="ni super" onclick="sw('t-su',this)"><span class="nio">⚙️</span>班級與帳號</button>
+    <button class="ni super" data-tab="t-su"><span class="nio">⚙️</span>班級與帳號</button>
   </nav>
 
   <main class="main">
@@ -166,15 +178,17 @@
         <div class="ch"><div><div class="ct">新增數位聯絡簿</div><div class="csub">每次記錄均即時同步至家長端</div></div></div>
         <div class="fgrid">
           <div class="fg"><label class="fl">課程日期</label><input type="date" class="fi" id="cb-date"></div>
-          <div class="fg"><label class="fl">出缺勤狀態</label><select class="fsel" id="cb-att"><option>準時出席</option><option>遲到</option><option>請假</option><option>曠課</option></select></div>
+          <div class="fg"><label class="fl">出缺勤狀態</label>
+            <select class="fsel" id="cb-att"><option>準時出席</option><option>遲到</option><option>請假</option><option>曠課</option></select>
+          </div>
           <div class="fg"><label class="fl">英文進度</label><input type="text" class="fi" id="cb-en" placeholder="例如：Unit 3 核心單字精讀"></div>
-          <div class="fg"><label class="fl">國文進度</label><input type="text" class="fi" id="cb-zh" placeholder="例如：文言文句型修辭應用"></div>
+          <div class="fg"><label class="fl">國文進度</label><input type="text" class="fi" id="cb-zh" placeholder="例如：文言文句型修辭"></div>
           <div class="fg full"><label class="fl">指派作業</label><textarea class="fta" id="cb-hw" placeholder="請詳細填寫今日指定作業內容…"></textarea></div>
           <div class="fg full"><label class="fl">課堂表現標籤（半形逗號分隔）</label><input type="text" class="fi" id="cb-tags" placeholder="專注度佳, 互動踴躍, 作業完成率高"></div>
         </div>
-        <div style="margin-top:1.3rem;display:flex;gap:9px;flex-wrap:wrap">
-          <button class="btn btnP" onclick="submitCB()">📤 發布聯絡簿</button>
-          <button class="btn btnO btn-sm" onclick="clrCB()">清空欄位</button>
+        <div style="margin-top:1.2rem;display:flex;gap:9px;flex-wrap:wrap">
+          <button class="btn btnP" id="btn-cb">📤 發布聯絡簿</button>
+          <button class="btn btnO btn-xs" id="btn-cb-clr">清空欄位</button>
         </div>
         <div id="al-cb-ok" class="al al-ok">✔ 聯絡簿已成功發布！</div>
         <div id="al-cb-err" class="al al-err"></div>
@@ -187,15 +201,17 @@
         <div class="ch"><div><div class="ct">登錄成績與診斷</div></div></div>
         <div class="fgrid">
           <div class="fg"><label class="fl">測驗日期</label><input type="date" class="fi" id="gr-date"></div>
-          <div class="fg"><label class="fl">測驗類型</label><select class="fsel" id="gr-type"><option>單字測驗</option><option>閱讀理解</option><option>聽力測驗</option><option>模擬月考</option><option>小考</option><option>作業評分</option></select></div>
+          <div class="fg"><label class="fl">測驗類型</label>
+            <select class="fsel" id="gr-type"><option>單字測驗</option><option>閱讀理解</option><option>聽力測驗</option><option>模擬月考</option><option>小考</option><option>作業評分</option></select>
+          </div>
           <div class="fg full"><label class="fl">測驗名稱</label><input type="text" class="fi" id="gr-title" placeholder="例如：第三週課堂單字精測"></div>
           <div class="fg"><label class="fl">學生分數（0–100）</label><input type="number" class="fi" id="gr-score" min="0" max="100" placeholder="0–100"></div>
           <div class="fg"><label class="fl">全班平均分</label><input type="number" class="fi" id="gr-avg" min="0" max="100" placeholder="0–100"></div>
-          <div class="fg full"><label class="fl">個別化診斷與精進方針</label><textarea class="fta" id="gr-diag" style="min-height:110px" placeholder="請針對本次測驗分析學生弱點並給予具體補強建議…"></textarea></div>
+          <div class="fg full"><label class="fl">個別化診斷與精進方針</label><textarea class="fta" id="gr-diag" style="min-height:100px" placeholder="請針對本次測驗分析學生弱點並給予具體補強建議…"></textarea></div>
         </div>
-        <div style="margin-top:1.3rem;display:flex;gap:9px;flex-wrap:wrap">
-          <button class="btn btnP" onclick="submitGR()">📊 登錄成績</button>
-          <button class="btn btnO btn-sm" onclick="clrGR()">清空</button>
+        <div style="margin-top:1.2rem;display:flex;gap:9px;flex-wrap:wrap">
+          <button class="btn btnP" id="btn-gr">📊 登錄成績</button>
+          <button class="btn btnO btn-xs" id="btn-gr-clr">清空</button>
         </div>
         <div id="al-gr-ok" class="al al-ok">✔ 成績與診斷已成功儲存！</div>
         <div id="al-gr-err" class="al al-err"></div>
@@ -205,60 +221,77 @@
     <!-- 家長私訊 -->
     <div id="t-mg" class="tp">
       <div class="card">
-        <div class="ct" style="margin-bottom:1.3rem">家長私訊管理</div>
+        <div class="ct" style="margin-bottom:1.2rem">家長私訊管理</div>
         <div id="mth-list">
-          <div class="mth"><div class="mav">王</div><div style="flex:1"><div><span class="mname unread">王小明 家長</span><span class="mt">10分鐘前</span></div><div class="mprev unread">老師您好，請問這周英文作業截止時間？</div></div><button class="btn btnP btn-sm" onclick="openR('王小明')">回覆</button></div>
-          <div class="mth"><div class="mav">陳</div><div style="flex:1"><div><span class="mname">陳美玲 家長</span><span class="mt">昨天</span></div><div class="mprev">謝謝老師，孩子最近進步很多！</div></div><button class="btn btnO btn-sm" onclick="openR('陳美玲')">回覆</button></div>
-        </div>
-        <div class="rbox" id="rbox">
-          <div style="font-size:11.5px;color:var(--ac);margin-bottom:9px" id="rlbl">回覆給：</div>
-          <textarea id="rtxt" placeholder="輸入回覆內容…"></textarea>
-          <div class="rfoot">
-            <button class="btn btnO btn-sm" onclick="closeR()">取消</button>
-            <button class="btn btnP btn-sm" onclick="sendR()">傳送 ✉</button>
+          <div class="mth">
+            <div class="mav">王</div>
+            <div style="flex:1"><div><span class="mname unread">王小明 家長</span><span class="mt2">10分鐘前</span></div><div class="mprev unread">老師您好，請問這周英文作業截止時間？</div></div>
+            <button class="btn btnP btn-xs" data-reply="王小明">回覆</button>
+          </div>
+          <div class="mth">
+            <div class="mav">陳</div>
+            <div style="flex:1"><div><span class="mname">陳美玲 家長</span><span class="mt2">昨天</span></div><div class="mprev">謝謝老師，孩子最近進步很多！</div></div>
+            <button class="btn btnO btn-xs" data-reply="陳美玲">回覆</button>
+          </div>
+          <div class="mth">
+            <div class="mav">林</div>
+            <div style="flex:1"><div><span class="mname">林子豪 家長</span><span class="mt2">2天前</span></div><div class="mprev">請問下週是否有模擬考？</div></div>
+            <button class="btn btnO btn-xs" data-reply="林子豪">回覆</button>
           </div>
         </div>
-        <div id="al-mg-ok" class="al al-ok" style="display:none">✔ 訊息已傳送！</div>
+        <div class="rbox" id="rbox">
+          <div style="font-size:11.5px;color:var(--ac);margin-bottom:8px" id="rlbl">回覆給：</div>
+          <textarea id="rtxt" placeholder="輸入回覆內容…"></textarea>
+          <div class="rfoot">
+            <button class="btn btnO btn-xs" id="btn-rclose">取消</button>
+            <button class="btn btnP btn-xs" id="btn-rsend">傳送 ✉</button>
+          </div>
+        </div>
+        <div id="al-mg-ok" class="al al-ok">✔ 訊息已傳送！</div>
       </div>
     </div>
 
     <!-- 課表管理 -->
     <div id="t-sc" class="tp">
       <div class="card">
-        <div class="ch"><div class="ct">週課表管理</div><button class="btn btnP btn-sm" onclick="document.getElementById('mo-ev').classList.add('open')">＋ 新增課程</button></div>
+        <div class="ch">
+          <div class="ct">週課表管理</div>
+          <button class="btn btnP btn-xs" id="btn-add-ev">＋ 新增課程</button>
+        </div>
         <div class="wnav">
-          <button class="wnb" onclick="cwk(-1)">‹</button>
+          <button class="wnb" id="wk-prev">‹</button>
           <span class="wlbl" id="wlbl">—</span>
-          <button class="wnb" onclick="cwk(1)">›</button>
-          <button class="btn-out" style="font-size:11.5px" onclick="cwk(0,'r')">今天</button>
+          <button class="wnb" id="wk-next">›</button>
+          <button class="btn-sm-out" id="wk-today" style="font-size:11px">今天</button>
         </div>
         <div style="overflow-x:auto"><div class="sgrid" id="sgrid"></div></div>
       </div>
+      <!-- 發布課表圖片 -->
       <div class="card">
-        <div class="ch"><div><div class="ct">發布課表至家長端</div><div class="csub">圖片或文字課表，發布後家長即可查看</div></div></div>
+        <div class="ch"><div><div class="ct">發布課表至家長端</div><div class="csub">圖片或文字課表，家長端即時可見</div></div></div>
         <div class="fgrid">
           <div class="fg"><label class="fl">目標班級</label><select class="fsel" id="sc-cls"><option value="">請選擇班級…</option></select></div>
-          <div class="fg full"><label class="fl">文字課表（選填）</label><textarea class="fta" id="sc-text" placeholder="可直接貼上課表文字，家長端將以原格式顯示…"></textarea></div>
+          <div class="fg full"><label class="fl">文字課表（選填）</label><textarea class="fta" id="sc-text" placeholder="可直接貼上課表文字…"></textarea></div>
           <div class="fg full">
             <label class="fl">圖片課表（選填）</label>
-            <div class="upload-zone" onclick="document.getElementById('sc-img-input').click()">
-              <input type="file" id="sc-img-input" accept="image/*" onchange="previewImg(this)">
-              <div style="font-size:28px;margin-bottom:.4rem">🖼</div>
-              <div style="font-size:14px;color:var(--txs)">點擊上傳課表圖片</div>
-              <div style="font-size:12px;color:var(--txm);margin-top:.3rem">支援 JPG / PNG / WEBP</div>
-              <img id="sc-preview" class="preview-img" src="" alt="預覽">
+            <div class="uzbox" id="uzbox">
+              <input type="file" id="sc-img-inp" accept="image/*">
+              <div style="font-size:26px;margin-bottom:.3rem">🖼</div>
+              <div style="font-size:13.5px;color:var(--txs)">點擊上傳課表圖片</div>
+              <div style="font-size:11.5px;color:var(--txm);margin-top:.3rem">JPG / PNG / WEBP</div>
+              <img id="sc-prev" class="prev-img" src="" alt="預覽">
             </div>
           </div>
         </div>
-        <div style="margin-top:1.1rem;display:flex;gap:9px;flex-wrap:wrap">
-          <button class="btn btnP" onclick="publishSchedule()">📤 發布至家長端</button>
-          <button class="btn btnO btn-sm" onclick="clrSched()">清空</button>
+        <div style="margin-top:1rem;display:flex;gap:9px;flex-wrap:wrap">
+          <button class="btn btnP" id="btn-pub-sc">📤 發布至家長端</button>
+          <button class="btn btnO btn-xs" id="btn-sc-clr">清空</button>
         </div>
         <div id="al-sc-ok" class="al al-ok">✔ 課表已發布至家長端！</div>
         <div id="al-sc-err" class="al al-err"></div>
       </div>
       <div class="card">
-        <div class="ct" style="margin-bottom:1.1rem">本週課程一覽</div>
+        <div class="ct" style="margin-bottom:1rem">本週課程一覽</div>
         <div id="uplist"></div>
       </div>
     </div>
@@ -268,23 +301,27 @@
       <div class="card">
         <div class="ch"><div class="ct">發布最新消息</div></div>
         <div class="fgrid">
-          <div class="fg"><label class="fl">消息類型</label><select class="fsel" id="nw-type"><option>公告</option><option>緊急</option><option>活動</option><option>考試</option><option>課程</option></select></div>
-          <div class="fg"><label class="fl">目標對象</label><select class="fsel" id="nw-target"><option>全體</option><option>國一英語先修 A 班</option><option>國一英語先修 B 班</option><option>師資</option></select></div>
+          <div class="fg"><label class="fl">消息類型</label>
+            <select class="fsel" id="nw-type"><option>公告</option><option>緊急</option><option>活動</option><option>考試</option><option>課程</option></select>
+          </div>
+          <div class="fg"><label class="fl">目標對象</label>
+            <select class="fsel" id="nw-tgt"><option>全體</option><option>國一英語先修 A 班</option><option>國一英語先修 B 班</option><option>師資</option></select>
+          </div>
           <div class="fg full"><label class="fl">消息標題</label><input type="text" class="fi" id="nw-title" placeholder="請輸入公告標題"></div>
-          <div class="fg full"><label class="fl">消息內容</label><textarea class="fta" id="nw-body" style="min-height:120px" placeholder="請詳細填寫公告內容…"></textarea></div>
+          <div class="fg full"><label class="fl">消息內容</label><textarea class="fta" id="nw-body" style="min-height:110px" placeholder="請詳細填寫公告內容…"></textarea></div>
         </div>
-        <div style="margin-top:1.3rem;display:flex;gap:9px;flex-wrap:wrap">
-          <button class="btn btnP" onclick="submitNW()">📣 發布消息</button>
-          <button class="btn btnO btn-sm" onclick="clrNW()">清空</button>
+        <div style="margin-top:1.2rem;display:flex;gap:9px;flex-wrap:wrap">
+          <button class="btn btnP" id="btn-nw">📣 發布消息</button>
+          <button class="btn btnO btn-xs" id="btn-nw-clr">清空</button>
         </div>
         <div id="al-nw-ok" class="al al-ok">✔ 最新消息已成功發布！</div>
         <div id="al-nw-err" class="al al-err"></div>
       </div>
       <div class="card">
-        <div class="ch"><div class="ct">已發布消息</div><button class="btn-out btn-sm" onclick="loadNW()">🔄 重整</button></div>
+        <div class="ch"><div class="ct">已發布消息</div><button class="btn-sm-out btn-xs" id="btn-nw-reload">🔄 重整</button></div>
         <div id="nw-list">
-          <div class="ni-card"><span class="nbg urgent">緊急</span><div style="flex:1"><div class="ntitle">下週一英文段考提醒</div><div class="nbody">請複習 Unit 1–4 核心單字、句型及聽力練習。</div><div class="nmeta">全體 · 2025/01/14</div></div><button class="btn btnO btn-sm" onclick="delNW(this)">刪除</button></div>
-          <div class="ni-card"><span class="nbg event">活動</span><div style="flex:1"><div class="ntitle">寒假英語口語實戰營（2/3–2/7）</div><div class="nbody">如苑寒假口語課程開放報名，每天2小時沉浸式會話訓練，名額僅限8人！</div><div class="nmeta">全體 · 2025/01/12</div></div><button class="btn btnO btn-sm" onclick="delNW(this)">刪除</button></div>
+          <div class="nc" data-did=""><span class="nbg urgent">緊急</span><div style="flex:1"><div class="ntit">下週一英文段考提醒</div><div class="nbod">請複習 Unit 1–4 核心單字、句型及聽力練習。</div><div class="nmet">全體 · 2025/01/14</div></div><button class="btn btnO btn-xs btn-del-nw">刪除</button></div>
+          <div class="nc" data-did=""><span class="nbg event">活動</span><div style="flex:1"><div class="ntit">寒假英語口語實戰營（2/3–2/7）</div><div class="nbod">如苑寒假口語課程開放報名，名額僅限8人！</div><div class="nmet">全體 · 2025/01/12</div></div><button class="btn btnO btn-xs btn-del-nw">刪除</button></div>
         </div>
       </div>
     </div>
@@ -300,18 +337,18 @@
         <div class="step"><div class="stepn">1</div><div class="stept">建立新班級</div></div>
         <div class="fgrid">
           <div class="fg"><label class="fl">班級名稱</label><input type="text" class="fi" id="su-cls" placeholder="例如：國一英語先修 A 班"></div>
-          <div class="fg" style="align-self:flex-end"><button class="btn btnP" onclick="createCls()">確認新增班級</button></div>
+          <div class="fg" style="align-self:flex-end"><button class="btn btnP" id="btn-su-cls">確認新增班級</button></div>
         </div>
         <div id="al-su-cls" class="al al-ok">✔ 班級建立成功！</div>
       </div>
       <div class="card">
-        <div class="step"><div class="stepn">2</div><div class="stept">註冊新學生帳戶（家長專屬憑證）</div></div>
+        <div class="step"><div class="stepn">2</div><div class="stept">註冊新學生帳戶</div></div>
         <div class="fgrid">
           <div class="fg"><label class="fl">學生姓名</label><input type="text" class="fi" id="su-sname" placeholder="請輸入學生真實姓名"></div>
           <div class="fg"><label class="fl">所屬班級</label><select class="fsel" id="su-scls"><option value="">請先建立班級…</option></select></div>
-          <div class="fg"><label class="fl">家長登入密碼</label><input type="text" class="fi" id="su-spwd" placeholder="設定初始登入密碼"><div class="fhint">⚠ 請告知家長登入後立即修改密碼</div></div>
+          <div class="fg"><label class="fl">家長登入密碼</label><input type="text" class="fi" id="su-spwd" placeholder="設定初始登入密碼"><div class="fhint">⚠ 請告知家長登入後立即修改</div></div>
         </div>
-        <button class="btn btnP" style="margin-top:1rem" onclick="createStu()">建立學生帳戶</button>
+        <button class="btn btnP" style="margin-top:1rem" id="btn-su-stu">建立學生帳戶</button>
         <div id="al-su-stu" class="al al-ok">✔ 學生帳戶建立成功！</div>
       </div>
       <div class="card">
@@ -322,238 +359,372 @@
           <div class="fg"><label class="fl">姓名</label><input type="text" class="fi" id="su-sn" placeholder="真實姓名"></div>
           <div class="fg"><label class="fl">登入密碼</label><input type="password" class="fi" id="su-spwd2" placeholder="設定初始密碼"></div>
         </div>
-        <button class="btn btnP" style="margin-top:1rem" onclick="createStaff()">授權教職員帳號</button>
-        <div id="al-su-staff-ok" class="al al-ok">✔ 教職員帳號授權成功！</div>
-        <div id="al-su-staff-err" class="al al-err"></div>
+        <button class="btn btnP" style="margin-top:1rem" id="btn-su-staff">授權教職員帳號</button>
+        <div id="al-su-stok" class="al al-ok">✔ 教職員帳號授權成功！</div>
+        <div id="al-su-sterr" class="al al-err"></div>
       </div>
     </div>
+
   </main>
 </div>
 
 <!-- 新增課程 Modal -->
 <div class="mo" id="mo-ev">
   <div class="mbox">
-    <div class="mbox-title">新增課程 <button class="mc" onclick="document.getElementById('mo-ev').classList.remove('open')">✕</button></div>
+    <div class="mtit">新增課程 <button class="mcls" id="mo-ev-close">✕</button></div>
     <div class="fgrid">
-      <div class="fg"><label class="fl">星期</label><select class="fsel" id="ev-day"><option value="1">週一</option><option value="2">週二</option><option value="3">週三</option><option value="4">週四</option><option value="5">週五</option><option value="6">週六</option></select></div>
-      <div class="fg"><label class="fl">時段</label><select class="fsel" id="ev-slot"><option value="0">09:00–10:30</option><option value="1">10:40–12:10</option><option value="2">13:00–14:30</option><option value="3">14:40–16:10</option><option value="4">16:20–17:50</option><option value="5">18:00–19:30</option><option value="6">19:40–21:10</option></select></div>
+      <div class="fg"><label class="fl">星期</label>
+        <select class="fsel" id="ev-day"><option value="1">週一</option><option value="2">週二</option><option value="3">週三</option><option value="4">週四</option><option value="5">週五</option><option value="6">週六</option></select>
+      </div>
+      <div class="fg"><label class="fl">時段</label>
+        <select class="fsel" id="ev-slot"><option value="0">09:00–10:30</option><option value="1">10:40–12:10</option><option value="2">13:00–14:30</option><option value="3">14:40–16:10</option><option value="4">16:20–17:50</option><option value="5">18:00–19:30</option><option value="6">19:40–21:10</option></select>
+      </div>
       <div class="fg full"><label class="fl">班級名稱</label><input type="text" class="fi" id="ev-cls" placeholder="例如：國一英語先修 A 班"></div>
       <div class="fg full"><label class="fl">教室 / 地點</label><input type="text" class="fi" id="ev-room" placeholder="例如：204 教室"></div>
       <div class="fg full"><label class="fl">備註（選填）</label><input type="text" class="fi" id="ev-note" placeholder="例如：本週主題：閱讀策略"></div>
     </div>
-    <div class="mfoot">
-      <button class="btn btnO" onclick="document.getElementById('mo-ev').classList.remove('open')">取消</button>
-      <button class="btn btnP" onclick="saveEv()">儲存課程</button>
+    <div class="mfoo">
+      <button class="btn btnO" id="mo-ev-cancel">取消</button>
+      <button class="btn btnP" id="mo-ev-save">儲存課程</button>
     </div>
   </div>
 </div>
 
-<script type="module">
-  import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, signOut, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-  import { getFirestore, collection, query, where, orderBy, limit, getDocs, addDoc, setDoc, deleteDoc, doc, serverTimestamp, Timestamp }
-    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-  import { getStorage, ref, uploadBytes, getDownloadURL }
-    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
-
-  const CFG={apiKey:"AIzaSyCWcNX_urPo8HOV42pL_ngHs7a9T60tGWY",authDomain:"liveabc-song.firebaseapp.com",projectId:"liveabc-song",storageBucket:"liveabc-song.firebasestorage.app",messagingSenderId:"545222080412",appId:"1:545222080412:web:1c3a34e4b88053ebb97a59"};
-  const app=getApps().length?getApps()[0]:initializeApp(CFG);
-  const auth=getAuth(app); const db=getFirestore(app); const storage=getStorage(app);
-
-  /* ── Auth Guard ── */
-  const uid    = sessionStorage.getItem('vip_uid');
-  const role   = sessionStorage.getItem('vip_role');
-  const isSuper = sessionStorage.getItem('vip_super') === 'true';
-  if (!uid || (!['admin','teacher'].includes(role) && !isSuper)) {
-    window.location.href = 'index.html';
-  }
-
-  const today = new Date().toISOString().slice(0,10);
-  document.getElementById('cb-date').value = today;
-  document.getElementById('gr-date').value = today;
-
-  function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
-  function al(id,dur=3500){const e=document.getElementById(id);if(!e)return;e.style.display='block';setTimeout(()=>e.style.display='none',dur)}
-  function err(id,msg){const e=document.getElementById(id);if(!e)return;e.textContent='⚠ '+msg;e.style.display='block';setTimeout(()=>e.style.display='none',4500)}
-  async function hashPwd(p){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(p));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('')}
-
-  async function loadStudents(){
-    try{
-      const sn=await getDocs(query(collection(db,'users'),where('role','==','parent')));
-      const sel=document.getElementById('gsel');
-      sel.innerHTML='<option value="">請選擇學生…</option>';
-      let c=0;
-      sn.forEach(s=>{const d=s.data();const o=document.createElement('option');o.value=s.id;o.textContent=d.name+' ('+(d.className||'未指定')+')';sel.appendChild(o);c++;});
-      document.getElementById('st-stu').textContent=c;
-    }catch(e){console.error(e)}
-  }
-
-  async function loadClasses(){
-    try{
-      const sn=await getDocs(collection(db,'classes'));
-      ['su-scls','sc-cls'].forEach(id=>{
-        const sel=document.getElementById(id); if(!sel)return;
-        sel.innerHTML='<option value="">請選擇班級…</option>';
-        sn.forEach(s=>{const o=document.createElement('option');o.value=o.textContent=s.data().className;sel.appendChild(o);});
-      });
-      document.getElementById('st-cls').textContent=sn.size;
-    }catch(e){console.error(e)}
-  }
-
-  window.submitCB=async function(){
-    const sid=document.getElementById('gsel').value; if(!sid)return err('al-cb-err','請先選擇操作學生');
-    const data={studentId:sid,date:document.getElementById('cb-date').value,attendance:document.getElementById('cb-att').value,progressEnglish:document.getElementById('cb-en').value.trim(),progressChinese:document.getElementById('cb-zh').value.trim(),homework:document.getElementById('cb-hw').value.trim(),tags:document.getElementById('cb-tags').value.split(',').map(t=>t.trim()).filter(Boolean),createdAt:serverTimestamp()};
-    if(!data.date)return err('al-cb-err','請填寫課程日期');
-    try{await addDoc(collection(db,'contact_books'),data);al('al-cb-ok');clrCB();}catch(e){err('al-cb-err',e.message)}
-  };
-  window.clrCB=function(){['cb-en','cb-zh','cb-hw','cb-tags'].forEach(id=>document.getElementById(id).value='');document.getElementById('cb-date').value=today};
-
-  window.submitGR=async function(){
-    const sid=document.getElementById('gsel').value; if(!sid)return err('al-gr-err','請先選擇操作學生');
-    const title=document.getElementById('gr-title').value.trim(); const score=Number(document.getElementById('gr-score').value);
-    if(!title)return err('al-gr-err','請填寫測驗名稱');
-    if(isNaN(score)||score<0||score>100)return err('al-gr-err','請填寫 0–100 之間的分數');
-    try{
-      await addDoc(collection(db,'grades'),{studentId:sid,title,examType:document.getElementById('gr-type').value,score,averageScore:Number(document.getElementById('gr-avg').value)||null,diagnosis:document.getElementById('gr-diag').value.trim(),examDate:Timestamp.fromDate(new Date(document.getElementById('gr-date').value)),createdAt:serverTimestamp()});
-      al('al-gr-ok'); clrGR();
-    }catch(e){err('al-gr-err',e.message)}
-  };
-  window.clrGR=function(){['gr-title','gr-score','gr-avg','gr-diag'].forEach(id=>document.getElementById(id).value='');document.getElementById('gr-date').value=today};
-
-  let schedImgFile=null;
-  window.previewImg=function(inp){
-    const file=inp.files[0]; if(!file)return; schedImgFile=file;
-    const r=new FileReader(); r.onload=e=>{const img=document.getElementById('sc-preview');img.src=e.target.result;img.style.display='block';}; r.readAsDataURL(file);
-  };
-  window.publishSchedule=async function(){
-    const cls=document.getElementById('sc-cls').value; if(!cls)return err('al-sc-err','請選擇目標班級');
-    const text=document.getElementById('sc-text').value.trim();
-    if(!text&&!schedImgFile)return err('al-sc-err','請填寫文字課表或上傳圖片課表');
-    try{
-      let imageUrl=null;
-      if(schedImgFile){
-        const storRef=ref(storage,`class_schedules/${cls}_${Date.now()}`);
-        const snap=await uploadBytes(storRef,schedImgFile); imageUrl=await getDownloadURL(snap.ref);
-      }
-      await setDoc(doc(db,'class_schedules',cls),{className:cls,scheduleText:text||null,imageUrl:imageUrl||null,updatedAt:serverTimestamp()});
-      al('al-sc-ok'); schedImgFile=null;
-    }catch(e){err('al-sc-err',e.message)}
-  };
-  window.clrSched=function(){document.getElementById('sc-text').value='';document.getElementById('sc-img-input').value='';document.getElementById('sc-preview').style.display='none';schedImgFile=null};
-
-  window.submitNW=async function(){
-    const title=document.getElementById('nw-title').value.trim(); const body=document.getElementById('nw-body').value.trim();
-    if(!title)return err('al-nw-err','請填寫消息標題'); if(!body)return err('al-nw-err','請填寫消息內容');
-    const type=document.getElementById('nw-type').value; const target=document.getElementById('nw-target').value;
-    try{
-      const docRef=await addDoc(collection(db,'news'),{title,body,type,target,createdAt:serverTimestamp(),readCount:0});
-      al('al-nw-ok'); clrNW();
-      const bc=type==='緊急'?'urgent':type==='活動'?'event':'';
-      const div=document.createElement('div'); div.className='ni-card'; div.dataset.did=docRef.id;
-      div.innerHTML=`<span class="nbg ${bc}">${esc(type)}</span><div style="flex:1"><div class="ntitle">${esc(title)}</div><div class="nbody">${esc(body)}</div><div class="nmeta">${esc(target)} · 剛剛</div></div><button class="btn btnO btn-sm" onclick="delNW(this)">刪除</button>`;
-      document.getElementById('nw-list').prepend(div);
-    }catch(e){err('al-nw-err',e.message)}
-  };
-  window.clrNW=function(){['nw-title','nw-body'].forEach(id=>document.getElementById(id).value='')};
-  window.loadNW=async function(){
-    try{
-      const sn=await getDocs(query(collection(db,'news'),orderBy('createdAt','desc'),limit(20)));
-      const list=document.getElementById('nw-list'); list.innerHTML='';
-      if(sn.empty){list.innerHTML='<div style="padding:1.5rem;text-align:center;color:var(--txm)">尚無已發布消息</div>';return;}
-      sn.forEach(s=>{
-        const d=s.data(); const bc=d.type==='緊急'?'urgent':d.type==='活動'?'event':'';
-        const div=document.createElement('div'); div.className='ni-card'; div.dataset.did=s.id;
-        div.innerHTML=`<span class="nbg ${bc}">${esc(d.type||'公告')}</span><div style="flex:1"><div class="ntitle">${esc(d.title)}</div><div class="nbody">${esc(d.body)}</div><div class="nmeta">${esc(d.target||'全體')}</div></div><button class="btn btnO btn-sm" onclick="delNW(this)">刪除</button>`;
-        list.appendChild(div);
-      });
-    }catch(e){console.error(e)}
-  };
-  window.delNW=async function(btn){
-    const card=btn.closest('.ni-card'); if(!confirm('確定刪除？'))return;
-    if(card?.dataset?.did){try{await deleteDoc(doc(db,'news',card.dataset.did))}catch(e){console.warn(e)}}
-    card?.remove();
-  };
-
-  window.openR=function(n){document.getElementById('rlbl').textContent='回覆給：'+n+' 家長';document.getElementById('rtxt').value='';document.getElementById('rbox').style.display='block';document.getElementById('rtxt').focus()};
-  window.closeR=function(){document.getElementById('rbox').style.display='none'};
-  window.sendR=function(){const e=document.getElementById('al-mg-ok');e.style.display='block';setTimeout(()=>e.style.display='none',3000);closeR()};
-
-  window.createCls=async function(){const n=document.getElementById('su-cls').value.trim();if(!n)return alert('請輸入班級名稱');try{await addDoc(collection(db,'classes'),{className:n,createdAt:serverTimestamp()});al('al-su-cls');document.getElementById('su-cls').value='';await loadClasses();}catch(e){alert(e.message)}};
-
-  window.createStu=async function(){
-    const name=document.getElementById('su-sname').value.trim(); const cls=document.getElementById('su-scls').value; const pwd=document.getElementById('su-spwd').value;
-    if(!name||!cls||!pwd)return alert('請填寫完整資料');
-    try{const h=await hashPwd(pwd);await addDoc(collection(db,'users'),{name,className:cls,passwordHash:h,role:'parent',createdAt:serverTimestamp()});al('al-su-stu');['su-sname','su-spwd'].forEach(id=>document.getElementById(id).value='');await loadStudents();}catch(e){alert(e.message)}
-  };
-
-  window.createStaff=async function(){
-    const type=document.getElementById('su-stype').value; const email=document.getElementById('su-semail').value.trim(); const name=document.getElementById('su-sn').value.trim(); const pwd=document.getElementById('su-spwd2').value;
-    if(!email||!name||!pwd)return err('al-su-staff-err','請填寫完整資料');
-    try{
-      const sa=initializeApp(CFG,'SA-'+Date.now()); const sau=getAuth(sa);
-      const cred=await createUserWithEmailAndPassword(sau,email,pwd);
-      await setDoc(doc(db,'users',cred.user.uid),{email,name,role:type,jobTitle:type==='admin'?'管理者':'老師',isSuperAdmin:false,createdAt:serverTimestamp()});
-      await signOut(sau);
-      al('al-su-staff-ok'); ['su-semail','su-sn','su-spwd2'].forEach(id=>document.getElementById(id).value='');
-    }catch(e){err('al-su-staff-err',e.message)}
-  };
-
-  window.doLogout=async function(){await signOut(auth).catch(()=>{});sessionStorage.clear();window.location.href='index.html'};
-
-  loadStudents(); loadClasses();
-</script>
-
 <script>
-  function setTheme(n,el){document.body.dataset.theme=n;document.querySelectorAll('.td').forEach(d=>d.classList.remove('active'));el.classList.add('active');localStorage.setItem('vip_theme',n)}
-  (function(){const t=localStorage.getItem('vip_theme');if(t){document.body.dataset.theme=t;const d=document.querySelector(`.td[data-t="${t}"]`);if(d){document.querySelectorAll('.td').forEach(x=>x.classList.remove('active'));d.classList.add('active')}}})();
+/* ══════════════════════════════════════════════
+   全部用普通 script，避免 module scope 問題
+   Firebase 用動態 import 載入
+══════════════════════════════════════════════ */
 
-  const HIDE=['t-sc','t-nw','t-su'];
-  window.sw=function(id,btn){
-    document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));
-    document.querySelectorAll('.ni').forEach(b=>b.classList.remove('active'));
-    document.getElementById(id)?.classList.add('active'); btn?.classList.add('active');
-    document.getElementById('sbar').style.display=HIDE.includes(id)?'none':'flex';
-  };
+/* ── Auth Guard ── */
+const _uid   = sessionStorage.getItem('vip_uid');
+const _role  = sessionStorage.getItem('vip_role');
+const _super = sessionStorage.getItem('vip_super');
+if (!_uid || (!['admin','teacher'].includes(_role) && _super !== 'true')) {
+  window.location.href = 'index.html';
+}
 
-  document.getElementById('mo-ev').addEventListener('click',function(e){if(e.target===this)this.classList.remove('open')});
+/* ── Theme ── */
+function setTheme(name) {
+  document.body.dataset.theme = name;
+  document.querySelectorAll('.td').forEach(d => d.classList.toggle('active', d.dataset.t === name));
+  localStorage.setItem('vip_theme', name);
+}
+document.querySelectorAll('.td').forEach(d => d.addEventListener('click', () => setTheme(d.dataset.t)));
+(function(){ const t = localStorage.getItem('vip_theme'); if(t) setTheme(t); })();
 
-  const SLOTS=['09:00–10:30','10:40–12:10','13:00–14:30','14:40–16:10','16:20–17:50','18:00–19:30','19:40–21:10'];
-  const DAYS=['週一','週二','週三','週四','週五','週六'];
-  let evs=JSON.parse(localStorage.getItem('vip_schedule')||'[]');
-  if(!evs.length) evs=[{id:1,day:1,slot:0,className:'國一英語先修 A 班',room:'204 教室',note:'Unit 3'},{id:2,day:3,slot:2,className:'國一英語先修 B 班',room:'205 教室',note:'閱讀理解'},{id:3,day:5,slot:1,className:'國一英語先修 A 班',room:'204 教室',note:'聽力訓練'}];
-  let wkOff=0;
-  function wkDates(off){const n=new Date();const dow=n.getDay()||7;const mon=new Date(n);mon.setDate(n.getDate()-dow+1+off*7);return Array.from({length:6},(_,i)=>{const d=new Date(mon);d.setDate(mon.getDate()+i);return d})}
-  function fm(d){return `${d.getMonth()+1}/${d.getDate()}`}
-  function renderSched(){
-    const dates=wkDates(wkOff); const tds=new Date().toDateString();
-    document.getElementById('wlbl').textContent=`${fm(dates[0])} — ${fm(dates[5])}`;
-    let h='<div class="scell head"></div>';
-    dates.forEach((d,i)=>{const it=d.toDateString()===tds;h+=`<div class="scell head${it?'" style="color:var(--ac)':''">${DAYS[i]}<br><span style="font-size:9px;font-weight:400">${fm(d)}</span></div>`});
-    SLOTS.forEach((sl,si)=>{
-      h+=`<div class="scell tcol">${sl.replace('–','–<br>')}</div>`;
-      for(let di=1;di<=6;di++){
-        const de=evs.filter(e=>e.day===di&&e.slot===si); const it=dates[di-1].toDateString()===tds;
-        h+=`<div class="scell slot${it?' today':''}" onclick="cellClick(${di},${si})">`;
-        de.forEach(e=>{h+=`<div class="sev" onclick="event.stopPropagation();removeEv(${e.id})" title="點擊刪除"><div class="ec">${e.className}</div><div class="er">${e.room}</div></div>`});
-        h+='</div>';
-      }
+/* ── Tab Switch ── */
+const HIDE_SBAR = ['t-sc','t-nw','t-su'];
+function sw(tabId) {
+  document.querySelectorAll('.tp').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(b => b.classList.remove('active'));
+  const tab = document.getElementById(tabId);
+  if (tab) tab.classList.add('active');
+  document.querySelectorAll('.ni').forEach(b => {
+    if (b.dataset.tab === tabId) b.classList.add('active');
+  });
+  document.getElementById('sbar').style.display = HIDE_SBAR.includes(tabId) ? 'none' : 'flex';
+}
+document.querySelectorAll('.ni[data-tab]').forEach(btn => {
+  btn.addEventListener('click', () => sw(btn.dataset.tab));
+});
+
+/* ── Logout ── */
+document.getElementById('btn-logout').addEventListener('click', async () => {
+  const { getAuth, signOut } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
+  const { getApps } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
+  if (getApps().length) { try { await signOut(getAuth(getApps()[0])); } catch(e){} }
+  sessionStorage.clear();
+  window.location.href = 'index.html';
+});
+
+/* ── Helper: show alert ── */
+function alOk(id, dur=3200) {
+  const el = document.getElementById(id); if(!el)return;
+  el.style.display='block'; setTimeout(()=>el.style.display='none', dur);
+}
+function alErr(id, msg, dur=4000) {
+  const el = document.getElementById(id); if(!el)return;
+  el.textContent='⚠ '+msg; el.style.display='block';
+  setTimeout(()=>el.style.display='none', dur);
+}
+async function hashPwd(p) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(p));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function esc(s){ return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])); }
+
+/* ── Firebase init ── */
+const CFG = {
+  apiKey:"AIzaSyCWcNX_urPo8HOV42pL_ngHs7a9T60tGWY",
+  authDomain:"liveabc-song.firebaseapp.com",
+  projectId:"liveabc-song",
+  storageBucket:"liveabc-song.firebasestorage.app",
+  messagingSenderId:"545222080412",
+  appId:"1:545222080412:web:1c3a34e4b88053ebb97a59"
+};
+let _db = null, _auth = null, _storage = null;
+async function getDB() {
+  if (_db) return _db;
+  const { initializeApp, getApps } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
+  const { getFirestore } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  const { getAuth } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
+  const app = getApps().length ? getApps()[0] : initializeApp(CFG);
+  _db = getFirestore(app); _auth = getAuth(app);
+  return _db;
+}
+
+/* ── Set today dates ── */
+const todayStr = new Date().toISOString().slice(0,10);
+document.getElementById('cb-date').value = todayStr;
+document.getElementById('gr-date').value = todayStr;
+
+/* ── Load students ── */
+async function loadStudents() {
+  const db = await getDB();
+  const { collection, query, where, getDocs } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  try {
+    const sn = await getDocs(query(collection(db,'users'), where('role','==','parent')));
+    const sel = document.getElementById('gsel');
+    sel.innerHTML = '<option value="">請選擇學生…</option>';
+    let c=0; sn.forEach(s=>{ const d=s.data(); const o=document.createElement('option'); o.value=s.id; o.textContent=d.name+' ('+(d.className||'未指定')+')'; sel.appendChild(o); c++; });
+    document.getElementById('st-stu').textContent = c;
+  } catch(e){ console.error(e); }
+}
+async function loadClasses() {
+  const db = await getDB();
+  const { collection, getDocs } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  try {
+    const sn = await getDocs(collection(db,'classes'));
+    ['su-scls','sc-cls'].forEach(id => {
+      const sel = document.getElementById(id); if(!sel)return;
+      sel.innerHTML='<option value="">請選擇班級…</option>';
+      sn.forEach(s=>{ const o=document.createElement('option'); o.value=o.textContent=s.data().className; sel.appendChild(o); });
     });
-    document.getElementById('sgrid').innerHTML=h;
-    const up=document.getElementById('uplist');
-    up.innerHTML=evs.length?evs.map(e=>`<div style="display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--br);font-size:13px"><span style="font-family:var(--fm);font-size:11px;color:var(--ac);min-width:28px">${DAYS[e.day-1]}</span><span style="font-size:11px;color:var(--txm);min-width:110px">${SLOTS[e.slot]}</span><span style="flex:1;font-weight:600">${e.className}</span><span style="color:var(--txm);font-size:12px">${e.room}</span><button class="btn btnO btn-sm" onclick="removeEv(${e.id})">移除</button></div>`).join(''):'<div style="text-align:center;padding:2rem;color:var(--txm)">點擊課表格子或「新增課程」建立課程</div>';
-  }
-  window.cwk=function(d,r){if(r==='r')wkOff=0;else wkOff+=d;renderSched()};
-  window.cellClick=function(day,slot){document.getElementById('ev-day').value=day;document.getElementById('ev-slot').value=slot;document.getElementById('mo-ev').classList.add('open')};
-  window.saveEv=function(){
-    const cls=document.getElementById('ev-cls').value.trim(); if(!cls)return alert('請填寫班級名稱');
-    evs.push({id:Date.now(),day:parseInt(document.getElementById('ev-day').value),slot:parseInt(document.getElementById('ev-slot').value),className:cls,room:document.getElementById('ev-room').value.trim()||'—',note:document.getElementById('ev-note').value.trim()});
-    localStorage.setItem('vip_schedule',JSON.stringify(evs));
-    document.getElementById('mo-ev').classList.remove('open');
-    ['ev-cls','ev-room','ev-note'].forEach(id=>document.getElementById(id).value='');
-    renderSched();
+    document.getElementById('st-cls').textContent = sn.size;
+  } catch(e){ console.error(e); }
+}
+
+/* ── 聯絡簿 ── */
+document.getElementById('btn-cb').addEventListener('click', async () => {
+  const sid = document.getElementById('gsel').value; if(!sid){ alErr('al-cb-err','請先選擇操作學生'); return; }
+  const db = await getDB();
+  const { collection, addDoc, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  const data = {
+    studentId: sid,
+    date: document.getElementById('cb-date').value,
+    attendance: document.getElementById('cb-att').value,
+    progressEnglish: document.getElementById('cb-en').value.trim(),
+    progressChinese: document.getElementById('cb-zh').value.trim(),
+    homework: document.getElementById('cb-hw').value.trim(),
+    tags: document.getElementById('cb-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+    createdAt: serverTimestamp()
   };
-  window.removeEv=function(id){evs=evs.filter(e=>e.id!==id);localStorage.setItem('vip_schedule',JSON.stringify(evs));renderSched()};
+  if(!data.date){ alErr('al-cb-err','請填寫課程日期'); return; }
+  try { await addDoc(collection(db,'contact_books'),data); alOk('al-cb-ok'); clearCB(); }
+  catch(e){ alErr('al-cb-err', e.message); }
+});
+function clearCB(){ ['cb-en','cb-zh','cb-hw','cb-tags'].forEach(id=>document.getElementById(id).value=''); document.getElementById('cb-date').value=todayStr; }
+document.getElementById('btn-cb-clr').addEventListener('click', clearCB);
+
+/* ── 成績 ── */
+document.getElementById('btn-gr').addEventListener('click', async () => {
+  const sid = document.getElementById('gsel').value; if(!sid){ alErr('al-gr-err','請先選擇操作學生'); return; }
+  const title = document.getElementById('gr-title').value.trim(); if(!title){ alErr('al-gr-err','請填寫測驗名稱'); return; }
+  const score = Number(document.getElementById('gr-score').value);
+  if(isNaN(score)||score<0||score>100){ alErr('al-gr-err','請填寫 0–100 之間的分數'); return; }
+  const db = await getDB();
+  const { collection, addDoc, serverTimestamp, Timestamp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  try {
+    await addDoc(collection(db,'grades'),{
+      studentId:sid, title, examType:document.getElementById('gr-type').value, score,
+      averageScore:Number(document.getElementById('gr-avg').value)||null,
+      diagnosis:document.getElementById('gr-diag').value.trim(),
+      examDate:Timestamp.fromDate(new Date(document.getElementById('gr-date').value)),
+      createdAt:serverTimestamp()
+    });
+    alOk('al-gr-ok'); clearGR();
+  } catch(e){ alErr('al-gr-err', e.message); }
+});
+function clearGR(){ ['gr-title','gr-score','gr-avg','gr-diag'].forEach(id=>document.getElementById(id).value=''); document.getElementById('gr-date').value=todayStr; }
+document.getElementById('btn-gr-clr').addEventListener('click', clearGR);
+
+/* ── 家長私訊 ── */
+document.querySelectorAll('[data-reply]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const name = btn.dataset.reply;
+    document.getElementById('rlbl').textContent = '回覆給：' + name + ' 家長';
+    document.getElementById('rtxt').value = '';
+    document.getElementById('rbox').style.display = 'block';
+    document.getElementById('rtxt').focus();
+  });
+});
+document.getElementById('btn-rclose').addEventListener('click', () => { document.getElementById('rbox').style.display='none'; });
+document.getElementById('btn-rsend').addEventListener('click', () => {
+  const t = document.getElementById('rtxt').value.trim(); if(!t)return;
+  alOk('al-mg-ok'); document.getElementById('rbox').style.display='none';
+});
+
+/* ── 最新消息 ── */
+document.getElementById('btn-nw').addEventListener('click', async () => {
+  const title = document.getElementById('nw-title').value.trim(); if(!title){ alErr('al-nw-err','請填寫消息標題'); return; }
+  const body  = document.getElementById('nw-body').value.trim();  if(!body){  alErr('al-nw-err','請填寫消息內容');   return; }
+  const type  = document.getElementById('nw-type').value;
+  const tgt   = document.getElementById('nw-tgt').value;
+  const db = await getDB();
+  const { collection, addDoc, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  try {
+    const ref = await addDoc(collection(db,'news'),{title,body,type,target:tgt,createdAt:serverTimestamp(),readCount:0});
+    alOk('al-nw-ok');
+    document.getElementById('nw-title').value=''; document.getElementById('nw-body').value='';
+    const bc = type==='緊急'?'urgent':type==='活動'?'event':'';
+    const div = document.createElement('div'); div.className='nc'; div.dataset.did=ref.id;
+    div.innerHTML=`<span class="nbg ${bc}">${esc(type)}</span><div style="flex:1"><div class="ntit">${esc(title)}</div><div class="nbod">${esc(body)}</div><div class="nmet">${esc(tgt)} · 剛剛</div></div><button class="btn btnO btn-xs btn-del-nw">刪除</button>`;
+    div.querySelector('.btn-del-nw').addEventListener('click', () => delNews(div));
+    document.getElementById('nw-list').prepend(div);
+  } catch(e){ alErr('al-nw-err', e.message); }
+});
+document.getElementById('btn-nw-clr').addEventListener('click', () => { ['nw-title','nw-body'].forEach(id=>document.getElementById(id).value=''); });
+async function delNews(card) {
+  if(!confirm('確定刪除？')) return;
+  const did = card.dataset.did;
+  if(did) {
+    const db = await getDB();
+    const { doc, deleteDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    try { await deleteDoc(doc(db,'news',did)); } catch(e){}
+  }
+  card.remove();
+}
+document.querySelectorAll('.btn-del-nw').forEach(btn => btn.addEventListener('click', () => delNews(btn.closest('.nc'))));
+document.getElementById('btn-nw-reload').addEventListener('click', async () => {
+  const db = await getDB();
+  const { collection, query, orderBy, limit, getDocs } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  try {
+    const sn = await getDocs(query(collection(db,'news'),orderBy('createdAt','desc'),limit(20)));
+    const list = document.getElementById('nw-list'); list.innerHTML='';
+    if(sn.empty){ list.innerHTML='<div style="padding:1.5rem;text-align:center;color:var(--txm)">尚無已發布消息</div>'; return; }
+    sn.forEach(s=>{
+      const d=s.data(); const bc=d.type==='緊急'?'urgent':d.type==='活動'?'event':'';
+      const div=document.createElement('div'); div.className='nc'; div.dataset.did=s.id;
+      div.innerHTML=`<span class="nbg ${bc}">${esc(d.type||'公告')}</span><div style="flex:1"><div class="ntit">${esc(d.title)}</div><div class="nbod">${esc(d.body)}</div><div class="nmet">${esc(d.target||'全體')}</div></div><button class="btn btnO btn-xs btn-del-nw">刪除</button>`;
+      div.querySelector('.btn-del-nw').addEventListener('click', () => delNews(div));
+      list.appendChild(div);
+    });
+  } catch(e){ console.error(e); }
+});
+
+/* ── 班級管理 ── */
+document.getElementById('btn-su-cls').addEventListener('click', async () => {
+  const name = document.getElementById('su-cls').value.trim(); if(!name){ alert('請輸入班級名稱'); return; }
+  const db = await getDB();
+  const { collection, addDoc, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  try { await addDoc(collection(db,'classes'),{className:name,createdAt:serverTimestamp()}); alOk('al-su-cls'); document.getElementById('su-cls').value=''; await loadClasses(); }
+  catch(e){ alert(e.message); }
+});
+document.getElementById('btn-su-stu').addEventListener('click', async () => {
+  const name=document.getElementById('su-sname').value.trim(), cls=document.getElementById('su-scls').value, pwd=document.getElementById('su-spwd').value;
+  if(!name||!cls||!pwd){ alert('請填寫完整資料'); return; }
+  const db = await getDB();
+  const { collection, addDoc, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  try { const h=await hashPwd(pwd); await addDoc(collection(db,'users'),{name,className:cls,passwordHash:h,role:'parent',createdAt:serverTimestamp()}); alOk('al-su-stu'); ['su-sname','su-spwd'].forEach(id=>document.getElementById(id).value=''); await loadStudents(); }
+  catch(e){ alert(e.message); }
+});
+document.getElementById('btn-su-staff').addEventListener('click', async () => {
+  const type=document.getElementById('su-stype').value, email=document.getElementById('su-semail').value.trim(), name=document.getElementById('su-sn').value.trim(), pwd=document.getElementById('su-spwd2').value;
+  if(!email||!name||!pwd){ alErr('al-su-sterr','請填寫完整資料'); return; }
+  const { initializeApp, getApps } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
+  const { getAuth, createUserWithEmailAndPassword, signOut } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
+  const { getFirestore, doc, setDoc, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  try {
+    const sa = initializeApp(CFG,'SA-'+Date.now()); const sau = getAuth(sa);
+    const cred = await createUserWithEmailAndPassword(sau,email,pwd);
+    const sdb = getFirestore(sa);
+    await setDoc(doc(sdb,'users',cred.user.uid),{email,name,role:type,jobTitle:type==='admin'?'管理者':'老師',isSuperAdmin:false,createdAt:serverTimestamp()});
+    await signOut(sau);
+    alOk('al-su-stok'); ['su-semail','su-sn','su-spwd2'].forEach(id=>document.getElementById(id).value='');
+  } catch(e){ alErr('al-su-sterr', e.message); }
+});
+
+/* ── 課表圖片上傳 ── */
+document.getElementById('uzbox').addEventListener('click', () => document.getElementById('sc-img-inp').click());
+let _schedImgFile = null;
+document.getElementById('sc-img-inp').addEventListener('change', function(){
+  const file = this.files[0]; if(!file)return; _schedImgFile=file;
+  const r=new FileReader(); r.onload=e=>{ const img=document.getElementById('sc-prev'); img.src=e.target.result; img.style.display='block'; }; r.readAsDataURL(file);
+});
+document.getElementById('btn-pub-sc').addEventListener('click', async () => {
+  const cls = document.getElementById('sc-cls').value; if(!cls){ alErr('al-sc-err','請選擇目標班級'); return; }
+  const text = document.getElementById('sc-text').value.trim();
+  if(!text && !_schedImgFile){ alErr('al-sc-err','請填寫文字課表或上傳圖片'); return; }
+  const { initializeApp, getApps } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
+  const { getStorage, ref, uploadBytes, getDownloadURL } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js");
+  const { getFirestore, doc, setDoc, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  const app2 = getApps().length ? getApps()[0] : initializeApp(CFG);
+  const stor = getStorage(app2); const db2 = getFirestore(app2);
+  try {
+    let imageUrl=null;
+    if(_schedImgFile){
+      const sref=ref(stor,`class_schedules/${cls}_${Date.now()}`);
+      const snap=await uploadBytes(sref,_schedImgFile); imageUrl=await getDownloadURL(snap.ref);
+    }
+    await setDoc(doc(db2,'class_schedules',cls),{className:cls,scheduleText:text||null,imageUrl:imageUrl||null,updatedAt:serverTimestamp()});
+    alOk('al-sc-ok'); _schedImgFile=null;
+  } catch(e){ alErr('al-sc-err',e.message); }
+});
+document.getElementById('btn-sc-clr').addEventListener('click',()=>{ document.getElementById('sc-text').value=''; document.getElementById('sc-img-inp').value=''; document.getElementById('sc-prev').style.display='none'; _schedImgFile=null; });
+
+/* ── 課表格子 ── */
+const SLOTS=['09:00–10:30','10:40–12:10','13:00–14:30','14:40–16:10','16:20–17:50','18:00–19:30','19:40–21:10'];
+const DAYS=['週一','週二','週三','週四','週五','週六'];
+let evs = JSON.parse(localStorage.getItem('vip_schedule')||'[]');
+if(!evs.length) evs=[{id:1,day:1,slot:0,className:'國一英語先修 A 班',room:'204 教室',note:'Unit 3'},{id:2,day:3,slot:2,className:'國一英語先修 B 班',room:'205 教室',note:'閱讀理解'},{id:3,day:5,slot:1,className:'國一英語先修 A 班',room:'204 教室',note:'聽力訓練'}];
+let wkOff=0;
+function wkDates(off){ const n=new Date(); const dow=n.getDay()||7; const mon=new Date(n); mon.setDate(n.getDate()-dow+1+off*7); return Array.from({length:6},(_,i)=>{ const d=new Date(mon); d.setDate(mon.getDate()+i); return d; }); }
+function fm(d){ return `${d.getMonth()+1}/${d.getDate()}`; }
+function renderSched(){
+  const dates=wkDates(wkOff); const tds=new Date().toDateString();
+  document.getElementById('wlbl').textContent=`${fm(dates[0])} — ${fm(dates[5])}`;
+  let h='<div class="scell head"></div>';
+  dates.forEach((d,i)=>{ const it=d.toDateString()===tds; h+=`<div class="scell head${it?'" style="color:var(--ac)':''">${DAYS[i]}<br><span style="font-size:9px;font-weight:400">${fm(d)}</span></div>`; });
+  SLOTS.forEach((sl,si)=>{
+    h+=`<div class="scell tcol">${sl.replace('–','–<br>')}</div>`;
+    for(let di=1;di<=6;di++){
+      const de=evs.filter(e=>e.day===di&&e.slot===si); const it=dates[di-1].toDateString()===tds;
+      h+=`<div class="scell slot${it?' today':''}" data-day="${di}" data-slot="${si}">`;
+      de.forEach(e=>{ h+=`<div class="sev" data-eid="${e.id}" title="點擊刪除"><div class="ec">${esc(e.className)}</div><div class="er">${esc(e.room)}</div></div>`; });
+      h+='</div>';
+    }
+  });
+  const grid=document.getElementById('sgrid'); grid.innerHTML=h;
+  grid.querySelectorAll('.scell.slot').forEach(cell=>{
+    cell.addEventListener('click',()=>{ document.getElementById('ev-day').value=cell.dataset.day; document.getElementById('ev-slot').value=cell.dataset.slot; document.getElementById('mo-ev').classList.add('open'); });
+  });
+  grid.querySelectorAll('.sev').forEach(ev=>{
+    ev.addEventListener('click', e=>{ e.stopPropagation(); if(confirm('確定移除此課程？')){ evs=evs.filter(x=>x.id!=ev.dataset.eid); localStorage.setItem('vip_schedule',JSON.stringify(evs)); renderSched(); } });
+  });
+  const up=document.getElementById('uplist');
+  up.innerHTML=evs.length?evs.map(e=>`<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--br);font-size:12.5px"><span style="font-family:var(--fm);font-size:11px;color:var(--ac);min-width:26px">${DAYS[e.day-1]}</span><span style="font-size:10.5px;color:var(--txm);min-width:108px">${SLOTS[e.slot]}</span><span style="flex:1;font-weight:600">${esc(e.className)}</span><span style="color:var(--txm);font-size:11px">${esc(e.room)}</span></div>`).join(''):'<div style="text-align:center;padding:1.5rem;color:var(--txm)">點擊課表格子新增課程</div>';
+}
+document.getElementById('wk-prev').addEventListener('click',()=>{ wkOff--; renderSched(); });
+document.getElementById('wk-next').addEventListener('click',()=>{ wkOff++; renderSched(); });
+document.getElementById('wk-today').addEventListener('click',()=>{ wkOff=0; renderSched(); });
+document.getElementById('btn-add-ev').addEventListener('click',()=>document.getElementById('mo-ev').classList.add('open'));
+document.getElementById('mo-ev-close').addEventListener('click',()=>document.getElementById('mo-ev').classList.remove('open'));
+document.getElementById('mo-ev-cancel').addEventListener('click',()=>document.getElementById('mo-ev').classList.remove('open'));
+document.getElementById('mo-ev').addEventListener('click',function(e){ if(e.target===this) this.classList.remove('open'); });
+document.getElementById('mo-ev-save').addEventListener('click',()=>{
+  const cls=document.getElementById('ev-cls').value.trim(); if(!cls){ alert('請填寫班級名稱'); return; }
+  evs.push({id:Date.now(),day:parseInt(document.getElementById('ev-day').value),slot:parseInt(document.getElementById('ev-slot').value),className:cls,room:document.getElementById('ev-room').value.trim()||'—',note:document.getElementById('ev-note').value.trim()});
+  localStorage.setItem('vip_schedule',JSON.stringify(evs));
+  document.getElementById('mo-ev').classList.remove('open');
+  ['ev-cls','ev-room','ev-note'].forEach(id=>document.getElementById(id).value='');
   renderSched();
+});
+
+/* ── Init ── */
+renderSched();
+loadStudents();
+loadClasses();
 </script>
 </body>
 </html>

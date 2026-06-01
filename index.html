@@ -7,16 +7,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+TC:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
     [data-theme="obsidian"]{--bg:#080808;--surface:#141414;--s2:#1C1C1C;--br:rgba(201,168,76,.2);--ac:#C9A84C;--acl:#E8C97A;--acd:#7A5F28;--glow:rgba(201,168,76,.12);--tx:#F0EAD6;--txs:#A89E88;--txm:#5A5248;--r:12px;--fd:'Playfair Display','Noto Serif TC',serif;--fb:'DM Sans','Noto Serif TC',sans-serif}
     [data-theme="ivory"]{--bg:#F2EDE5;--surface:#FAFAF7;--s2:#EDE8DF;--br:rgba(100,75,45,.15);--ac:#7B5E38;--acl:#9E7A4D;--acd:#B8996A;--glow:rgba(123,94,56,.08);--tx:#26180E;--txs:#5A4835;--txm:#9A8870;--r:12px;--fd:'Cormorant Garamond','Noto Serif TC',serif;--fb:'DM Sans','Noto Serif TC',sans-serif}
     [data-theme="neon"]{--bg:#0C1016;--surface:#1A2030;--s2:#202838;--br:rgba(56,189,248,.16);--ac:#38BDF8;--acl:#7DD3FC;--acd:#0EA5E9;--glow:rgba(56,189,248,.1);--tx:#D0DCE8;--txs:#8298B0;--txm:#445060;--r:8px;--fd:'Space Grotesk',sans-serif;--fb:'Space Grotesk',sans-serif}
-
     html,body{min-height:100vh;background:var(--bg);color:var(--tx);font-family:var(--fb);-webkit-font-smoothing:antialiased;transition:background .35s,color .35s}
     body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 60% 50% at 50% -5%,var(--glow),transparent 70%)}
-
     .page{position:relative;z-index:1;min-height:100vh;display:grid;grid-template-columns:1fr 460px}
-    .brand{display:flex;flex-direction:column;justify-content:center;padding:4rem 3.5rem;position:relative;overflow:hidden}
+    /* BRAND */
+    .brand{display:flex;flex-direction:column;justify-content:center;padding:4rem 3.5rem;overflow:hidden;position:relative}
     .brand::after{content:'如苑';position:absolute;right:-1rem;bottom:-3rem;font-family:var(--fd);font-size:clamp(10rem,16vw,18rem);font-weight:700;color:var(--ac);opacity:.04;line-height:1;pointer-events:none;user-select:none}
     .b-pill{display:inline-flex;align-items:center;gap:8px;background:var(--glow);border:1px solid var(--br);border-radius:99px;padding:5px 16px;font-size:11.5px;color:var(--acl);letter-spacing:.08em;text-transform:uppercase;font-weight:500;width:fit-content;margin-bottom:2.5rem}
     .b-pill::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ac);animation:pulse 2s infinite}
@@ -28,20 +26,16 @@
     .b-feats{display:flex;flex-direction:column;gap:12px}
     .b-feat{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--txs)}
     .b-feat-ico{width:32px;height:32px;border-radius:8px;background:var(--s2);border:1px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
-
+    /* LOGIN PANEL */
     .login{background:var(--surface);border-left:1px solid var(--br);display:flex;flex-direction:column;justify-content:center;padding:2.75rem;position:relative}
-    .theme-row{position:absolute;top:1.4rem;right:1.6rem;display:flex;gap:7px}
+    /* Theme switcher - top right */
+    .theme-row{position:absolute;top:1.4rem;right:1.6rem;display:flex;gap:7px;align-items:center}
     .td{width:21px;height:21px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:.2s}
     .td:hover{transform:scale(1.15)}.td.active{border-color:var(--ac)}
     .td[data-t="obsidian"]{background:radial-gradient(circle at 35% 35%,#E8C97A,#4A3010)}
     .td[data-t="ivory"]{background:radial-gradient(circle at 35% 35%,#F5F0E8,#7B5E38)}
     .td[data-t="neon"]{background:radial-gradient(circle at 35% 35%,#38BDF8,#0C1016)}
-
-    .role-tabs{display:flex;background:var(--s2);border:1px solid var(--br);border-radius:10px;padding:4px;margin-bottom:2.25rem;gap:3px}
-    .rtab{flex:1;padding:10px 8px;border-radius:7px;border:none;background:transparent;cursor:pointer;font-family:var(--fb);font-size:13px;font-weight:500;color:var(--txm);transition:.2s;display:flex;align-items:center;justify-content:center;gap:6px}
-    .rtab:hover{color:var(--txs)}
-    .rtab.active{background:var(--ac);color:#080808;font-weight:700;box-shadow:0 2px 8px var(--glow)}
-
+    /* Main login form */
     .l-title{font-family:var(--fd);font-size:23px;font-weight:600;color:var(--tx);margin-bottom:5px}
     .l-sub{font-size:13px;color:var(--txm);margin-bottom:1.75rem}
     .fg{margin-bottom:1.1rem}
@@ -52,15 +46,22 @@
     #f-name{display:none}
     .btn-login{width:100%;background:var(--ac);color:#080808;border:none;border-radius:9px;padding:14px;font-size:15px;font-weight:700;font-family:var(--fb);cursor:pointer;transition:.2s;margin-top:.4rem;display:flex;align-items:center;justify-content:center;gap:8px}
     .btn-login:hover{background:var(--acl);transform:translateY(-1px);box-shadow:0 6px 18px var(--glow)}
-    .btn-login:active{transform:none;box-shadow:none}
-    .btn-login:disabled{opacity:.55;cursor:not-allowed;transform:none}
+    .btn-login:active{transform:none}.btn-login:disabled{opacity:.55;cursor:not-allowed;transform:none}
     .errmsg{display:none;background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.3);color:#E07060;border-radius:8px;padding:10px 14px;font-size:13px;margin-top:.9rem}
-    .l-foot{text-align:center;font-size:11.5px;color:var(--txm);margin-top:1.75rem;line-height:1.75}
     .spin{display:none;width:16px;height:16px;border:2px solid rgba(0,0,0,.2);border-top-color:#000;border-radius:50%;animation:rot .6s linear infinite}
     @keyframes rot{to{transform:rotate(360deg)}}
+    /* Role switcher - 學生預設，老師在下面小一點 */
+    .role-switch{margin-bottom:2rem}
+    .role-main-label{font-size:11px;color:var(--txm);margin-bottom:10px;text-transform:uppercase;letter-spacing:.08em}
+    .role-btns{display:flex;gap:8px;align-items:center}
+    .rbtn{flex:1;padding:11px 10px;border-radius:9px;border:1px solid var(--br);background:transparent;cursor:pointer;font-family:var(--fb);font-size:13.5px;font-weight:500;color:var(--txm);transition:.2s;text-align:center}
+    .rbtn:hover{border-color:var(--ac);color:var(--tx)}
+    .rbtn.active{background:var(--ac);color:#080808;border-color:var(--ac);font-weight:700;box-shadow:0 2px 8px var(--glow)}
+    .rbtn.staff-btn{flex:0.6;font-size:12px;padding:8px 10px;opacity:.7}
+    .rbtn.staff-btn.active{opacity:1;background:var(--s2);color:var(--acl);border-color:var(--br)}
     .divider-row{display:flex;align-items:center;gap:10px;margin:1.4rem 0;color:var(--txm);font-size:11.5px}
     .divider-row::before,.divider-row::after{content:'';flex:1;height:1px;background:var(--br)}
-
+    .l-foot{text-align:center;font-size:11.5px;color:var(--txm);margin-top:1.75rem;line-height:1.75}
     @media(max-width:900px){
       .page{grid-template-columns:1fr;grid-template-rows:auto 1fr}
       .brand{padding:2.5rem 2rem 2rem;border-bottom:1px solid var(--br)}
@@ -71,6 +72,8 @@
 </head>
 <body data-theme="obsidian">
 <div class="page">
+
+  <!-- 左側品牌 -->
   <div class="brand">
     <div class="b-pill">小班制精英課程</div>
     <div class="b-mark">如</div>
@@ -84,35 +87,41 @@
     </div>
   </div>
 
+  <!-- 右側登入 -->
   <div class="login">
+    <!-- 主題色點 -->
     <div class="theme-row">
-      <div class="td active" data-t="obsidian" title="曜石金" onclick="setTheme('obsidian',this)"></div>
-      <div class="td" data-t="ivory" title="白瓷紙" onclick="setTheme('ivory',this)"></div>
-      <div class="td" data-t="neon" title="藍調科技" onclick="setTheme('neon',this)"></div>
+      <div class="td active" data-t="obsidian" title="曜石金"></div>
+      <div class="td" data-t="ivory" title="白瓷紙"></div>
+      <div class="td" data-t="neon" title="藍調科技"></div>
     </div>
 
-    <div class="role-tabs">
-      <button class="rtab active" id="rt-staff" onclick="switchRole('staff')">🎓 教師 / 管理者</button>
-      <button class="rtab" id="rt-parent" onclick="switchRole('parent')">👨‍👩‍👦 學生 / 家長</button>
+    <!-- 角色切換：學生大、老師小 -->
+    <div class="role-switch">
+      <div class="role-main-label">請選擇登入身份</div>
+      <div class="role-btns">
+        <button class="rbtn active" id="rb-parent">👨‍👩‍👦 學生 / 家長</button>
+        <button class="rbtn staff-btn" id="rb-staff">🎓 教師</button>
+      </div>
     </div>
 
-    <div class="l-title" id="l-title">教師 / 管理者登入</div>
-    <div class="l-sub" id="l-sub">請輸入帳號與密碼</div>
+    <div class="l-title" id="l-title">家長專屬登入</div>
+    <div class="l-sub" id="l-sub">請輸入學生姓名與家長密碼</div>
 
     <div class="fg" id="f-name">
       <label class="fl">學生姓名</label>
-      <input class="fi" id="inp-name" type="text" placeholder="請輸入孩子的姓名" autocomplete="off">
+      <input class="fi" id="inp-name" type="text" placeholder="請輸入孩子的姓名">
     </div>
-    <div class="fg" id="f-email">
+    <div class="fg" id="f-email" style="display:none">
       <label class="fl">帳號（Email 或管理者名稱）</label>
-      <input class="fi" id="inp-email" type="text" placeholder="teacher@email.com 或 宋維" autocomplete="username">
+      <input class="fi" id="inp-email" type="text" placeholder="teacher@email.com 或 宋維">
     </div>
     <div class="fg">
       <label class="fl">密碼</label>
-      <input class="fi" id="inp-pwd" type="password" placeholder="••••••••" autocomplete="current-password">
+      <input class="fi" id="inp-pwd" type="password" placeholder="••••••••">
     </div>
 
-    <button class="btn-login" id="btn-login" onclick="handleLogin()">
+    <button class="btn-login" id="btn-login">
       <span id="btn-txt">登入系統</span>
       <span class="spin" id="btn-spin"></span>
     </button>
@@ -122,39 +131,40 @@
   </div>
 </div>
 
-<script type="module">
-  import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, signInAnonymously }
-    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-  import { getFirestore, collection, query, where, getDocs, getDoc, doc, updateDoc, serverTimestamp }
-    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+<script>
+  /* ══ 全部放在普通 script，不用 module，避免 onclick 找不到函數 ══ */
 
-  const CFG = {
-    apiKey:"AIzaSyCWcNX_urPo8HOV42pL_ngHs7a9T60tGWY",
-    authDomain:"liveabc-song.firebaseapp.com",
-    projectId:"liveabc-song",
-    storageBucket:"liveabc-song.firebasestorage.app",
-    messagingSenderId:"545222080412",
-    appId:"1:545222080412:web:1c3a34e4b88053ebb97a59"
-  };
-  const app  = getApps().length ? getApps()[0] : initializeApp(CFG);
-  const auth = getAuth(app);
-  const db   = getFirestore(app);
+  /* ── 主題 ── */
+  function setTheme(name) {
+    document.body.dataset.theme = name;
+    document.querySelectorAll('.td').forEach(d => d.classList.toggle('active', d.dataset.t === name));
+    localStorage.setItem('vip_theme', name);
+  }
+  document.querySelectorAll('.td').forEach(d => {
+    d.addEventListener('click', () => setTheme(d.dataset.t));
+  });
+  (function(){
+    const t = localStorage.getItem('vip_theme');
+    if (t) setTheme(t);
+  })();
 
-  let role = 'staff';
-
-  window.switchRole = function(r) {
-    role = r;
+  /* ── 角色切換 ── */
+  let currentRole = 'parent';
+  function switchRole(r) {
+    currentRole = r;
     const isParent = r === 'parent';
-    document.getElementById('rt-staff').classList.toggle('active', !isParent);
-    document.getElementById('rt-parent').classList.toggle('active', isParent);
-    document.getElementById('f-name').style.display   = isParent ? 'block' : 'none';
-    document.getElementById('f-email').style.display  = isParent ? 'none'  : 'block';
-    document.getElementById('l-title').textContent    = isParent ? '學生 / 家長登入' : '教師 / 管理者登入';
-    document.getElementById('l-sub').textContent      = isParent ? '請輸入學生姓名與家長密碼' : '請輸入帳號與密碼';
-    document.getElementById('errmsg').style.display   = 'none';
-  };
+    document.getElementById('rb-parent').classList.toggle('active', isParent);
+    document.getElementById('rb-staff').classList.toggle('active', !isParent);
+    document.getElementById('f-name').style.display  = isParent ? 'block' : 'none';
+    document.getElementById('f-email').style.display = isParent ? 'none'  : 'block';
+    document.getElementById('l-title').textContent   = isParent ? '家長專屬登入' : '教師 / 管理者登入';
+    document.getElementById('l-sub').textContent     = isParent ? '請輸入學生姓名與家長密碼' : '請輸入帳號與密碼';
+    document.getElementById('errmsg').style.display  = 'none';
+  }
+  document.getElementById('rb-parent').addEventListener('click', () => switchRole('parent'));
+  document.getElementById('rb-staff').addEventListener('click',  () => switchRole('staff'));
 
+  /* ── 登入 ── */
   function setLoad(on) {
     document.getElementById('btn-login').disabled     = on;
     document.getElementById('btn-spin').style.display = on ? 'inline-block' : 'none';
@@ -162,24 +172,41 @@
   }
   function showErr(msg) {
     const el = document.getElementById('errmsg');
-    el.textContent = msg;
-    el.style.display = 'block';
+    el.textContent = msg; el.style.display = 'block';
   }
   async function hashPwd(p) {
     const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(p));
-    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
   }
 
-  window.handleLogin = async function() {
+  async function handleLogin() {
     setLoad(true);
     document.getElementById('errmsg').style.display = 'none';
+
+    /* 動態載入 Firebase */
+    const { initializeApp, getApps } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
+    const { getAuth, signInWithEmailAndPassword, signInAnonymously } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
+    const { getFirestore, collection, query, where, getDocs, getDoc, doc, updateDoc, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+
+    const CFG = {
+      apiKey:"AIzaSyCWcNX_urPo8HOV42pL_ngHs7a9T60tGWY",
+      authDomain:"liveabc-song.firebaseapp.com",
+      projectId:"liveabc-song",
+      storageBucket:"liveabc-song.firebasestorage.app",
+      messagingSenderId:"545222080412",
+      appId:"1:545222080412:web:1c3a34e4b88053ebb97a59"
+    };
+    const app  = getApps().length ? getApps()[0] : initializeApp(CFG);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
     try {
-      if (role === 'staff') {
+      if (currentRole === 'staff') {
         const email = document.getElementById('inp-email').value.trim();
         const pwd   = document.getElementById('inp-pwd').value;
         if (!email || !pwd) { showErr('請填寫帳號與密碼'); setLoad(false); return; }
 
-        /* ── 最高管理者快速登入 ── */
+        /* 最高管理者宋維 */
         if (email === '宋維' && pwd === '701544') {
           await signInAnonymously(auth);
           sessionStorage.setItem('vip_uid',   'super-songwei');
@@ -190,14 +217,14 @@
           return;
         }
 
-        /* ── 一般教師 Firebase Auth ── */
+        /* 一般教師 */
         const cred = await signInWithEmailAndPassword(auth, email, pwd);
         const snap = await getDoc(doc(db, 'users', cred.user.uid));
         const data = snap.exists() ? snap.data() : null;
         if (!data || !['admin','teacher'].includes(data.role)) {
           showErr('此帳號沒有教師或管理者權限'); setLoad(false); return;
         }
-        await updateDoc(doc(db,'users',cred.user.uid), { lastLogin: serverTimestamp() });
+        try { await updateDoc(doc(db,'users',cred.user.uid), { lastLogin: serverTimestamp() }); } catch(e){}
         sessionStorage.setItem('vip_uid',   cred.user.uid);
         sessionStorage.setItem('vip_name',  data.name || email);
         sessionStorage.setItem('vip_role',  data.role);
@@ -205,7 +232,7 @@
         window.location.href = 'admin_dashboard.html';
 
       } else {
-        /* ── 家長登入 ── */
+        /* 家長登入 */
         const name = document.getElementById('inp-name').value.trim();
         const pwd  = document.getElementById('inp-pwd').value;
         if (!name || !pwd) { showErr('請填寫學生姓名與密碼'); setLoad(false); return; }
@@ -215,12 +242,12 @@
           where('name','==',name),
           where('role','==','parent'),
           where('passwordHash','==',hashed));
-        const snap = await getDocs(q);
-        if (snap.empty) { showErr('姓名或密碼錯誤，請重新確認'); setLoad(false); return; }
+        const sn = await getDocs(q);
+        if (sn.empty) { showErr('姓名或密碼錯誤，請重新確認'); setLoad(false); return; }
 
-        const d = snap.docs[0];
+        const d = sn.docs[0];
         await signInAnonymously(auth);
-        await updateDoc(doc(db,'users',d.id), { lastLogin: serverTimestamp() });
+        try { await updateDoc(doc(db,'users',d.id), { lastLogin: serverTimestamp() }); } catch(e){}
         sessionStorage.setItem('vip_uid',   d.id);
         sessionStorage.setItem('vip_name',  d.data().name);
         sessionStorage.setItem('vip_class', d.data().className || '');
@@ -237,31 +264,18 @@
         'auth/invalid-email':'帳號格式不正確'
       };
       showErr(map[e.code] || '登入失敗：' + e.message);
-    } finally { setLoad(false); }
-  };
-
-  /* Enter 鍵送出 */
-  document.getElementById('inp-name').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('inp-pwd').focus(); });
-  document.getElementById('inp-email').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('inp-pwd').focus(); });
-  document.getElementById('inp-pwd').addEventListener('keydown', e => { if(e.key==='Enter') window.handleLogin(); });
-
-  /* 還原主題 */
-  (function(){
-    const t = localStorage.getItem('vip_theme');
-    if (t) {
-      document.body.dataset.theme = t;
-      document.querySelectorAll('.td').forEach(d => d.classList.toggle('active', d.dataset.t === t));
+      setLoad(false);
     }
-  })();
-</script>
+  }
 
-<script>
-function setTheme(name, el) {
-  document.body.dataset.theme = name;
-  document.querySelectorAll('.td').forEach(d => d.classList.remove('active'));
-  el.classList.add('active');
-  localStorage.setItem('vip_theme', name);
-}
+  /* Enter 鍵 */
+  document.getElementById('inp-name').addEventListener('keydown',  e => { if(e.key==='Enter') document.getElementById('inp-pwd').focus(); });
+  document.getElementById('inp-email').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('inp-pwd').focus(); });
+  document.getElementById('inp-pwd').addEventListener('keydown',   e => { if(e.key==='Enter') handleLogin(); });
+  document.getElementById('btn-login').addEventListener('click', handleLogin);
+
+  /* 預設顯示家長 */
+  switchRole('parent');
 </script>
 </body>
 </html>
