@@ -361,10 +361,10 @@
   const auth=getAuth(app); const db=getFirestore(app); const storage=getStorage(app);
 
   /* ── Auth Guard ── */
-  const uid   = sessionStorage.getItem('vip_uid');
-  const role  = sessionStorage.getItem('vip_role');
-  const super_ = sessionStorage.getItem('vip_super');
-  if (!uid || !['admin','teacher'].includes(role)) {
+  const uid    = sessionStorage.getItem('vip_uid');
+  const role   = sessionStorage.getItem('vip_role');
+  const isSuper = sessionStorage.getItem('vip_super') === 'true';
+  if (!uid || (!['admin','teacher'].includes(role) && !isSuper)) {
     window.location.href = 'index.html';
   }
 
